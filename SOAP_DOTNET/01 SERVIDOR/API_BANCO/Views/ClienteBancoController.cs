@@ -47,8 +47,6 @@ public interface IClienteBancoController
 
     [OperationContract]
     Task<List<AmortizacionCreditoDto>> ObtenerAmortizacionPorCreditoId(int creditoId);
-
-
 }
 
 public class ClienteBancoController : IClienteBancoController
@@ -122,6 +120,4 @@ public class ClienteBancoController : IClienteBancoController
     {
         return await _clienteBancoService.ObtenerAmortizacionPorCreditoId(creditoId);
     }
-
-
 }
