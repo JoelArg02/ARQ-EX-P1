@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Runtime.Serialization;
+using API_Comercializadora.Models.Enums;
 
 namespace API_Comercializadora.Models;
 
@@ -13,7 +14,7 @@ public class Factura
 
     [DataMember]
     [Required]
-    [MaxLength(20)]
+    [MaxLength(50)]
     public string NumeroFactura { get; set; } = string.Empty;
 
     [DataMember]
@@ -25,8 +26,8 @@ public class Factura
     public int ClienteId { get; set; }
 
     [DataMember]
-    [ForeignKey("FormaPago")]
-    public int FormaPagoId { get; set; }
+    [Required]
+    public FormaPagoEnum FormaPago { get; set; }
 
     [DataMember]
     [Range(0, double.MaxValue)]
@@ -42,9 +43,6 @@ public class Factura
 
     [DataMember]
     public Cliente? Cliente { get; set; }
-
-    [DataMember]
-    public FormaPago? FormaPago { get; set; }
 
     [DataMember]
     public ICollection<DetalleFactura>? Detalles { get; set; }

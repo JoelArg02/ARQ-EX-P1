@@ -58,8 +58,7 @@
               "RelativeToolTip": "Repositories\\ClienteBancoRepository.cs",
               "ViewState": "AgIAAEUBAAAAAAAAAAAUwE4BAABnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T04:03:29.594Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-31T04:03:29.594Z"
             },
             {
               "$type": "Document",
@@ -71,8 +70,7 @@
               "RelativeToolTip": "Application\\Service\\ClienteBancoService.cs",
               "ViewState": "AgIAAFgAAAAAAAAAAAAYwG0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T04:06:02.695Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-31T04:06:02.695Z"
             },
             {
               "$type": "Document",
@@ -84,8 +82,7 @@
               "RelativeToolTip": "Application\\Service\\CreditoBancoService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T04:06:02.212Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-31T04:06:02.212Z"
             },
             {
               "$type": "Document",
@@ -97,8 +94,7 @@
               "RelativeToolTip": "Application\\Interface\\IClienteBancoService.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAA5wBMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T04:05:51.332Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-31T04:05:51.332Z"
             },
             {
               "$type": "Document",
@@ -108,7 +104,7 @@
               "RelativeDocumentMoniker": "Views\\ClienteBancoController.cs",
               "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API_BANCO\\Views\\ClienteBancoController.cs",
               "RelativeToolTip": "Views\\ClienteBancoController.cs",
-              "ViewState": "AgIAAGcAAAAAAAAAAAAUwFwAAAACAAAAAAAAAA==",
+              "ViewState": "AgIAAGUAAAAAAAAAAADwv1wAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-31T04:03:25.219Z",
               "EditorCaption": ""
@@ -123,8 +119,7 @@
               "RelativeToolTip": "Repositories\\Interfaces\\IClienteBancoRepository.cs",
               "ViewState": "AgIAAAUAAAAAAAAAAAAIwBQAAAAEAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T04:06:20.25Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-31T04:06:20.25Z"
             },
             {
               "$type": "Document",
@@ -136,8 +131,7 @@
               "RelativeToolTip": "Application\\DTOs\\Creditos\\index.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAqwCAAAAARAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T04:05:35.247Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-31T04:05:35.247Z"
             },
             {
               "$type": "Document",
@@ -149,8 +143,7 @@
               "RelativeToolTip": "Repositories\\AmortizacionCreditoRepository.cs",
               "ViewState": "AgIAAB4AAAAAAAAAAADwvzgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T04:02:34.719Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-31T04:02:34.719Z"
             },
             {
               "$type": "Document",
@@ -162,8 +155,7 @@
               "RelativeToolTip": "Views\\AmortizacionCreditoController.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABMAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T04:02:00.437Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-31T04:02:00.437Z"
             }
           ]
         }

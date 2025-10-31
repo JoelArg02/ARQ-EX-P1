@@ -7,6 +7,10 @@
       "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-BANCO.csproj|solutionrelative:views\\clientebancocontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-BANCO.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api_banco\\application\\dtos\\creditos\\index.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-BANCO.csproj|solutionrelative:application\\dtos\\creditos\\index.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-BANCO.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api_banco\\application\\interface\\iclientebancoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-BANCO.csproj|solutionrelative:application\\interface\\iclientebancoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -27,10 +31,6 @@
       "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-BANCO.csproj|solutionrelative:repositories\\interfaces\\iclientebancorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-BANCO.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api_banco\\application\\dtos\\creditos\\index.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-BANCO.csproj|solutionrelative:application\\dtos\\creditos\\index.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-BANCO.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api_banco\\repositories\\amortizacioncreditorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-BANCO.csproj|solutionrelative:repositories\\amortizacioncreditorepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
@@ -46,24 +46,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "IClienteBancoRepository.cs",
-              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API_BANCO\\Repositories\\Interfaces\\IClienteBancoRepository.cs",
-              "RelativeDocumentMoniker": "Repositories\\Interfaces\\IClienteBancoRepository.cs",
-              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API_BANCO\\Repositories\\Interfaces\\IClienteBancoRepository.cs",
-              "RelativeToolTip": "Repositories\\Interfaces\\IClienteBancoRepository.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAIwBQAAAAEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T04:06:20.25Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
               "Title": "ClienteBancoRepository.cs",
               "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API_BANCO\\Repositories\\ClienteBancoRepository.cs",
               "RelativeDocumentMoniker": "Repositories\\ClienteBancoRepository.cs",
@@ -71,12 +58,11 @@
               "RelativeToolTip": "Repositories\\ClienteBancoRepository.cs",
               "ViewState": "AgIAAEUBAAAAAAAAAAAUwE4BAABnAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T04:03:29.594Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-31T04:03:29.594Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "ClienteBancoService.cs",
               "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API_BANCO\\Application\\Service\\ClienteBancoService.cs",
               "RelativeDocumentMoniker": "Application\\Service\\ClienteBancoService.cs",
@@ -84,12 +70,11 @@
               "RelativeToolTip": "Application\\Service\\ClienteBancoService.cs",
               "ViewState": "AgIAAFgAAAAAAAAAAAAYwG0AAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T04:06:02.695Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-31T04:06:02.695Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "CreditoBancoService.cs",
               "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API_BANCO\\Application\\Service\\CreditoBancoService.cs",
               "RelativeDocumentMoniker": "Application\\Service\\CreditoBancoService.cs",
@@ -97,12 +82,11 @@
               "RelativeToolTip": "Application\\Service\\CreditoBancoService.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T04:06:02.212Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-31T04:06:02.212Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "IClienteBancoService.cs",
               "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API_BANCO\\Application\\Interface\\IClienteBancoService.cs",
               "RelativeDocumentMoniker": "Application\\Interface\\IClienteBancoService.cs",
@@ -110,21 +94,7 @@
               "RelativeToolTip": "Application\\Interface\\IClienteBancoService.cs",
               "ViewState": "AgIAAAkAAAAAAAAAAAA5wBMAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T04:05:51.332Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "index.cs",
-              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API_BANCO\\Application\\DTOs\\Creditos\\index.cs",
-              "RelativeDocumentMoniker": "Application\\DTOs\\Creditos\\index.cs",
-              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API_BANCO\\Application\\DTOs\\Creditos\\index.cs",
-              "RelativeToolTip": "Application\\DTOs\\Creditos\\index.cs",
-              "ViewState": "AgIAAFgAAAAAAAAAAAAwwG8AAAAFAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T04:05:35.247Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-31T04:05:51.332Z"
             },
             {
               "$type": "Document",
@@ -134,10 +104,34 @@
               "RelativeDocumentMoniker": "Views\\ClienteBancoController.cs",
               "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API_BANCO\\Views\\ClienteBancoController.cs",
               "RelativeToolTip": "Views\\ClienteBancoController.cs",
-              "ViewState": "AgIAAGIAAAAAAAAAAADwv3wAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAGUAAAAAAAAAAADwv1wAAAACAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-10-31T04:03:25.219Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IClienteBancoRepository.cs",
+              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API_BANCO\\Repositories\\Interfaces\\IClienteBancoRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\Interfaces\\IClienteBancoRepository.cs",
+              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API_BANCO\\Repositories\\Interfaces\\IClienteBancoRepository.cs",
+              "RelativeToolTip": "Repositories\\Interfaces\\IClienteBancoRepository.cs",
+              "ViewState": "AgIAAAUAAAAAAAAAAAAIwBQAAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-31T04:06:20.25Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "index.cs",
+              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API_BANCO\\Application\\DTOs\\Creditos\\index.cs",
+              "RelativeDocumentMoniker": "Application\\DTOs\\Creditos\\index.cs",
+              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API_BANCO\\Application\\DTOs\\Creditos\\index.cs",
+              "RelativeToolTip": "Application\\DTOs\\Creditos\\index.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwCAAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-10-31T04:05:35.247Z"
             },
             {
               "$type": "Document",
@@ -149,8 +143,7 @@
               "RelativeToolTip": "Repositories\\AmortizacionCreditoRepository.cs",
               "ViewState": "AgIAAB4AAAAAAAAAAADwvzgAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T04:02:34.719Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-31T04:02:34.719Z"
             },
             {
               "$type": "Document",
@@ -162,8 +155,7 @@
               "RelativeToolTip": "Views\\AmortizacionCreditoController.cs",
               "ViewState": "AgIAAAYAAAAAAAAAAAAAABMAAAAhAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T04:02:00.437Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-10-31T04:02:00.437Z"
             }
           ]
         }

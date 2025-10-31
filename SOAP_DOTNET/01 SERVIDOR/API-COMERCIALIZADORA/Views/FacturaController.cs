@@ -4,6 +4,7 @@ using API_Comercializadora.Application.Interface;
 using API_Comercializadora.Application.Service;
 using API_Comercializadora.Configuration;
 using API_Comercializadora.Models;
+using API_Comercializadora.Application.DTOs;
 
 namespace API_Comercializadora.Views;
 
@@ -21,15 +22,30 @@ public interface IFacturaController
 
     [OperationContract]
     Task<bool> DeleteFactura(int id);
+
+    [OperationContract]
+    Task<FacturaResponseDto> CrearFacturaConValidacion(CrearFacturaRequestDto request);
+
+    [OperationContract]
+    Task<VerificarElegibilidadResponseDto> VerificarElegibilidadCredito(string cedula);
 }
 
 public class FacturaController : IFacturaController
 {
     private readonly IFacturaService _facturaService;
+    private readonly IBancoBanquitoService _bancoBanquitoService;
+    private readonly ILogger<FacturaController> _logger;
 
-    public FacturaController(AppDbContext context)
+    public FacturaController(
+        AppDbContext context, 
+        IConfiguration configuration,
+        ILogger<FacturaController> logger)
     {
-        _facturaService = new FacturaService(context);
+        _logger = logger;
+        var facturaLogger = LoggerFactory.Create(builder => builder.AddConsole()).CreateLogger<FacturaService>();
+        _bancoBanquitoService = new BancoBanquitoService(configuration, 
+            LoggerFactory.Create(builder => builder.AddConsole()).CreateLogger<BancoBanquitoService>());
+        _facturaService = new FacturaService(context, _bancoBanquitoService, facturaLogger);
     }
 
     public async Task<List<Factura>> GetAllFacturas()
@@ -50,5 +66,42 @@ public class FacturaController : IFacturaController
     public async Task<bool> DeleteFactura(int id)
     {
         return await _facturaService.DeleteFactura(id);
+    }
+
+    public async Task<FacturaResponseDto> CrearFacturaConValidacion(CrearFacturaRequestDto request)
+    {
+        try
+        {
+            
+            return await _facturaService.CrearFacturaConValidacion(request);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error en FacturaController.CrearFacturaConValidacion");
+            return new FacturaResponseDto
+            {
+                Exitoso = false,
+                Mensaje = $"Error al procesar la factura: {ex.Message}"
+            };
+        }
+    }
+
+    public async Task<VerificarElegibilidadResponseDto> VerificarElegibilidadCredito(string cedula)
+    {
+        try
+        {
+            _logger.LogInformation($"Verificando elegibilidad de crédito para cédula: {cedula}");
+            return await _facturaService.VerificarElegibilidadCredito(cedula);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error en FacturaController.VerificarElegibilidadCredito");
+            return new VerificarElegibilidadResponseDto
+            {
+                EsElegible = false,
+                Mensaje = $"Error al verificar elegibilidad: {ex.Message}",
+                MontoMaximoCredito = 0
+            };
+        }
     }
 }

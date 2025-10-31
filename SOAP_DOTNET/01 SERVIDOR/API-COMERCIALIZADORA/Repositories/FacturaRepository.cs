@@ -18,7 +18,6 @@ public class FacturaRepository : IFacturaRepository
     {
         return await _context.Facturas
             .Include(f => f.Cliente)
-            .Include(f => f.FormaPago)
             .Include(f => f.Detalles)
             .ToListAsync();
     }
@@ -27,7 +26,6 @@ public class FacturaRepository : IFacturaRepository
     {
         return await _context.Facturas
             .Include(f => f.Cliente)
-            .Include(f => f.FormaPago)
             .Include(f => f.Detalles)
             .FirstOrDefaultAsync(f => f.Id == id);
     }
@@ -69,7 +67,6 @@ public class FacturaRepository : IFacturaRepository
             await transaction.CommitAsync();
 
             await _context.Entry(factura).Reference(f => f.Cliente).LoadAsync();
-            await _context.Entry(factura).Reference(f => f.FormaPago).LoadAsync();
             await _context.Entry(factura).Collection(f => f.Detalles).LoadAsync();
 
             return factura;

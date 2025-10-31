@@ -28,6 +28,10 @@ foreach (var controller in controllers)
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5000);
+});
 
 var app = builder.Build();
 
