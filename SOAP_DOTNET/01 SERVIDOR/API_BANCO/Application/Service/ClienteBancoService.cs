@@ -1,3 +1,5 @@
+using API_BANCO.Application.DTOs.Clientes;
+using API_BANCO.Application.DTOs.Creditos;
 using API_BANCO.Application.Interface;
 using API_BANCO.Configuration;
 using API_BANCO.Models.Entities;
@@ -33,18 +35,21 @@ public class ClienteBancoService : IClienteBancoService
         return await _repository.GetByCedulaAsync(cedula);
     }
 
-    public async Task<ClienteBanco> CreateClienteBanco(string cedula, string nombreCompleto, int estadoCivil, DateTime fechaNacimiento)
+    public async Task<ClienteBanco> CreateClienteBanco(ClienteBancoCreateDto dto)
     {
         var clienteBanco = new ClienteBanco
         {
-            Cedula = cedula,
-            NombreCompleto = nombreCompleto,
-            EstadoCivil = (EstadoCivil)estadoCivil,
-            FechaNacimiento = fechaNacimiento,
+            Cedula = dto.Cedula,
+            NombreCompleto = dto.NombreCompleto,
+            EstadoCivil = dto.EstadoCivil,
+            FechaNacimiento = dto.FechaNacimiento,
             TieneCreditoActivo = false
         };
-        return await _repository.CreateAsync(clienteBanco);
+
+        var created = await _repository.CreateAsync(clienteBanco);
+        return created;
     }
+
 
     public async Task<ClienteBanco?> UpdateClienteBanco(int id, string cedula, string nombreCompleto, int estadoCivil, DateTime fechaNacimiento, bool tieneCreditoActivo)
     {
@@ -63,5 +68,19 @@ public class ClienteBancoService : IClienteBancoService
     public async Task<bool> DeleteClienteBanco(int id)
     {
         return await _repository.DeleteAsync(id);
+    }
+
+    public async Task<bool> VerificarClientePorCedula(string cedula)
+    {
+        return await _repository.ExistePorCedulaAsync(cedula);
+    }
+    public async Task<VerificacionClienteResponseDto> VerificarElegibilidadCliente(string cedula)
+    {
+        return await _repository.VerificarElegibilidadAsync(cedula);
+    }
+
+    public async Task<CalculoCreditoResponseDto> CalcularMontoMaximoCredito(string cedula)
+    {
+        return await _repository.CalcularMontoMaximoCreditoAsync(cedula);
     }
 }

@@ -29,6 +29,11 @@ foreach (var controller in controllers)
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(5001);
+});
+
 var app = builder.Build();
 
 var serviceList = new List<string>();
@@ -49,7 +54,7 @@ app.UseServiceModel(serviceBuilder =>
 
         var serviceName = controller.Name.Replace("Controller", "Service");
         var servicePath = $"/{serviceName}.svc";
-        
+
         serviceList.Add(servicePath);
 
         serviceBuilder.AddService(
@@ -71,7 +76,6 @@ app.UseServiceModel(serviceBuilder =>
 var serviceMetadataBehavior = app.Services.GetRequiredService<ServiceMetadataBehavior>();
 serviceMetadataBehavior.HttpGetEnabled = true;
 
-// Página de inicio con lista de servicios
 app.MapGet("/", async context =>
 {
     var html = new StringBuilder();
@@ -95,30 +99,30 @@ app.MapGet("/", async context =>
     html.AppendLine("</head>");
     html.AppendLine("<body>");
     html.AppendLine("    <div class='container'>");
-    html.AppendLine("        <h1>🏦 API Banco - Servicios SOAP</h1>");
+    html.AppendLine("        <h1>API Banco - Servicios SOAP</h1>");
     html.AppendLine("        <p>Servicios web disponibles en esta API:</p>");
     html.AppendLine("        <ul class='service-list'>");
-    
+
     foreach (var service in serviceList)
     {
         var serviceName = service.Replace("/", "").Replace(".svc", "");
         html.AppendLine($"            <li class='service-item'>");
         html.AppendLine($"                <h3>{serviceName}</h3>");
-        html.AppendLine($"                <a href='{service}' target='_blank'>📄 Servicio</a>");
-        html.AppendLine($"                <a href='{service}?wsdl' target='_blank'>📋 WSDL</a>");
+        html.AppendLine($"                <a href='{service}' target='_blank'>Servicio</a>");
+        html.AppendLine($"                <a href='{service}?wsdl' target='_blank'>WSDL</a>");
         html.AppendLine($"            </li>");
     }
-    
+
     html.AppendLine("        </ul>");
     html.AppendLine("        <div class='info'>");
-    html.AppendLine("            <strong>ℹ️ Información:</strong><br>");
+    html.AppendLine("            <strong>Información:</strong><br>");
     html.AppendLine($"            Base URL: <code>{context.Request.Scheme}://{context.Request.Host}</code><br>");
     html.AppendLine($"            Total de servicios: {serviceList.Count}");
     html.AppendLine("        </div>");
     html.AppendLine("    </div>");
     html.AppendLine("</body>");
     html.AppendLine("</html>");
-    
+
     context.Response.ContentType = "text/html; charset=utf-8";
     await context.Response.WriteAsync(html.ToString());
 });
