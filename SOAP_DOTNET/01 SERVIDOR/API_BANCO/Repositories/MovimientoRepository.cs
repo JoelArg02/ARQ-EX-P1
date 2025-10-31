@@ -53,4 +53,24 @@ public class MovimientoRepository : IMovimientoRepository
         await _context.SaveChangesAsync();
         return true;
     }
+
+    public async Task<List<Movimiento>> GetByCedulaAndFechasAsync(string cedula, DateTime? fechaInicio = null, DateTime? fechaFin = null)
+    {
+        var query = _context.Movimientos
+            .Include(m => m.Cuenta)
+            .ThenInclude(c => c.ClienteBanco)
+            .Where(m => m.Cuenta.ClienteBanco.Cedula == cedula)
+            .AsQueryable();
+
+        if (fechaInicio.HasValue)
+            query = query.Where(m => m.Fecha >= fechaInicio.Value);
+
+        if (fechaFin.HasValue)
+            query = query.Where(m => m.Fecha <= fechaFin.Value);
+
+        return await query
+            .OrderByDescending(m => m.Fecha)
+            .ToListAsync();
+    }
+
 }

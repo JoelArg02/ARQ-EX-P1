@@ -1,9 +1,11 @@
-﻿using CoreWCF;
-using Microsoft.EntityFrameworkCore;
+﻿using API_BANCO.Application.DTOs.Movimientos;
 using API_BANCO.Application.Interface;
 using API_BANCO.Application.Service;
 using API_BANCO.Configuration;
 using API_BANCO.Models.Entities;
+using CoreWCF;
+using Microsoft.EntityFrameworkCore;
+using System.Web.Services.Description;
 
 namespace API_BANCO.Views;
 
@@ -24,6 +26,9 @@ public interface IMovimientoController
 
     [OperationContract]
     Task<bool> DeleteMovimiento(int id);
+
+    [OperationContract]
+    Task<List<Movimiento>> GetMovimientosByCedulaAndFechas(MovimientoFiltroDto filtro);
 }
 
 public class MovimientoController : IMovimientoController
@@ -58,5 +63,10 @@ public class MovimientoController : IMovimientoController
     public async Task<bool> DeleteMovimiento(int id)
     {
         return await _movimientoService.DeleteMovimiento(id);
+    }
+
+    public async Task<List<Movimiento>> GetMovimientosByCedulaAndFechas(MovimientoFiltroDto filtro)
+    {
+        return await _movimientoService.GetMovimientosByCedulaAndFechas(filtro);
     }
 }

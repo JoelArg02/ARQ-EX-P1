@@ -83,4 +83,30 @@ public class ClienteBancoService : IClienteBancoService
     {
         return await _repository.CalcularMontoMaximoCreditoAsync(cedula);
     }
+
+    public async Task<EvaluacionCreditoResultadoDto> EvaluarCredito(string cedula, decimal montoRequerido)
+    {
+        if (montoRequerido <= 0)
+        {
+            return new EvaluacionCreditoResultadoDto
+            {
+                Aprobado = false,
+                Detalle = "El monto solicitado debe ser mayor a 0."
+            };
+        }
+
+        return await _repository.EvaluarCreditoAsync(cedula, montoRequerido);
+    }
+    public Task<AprobacionCreditoResponseDto> AprobarCredito(AprobacionCreditoRequestDto dto) => _repository.AprobarCreditoAsync(dto.CedulaCliente, dto.MontoSolicitado, dto.NumeroCuotas);
+    public async Task<CreditoResumenDto?> ObtenerCreditoPorCedula(string cedula)
+    {
+        return await _repository.ObtenerCreditoPorCedulaAsync(cedula);
+    }
+
+    public async Task<List<AmortizacionCreditoDto>> ObtenerAmortizacionPorCreditoId(int creditoId)
+    {
+        return await _repository.ObtenerAmortizacionPorCreditoIdAsync(creditoId);
+    }
+
+
 }

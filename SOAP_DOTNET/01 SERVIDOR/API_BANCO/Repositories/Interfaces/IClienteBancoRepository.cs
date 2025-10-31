@@ -15,5 +15,8 @@ public interface IClienteBancoRepository
     Task<bool> ExistePorCedulaAsync(string cedula);
     Task<VerificacionClienteResponseDto> VerificarElegibilidadAsync(string cedula);
     Task<CalculoCreditoResponseDto> CalcularMontoMaximoCreditoAsync(string cedula);
-
+    Task<EvaluacionCreditoResultadoDto> EvaluarCreditoAsync(string cedula, decimal montoRequerido);
+    Task<AprobacionCreditoResponseDto> AprobarCreditoAsync(string cedula, decimal montoSolicitado, int numeroCuotas);
+    Task<CreditoResumenDto?> ObtenerCreditoPorCedulaAsync(string cedula);
+    Task<List<AmortizacionCreditoDto>> ObtenerAmortizacionPorCreditoIdAsync(int creditoId);
 }

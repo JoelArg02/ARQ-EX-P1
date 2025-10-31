@@ -1,3 +1,4 @@
+using API_BANCO.Application.DTOs.Movimientos;
 using API_BANCO.Application.Interface;
 using API_BANCO.Configuration;
 using API_BANCO.Models.Entities;
@@ -48,5 +49,10 @@ public class MovimientoService : IMovimientoService
     public async Task<bool> DeleteMovimiento(int id)
     {
         return await _repository.DeleteAsync(id);
+    }
+
+    public async Task<List<Movimiento>> GetMovimientosByCedulaAndFechas(MovimientoFiltroDto filtro)
+    {
+        return await _repository.GetByCedulaAndFechasAsync(filtro.Cedula, filtro.FechaInicio, filtro.FechaFin);
     }
 }

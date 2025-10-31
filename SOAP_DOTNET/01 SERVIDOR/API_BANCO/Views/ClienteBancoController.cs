@@ -37,6 +37,18 @@ public interface IClienteBancoController
     [OperationContract]
     Task<CalculoCreditoResponseDto> CalcularMontoMaximoCredito(string cedula);
 
+    [OperationContract]
+    Task<EvaluacionCreditoResultadoDto> EvaluarCredito(EvaluacionCreditoRequestDto dto);
+
+    [OperationContract]
+    Task<AprobacionCreditoResponseDto> AprobarCredito(AprobacionCreditoRequestDto dto);
+    [OperationContract]
+    Task<CreditoResumenDto?> ObtenerCreditoPorCedula(string cedula);
+
+    [OperationContract]
+    Task<List<AmortizacionCreditoDto>> ObtenerAmortizacionPorCreditoId(int creditoId);
+
+
 }
 
 public class ClienteBancoController : IClienteBancoController
@@ -90,6 +102,25 @@ public class ClienteBancoController : IClienteBancoController
     public async Task<CalculoCreditoResponseDto> CalcularMontoMaximoCredito(string cedula)
     {
         return await _clienteBancoService.CalcularMontoMaximoCredito(cedula);
+    }
+
+    public async Task<EvaluacionCreditoResultadoDto> EvaluarCredito(EvaluacionCreditoRequestDto dto)
+    {
+        return await _clienteBancoService.EvaluarCredito(dto.CedulaCliente, dto.MontoRequerido);
+    }
+    public async Task<AprobacionCreditoResponseDto> AprobarCredito(AprobacionCreditoRequestDto dto)
+    {
+        return await _clienteBancoService.AprobarCredito(dto);
+    }
+
+    public async Task<CreditoResumenDto?> ObtenerCreditoPorCedula(string cedula)
+    {
+        return await _clienteBancoService.ObtenerCreditoPorCedula(cedula);
+    }
+
+    public async Task<List<AmortizacionCreditoDto>> ObtenerAmortizacionPorCreditoId(int creditoId)
+    {
+        return await _clienteBancoService.ObtenerAmortizacionPorCreditoId(creditoId);
     }
 
 

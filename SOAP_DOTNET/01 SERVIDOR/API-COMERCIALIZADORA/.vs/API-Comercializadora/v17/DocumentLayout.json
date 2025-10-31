@@ -3,72 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:models\\user.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\repositories\\facturarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:repositories\\facturarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\models\\amortizacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:models\\amortizacion.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\repositories\\detallefacturarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:repositories\\detallefacturarepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\application\\service\\clienteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:application\\service\\clienteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\models\\formapago.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:models\\formapago.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\application\\interface\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:application\\interface\\iuserservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\application\\interface\\iformapagoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:application\\interface\\iformapagoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\application\\interface\\ifacturaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:application\\interface\\ifacturaservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\application\\interface\\ielectrodomesticoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:application\\interface\\ielectrodomesticoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\application\\interface\\iclienteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:application\\interface\\iclienteservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\application\\service\\formapagoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:application\\service\\formapagoservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\application\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:application\\service\\userservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\configuration\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:configuration\\appdbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\configuration\\appdbcontextfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:configuration\\appdbcontextfactory.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\migrations\\20251029171732_initmigrations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:migrations\\20251029171732_initmigrations.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:migrations\\appdbcontextmodelsnapshot.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
-      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\.env||{8B382828-6202-11D1-8870-0000F87579D2}",
-      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:.env||{8B382828-6202-11D1-8870-0000F87579D2}"
+      "AbsoluteMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|c:\\users\\joeli\\documents\\arq-ex-p1\\soap_dotnet\\01 servidor\\api-comercializadora\\servicereference\\reference.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{A1234567-89AB-CDEF-0123-456789ABCDEF}|API-Comercializadora.csproj|solutionrelative:servicereference\\reference.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -83,222 +31,53 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "User.cs",
-              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Models\\User.cs",
-              "RelativeDocumentMoniker": "Models\\User.cs",
-              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Models\\User.cs",
-              "RelativeToolTip": "Models\\User.cs",
+              "Title": "FacturaRepository.cs",
+              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Repositories\\FacturaRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\FacturaRepository.cs",
+              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Repositories\\FacturaRepository.cs",
+              "RelativeToolTip": "Repositories\\FacturaRepository.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T02:38:54.979Z",
+              "WhenOpened": "2025-10-31T04:16:08.258Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "Amortizacion.cs",
-              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Models\\Amortizacion.cs",
-              "RelativeDocumentMoniker": "Models\\Amortizacion.cs",
-              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Models\\Amortizacion.cs",
-              "RelativeToolTip": "Models\\Amortizacion.cs",
-              "ViewState": "AgIAABsAAAAAAAAAAAA4wAAAAAAAAAAAAAAAAA==",
+              "Title": "DetalleFacturaRepository.cs",
+              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Repositories\\DetalleFacturaRepository.cs",
+              "RelativeDocumentMoniker": "Repositories\\DetalleFacturaRepository.cs",
+              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Repositories\\DetalleFacturaRepository.cs",
+              "RelativeToolTip": "Repositories\\DetalleFacturaRepository.cs",
+              "ViewState": "AgIAAA0AAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T02:38:52.15Z",
+              "WhenOpened": "2025-10-31T04:16:04.799Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "ClienteService.cs",
-              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Application\\Service\\ClienteService.cs",
-              "RelativeDocumentMoniker": "Application\\Service\\ClienteService.cs",
-              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Application\\Service\\ClienteService.cs",
-              "RelativeToolTip": "Application\\Service\\ClienteService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "FormaPago.cs",
+              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Models\\FormaPago.cs",
+              "RelativeDocumentMoniker": "Models\\FormaPago.cs",
+              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Models\\FormaPago.cs",
+              "RelativeToolTip": "Models\\FormaPago.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABQAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T02:38:44.522Z",
+              "WhenOpened": "2025-10-31T04:15:54.643Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 3,
-              "Title": "IUserService.cs",
-              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Application\\Interface\\IUserService.cs",
-              "RelativeDocumentMoniker": "Application\\Interface\\IUserService.cs",
-              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Application\\Interface\\IUserService.cs",
-              "RelativeToolTip": "Application\\Interface\\IUserService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Title": "Reference.cs",
+              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\ServiceReference\\Reference.cs",
+              "RelativeDocumentMoniker": "ServiceReference\\Reference.cs",
+              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\ServiceReference\\Reference.cs",
+              "RelativeToolTip": "ServiceReference\\Reference.cs",
+              "ViewState": "AgIAANgDAAAAAAAAAAAmwPMDAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T02:38:42.841Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "IFormaPagoService.cs",
-              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Application\\Interface\\IFormaPagoService.cs",
-              "RelativeDocumentMoniker": "Application\\Interface\\IFormaPagoService.cs",
-              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Application\\Interface\\IFormaPagoService.cs",
-              "RelativeToolTip": "Application\\Interface\\IFormaPagoService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T02:38:41.492Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "IFacturaService.cs",
-              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Application\\Interface\\IFacturaService.cs",
-              "RelativeDocumentMoniker": "Application\\Interface\\IFacturaService.cs",
-              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Application\\Interface\\IFacturaService.cs",
-              "RelativeToolTip": "Application\\Interface\\IFacturaService.cs",
-              "ViewState": "AgIAAAcAAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T02:38:39.899Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "IElectrodomesticoService.cs",
-              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Application\\Interface\\IElectrodomesticoService.cs",
-              "RelativeDocumentMoniker": "Application\\Interface\\IElectrodomesticoService.cs",
-              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Application\\Interface\\IElectrodomesticoService.cs",
-              "RelativeToolTip": "Application\\Interface\\IElectrodomesticoService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T02:38:38.523Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "IClienteService.cs",
-              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Application\\Interface\\IClienteService.cs",
-              "RelativeDocumentMoniker": "Application\\Interface\\IClienteService.cs",
-              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Application\\Interface\\IClienteService.cs",
-              "RelativeToolTip": "Application\\Interface\\IClienteService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T02:38:37.356Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "FormaPagoService.cs",
-              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Application\\Service\\FormaPagoService.cs",
-              "RelativeDocumentMoniker": "Application\\Service\\FormaPagoService.cs",
-              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Application\\Service\\FormaPagoService.cs",
-              "RelativeToolTip": "Application\\Service\\FormaPagoService.cs",
-              "ViewState": "AgIAACMAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T02:38:33.732Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "UserService.cs",
-              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Application\\Service\\UserService.cs",
-              "RelativeDocumentMoniker": "Application\\Service\\UserService.cs",
-              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Application\\Service\\UserService.cs",
-              "RelativeToolTip": "Application\\Service\\UserService.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T02:38:32.799Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 11,
-              "Title": "AppDbContextFactory.cs",
-              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Configuration\\AppDbContextFactory.cs",
-              "RelativeDocumentMoniker": "Configuration\\AppDbContextFactory.cs",
-              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Configuration\\AppDbContextFactory.cs",
-              "RelativeToolTip": "Configuration\\AppDbContextFactory.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T02:38:27.226Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "AppDbContext.cs",
-              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Configuration\\AppDbContext.cs",
-              "RelativeDocumentMoniker": "Configuration\\AppDbContext.cs",
-              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Configuration\\AppDbContext.cs",
-              "RelativeToolTip": "Configuration\\AppDbContext.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T02:38:26.496Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 12,
-              "Title": "20251029171732_InitMigrations.cs",
-              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Migrations\\20251029171732_InitMigrations.cs",
-              "RelativeDocumentMoniker": "Migrations\\20251029171732_InitMigrations.cs",
-              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Migrations\\20251029171732_InitMigrations.cs",
-              "RelativeToolTip": "Migrations\\20251029171732_InitMigrations.cs",
-              "ViewState": "AgIAALcAAAAAAAAAAAAowAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T02:38:10.824Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 13,
-              "Title": "AppDbContextModelSnapshot.cs",
-              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Migrations\\AppDbContextModelSnapshot.cs",
-              "RelativeDocumentMoniker": "Migrations\\AppDbContextModelSnapshot.cs",
-              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Migrations\\AppDbContextModelSnapshot.cs",
-              "RelativeToolTip": "Migrations\\AppDbContextModelSnapshot.cs",
-              "ViewState": "AgIAAAwBAAAAAAAAAAAgwAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T02:38:04.017Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 14,
-              "Title": "Program.cs",
-              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Program.cs",
-              "RelativeDocumentMoniker": "Program.cs",
-              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\Program.cs",
-              "RelativeToolTip": "Program.cs",
-              "ViewState": "AgIAAF0AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-10-31T01:58:00.551Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 15,
-              "Title": "appsettings.json",
-              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\appsettings.json",
-              "RelativeDocumentMoniker": "appsettings.json",
-              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\appsettings.json",
-              "RelativeToolTip": "appsettings.json",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAABEAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
-              "WhenOpened": "2025-10-31T01:38:42.599Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 16,
-              "Title": ".env",
-              "DocumentMoniker": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\.env",
-              "RelativeDocumentMoniker": ".env",
-              "ToolTip": "C:\\Users\\joeli\\Documents\\ARQ-EX-P1\\SOAP_DOTNET\\01 SERVIDOR\\API-COMERCIALIZADORA\\.env",
-              "RelativeToolTip": ".env",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
-              "WhenOpened": "2025-10-31T01:38:17.163Z",
+              "WhenOpened": "2025-10-31T04:15:09.24Z",
               "EditorCaption": ""
             }
           ]

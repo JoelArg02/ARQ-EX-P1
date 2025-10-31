@@ -15,5 +15,9 @@ public interface IClienteBancoService
     Task<bool> VerificarClientePorCedula(string cedula);
     Task<VerificacionClienteResponseDto> VerificarElegibilidadCliente(string cedula);
     Task<CalculoCreditoResponseDto> CalcularMontoMaximoCredito(string cedula);
+    Task<EvaluacionCreditoResultadoDto> EvaluarCredito(string cedula, decimal montoRequerido);
+    Task<AprobacionCreditoResponseDto> AprobarCredito(AprobacionCreditoRequestDto dto);
+    Task<CreditoResumenDto?> ObtenerCreditoPorCedula(string cedula);
+    Task<List<AmortizacionCreditoDto>> ObtenerAmortizacionPorCreditoId(int creditoId);
 
 }

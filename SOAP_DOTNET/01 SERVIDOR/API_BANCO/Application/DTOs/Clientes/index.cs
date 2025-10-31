@@ -44,7 +44,7 @@ namespace API_BANCO.Application.DTOs.Clientes
         public bool NoTieneCreditoActivo { get; set; }
 
         [DataMember]
-        public bool EsElegible => EsCliente && TieneDepositoUltimoMes && CumpleEdadEstadoCivil && NoTieneCreditoActivo;
+        public bool EsElegible { get; set; }
 
         [DataMember]
         public string Mensaje { get; set; } = string.Empty;
