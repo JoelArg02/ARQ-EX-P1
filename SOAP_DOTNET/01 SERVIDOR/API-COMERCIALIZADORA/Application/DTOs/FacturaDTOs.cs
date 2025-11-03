@@ -98,3 +98,37 @@ public class VerificarElegibilidadResponseDto
     [DataMember]
     public decimal MontoMaximoCredito { get; set; }
 }
+
+[DataContract]
+public class FacturaListDto
+{
+    [DataMember]
+    public int Id { get; set; }
+
+    [DataMember]
+    public int ClienteId { get; set; }
+
+    [DataMember]
+    public string NombreCliente { get; set; } = string.Empty;
+
+    [DataMember]
+    public string CedulaCliente { get; set; } = string.Empty;
+
+    [DataMember]
+    public DateTime FechaEmision { get; set; }
+
+    [DataMember]
+    public decimal Subtotal { get; set; }
+
+    [DataMember]
+    public decimal Iva { get; set; }
+
+    [DataMember]
+    public decimal Total { get; set; }
+
+    [DataMember]
+    public string FormaPago { get; set; } = string.Empty; // "Efectivo" o "Crédito"
+
+    [DataMember]
+    public int CantidadProductos { get; set; }
+}

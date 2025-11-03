@@ -4,6 +4,7 @@ using API_Comercializadora.Application.Interface;
 using API_Comercializadora.Application.Service;
 using API_Comercializadora.Configuration;
 using API_Comercializadora.Models;
+using API_Comercializadora.Models.Enums;
 using API_Comercializadora.Application.DTOs;
 
 namespace API_Comercializadora.Views;
@@ -12,7 +13,7 @@ namespace API_Comercializadora.Views;
 public interface IFacturaController
 {
     [OperationContract]
-    Task<List<Factura>> GetAllFacturas();
+    Task<List<FacturaListDto>> GetAllFacturas();
 
     [OperationContract]
     Task<Factura?> GetFacturaById(int id);
@@ -48,9 +49,31 @@ public class FacturaController : IFacturaController
         _facturaService = new FacturaService(context, _bancoBanquitoService, facturaLogger);
     }
 
-    public async Task<List<Factura>> GetAllFacturas()
+    public async Task<List<FacturaListDto>> GetAllFacturas()
     {
-        return await _facturaService.GetAllFacturas();
+        try
+        {
+            var facturas = await _facturaService.GetAllFacturas();
+            
+            return facturas.Select(f => new FacturaListDto
+            {
+                Id = f.Id,
+                ClienteId = f.ClienteId,
+                NombreCliente = f.Cliente?.NombreCompleto ?? "Cliente Desconocido",
+                CedulaCliente = f.Cliente?.Cedula ?? "",
+                FechaEmision = f.FechaEmision,
+                Subtotal = f.Subtotal,
+                Iva = f.Subtotal * 0.15m, // Calcular IVA como 15% del subtotal
+                Total = f.TotalFinal,
+                FormaPago = f.FormaPago == FormaPagoEnum.Efectivo ? "Efectivo" : "Crédito",
+                CantidadProductos = f.Detalles?.Count ?? 0
+            }).ToList();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Error al obtener todas las facturas");
+            return new List<FacturaListDto>();
+        }
     }
 
     public async Task<Factura?> GetFacturaById(int id)

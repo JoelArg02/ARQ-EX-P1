@@ -30,7 +30,7 @@ builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
 builder.WebHost.ConfigureKestrel(options =>
 {
-    options.ListenAnyIP(5000);
+    options.ListenAnyIP(5004);
 });
 
 var app = builder.Build();

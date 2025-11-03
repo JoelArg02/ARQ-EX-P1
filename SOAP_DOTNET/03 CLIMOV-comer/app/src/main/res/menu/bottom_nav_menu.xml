@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/navigation_clientes"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Clientes" />
+
+    <item
+        android:id="@+id/navigation_productos"
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="Productos" />
+
+    <item
+        android:id="@+id/navigation_facturar"
+        android:icon="@android:drawable/ic_menu_edit"
+        android:title="Facturar" />
+
+    <item
+        android:id="@+id/navigation_facturas"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:title="Facturas" />
+
+</menu>

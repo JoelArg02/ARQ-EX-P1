@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_clientes">
+
+    <fragment
+        android:id="@+id/navigation_clientes"
+        android:name="ec.edu.espe.comercializadora.ui.clientes.ClientesFragment"
+        android:label="Clientes"
+        tools:layout="@layout/fragment_clientes" />
+
+    <fragment
+        android:id="@+id/navigation_productos"
+        android:name="ec.edu.espe.comercializadora.ui.productos.ProductosFragment"
+        android:label="Productos"
+        tools:layout="@layout/fragment_productos" />
+
+    <fragment
+        android:id="@+id/navigation_facturar"
+        android:name="ec.edu.espe.comercializadora.ui.facturar.FacturarFragment"
+        android:label="Facturar"
+        tools:layout="@layout/fragment_facturar" />
+
+    <fragment
+        android:id="@+id/navigation_facturas"
+        android:name="ec.edu.espe.comercializadora.ui.facturas.FacturasFragment"
+        android:label="Facturas"
+        tools:layout="@layout/fragment_facturas" />
+</navigation>
