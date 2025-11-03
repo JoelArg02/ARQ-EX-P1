@@ -40,6 +40,13 @@ public class CuentaService : ICuentaService
 
     public async Task<Cuenta> CreateCuenta(int clienteBancoId, string numeroCuenta, decimal saldo, int tipoCuenta)
     {
+        // Validar que el cliente no tenga ya una cuenta
+        var cuentasExistentes = await _repository.GetByClienteBancoIdAsync(clienteBancoId);
+        if (cuentasExistentes.Any())
+        {
+            throw new InvalidOperationException("El cliente ya tiene una cuenta. Solo se permite una cuenta por cliente.");
+        }
+
         var cuenta = new Cuenta
         {
             ClienteBancoId = clienteBancoId,

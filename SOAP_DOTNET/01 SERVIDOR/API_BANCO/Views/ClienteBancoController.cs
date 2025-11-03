@@ -47,6 +47,15 @@ public interface IClienteBancoController
 
     [OperationContract]
     Task<List<AmortizacionCreditoDto>> ObtenerAmortizacionPorCreditoId(int creditoId);
+
+    [OperationContract]
+    Task<List<AmortizacionCreditoDto>> GetAmortizacionesByCredito(int creditoId);
+
+    [OperationContract]
+    Task<List<CreditoBanco>> GetAllCreditosBanco();
+
+    [OperationContract]
+    Task<List<CreditoBanco>> GetCreditosByClienteId(int clienteId);
 }
 
 public class ClienteBancoController : IClienteBancoController
@@ -75,7 +84,19 @@ public class ClienteBancoController : IClienteBancoController
 
     public async Task<ClienteBanco> CreateClienteBanco(ClienteBancoCreateDto dto)
     {
-        return await _clienteBancoService.CreateClienteBanco(dto);
+        try
+        {
+            Console.WriteLine($"[DEBUG] CreateClienteBanco recibido - Cedula: {dto.Cedula}, Nombre: {dto.NombreCompleto}, EstadoCivil: {dto.EstadoCivil}, FechaNacimiento: {dto.FechaNacimiento}");
+            var resultado = await _clienteBancoService.CreateClienteBanco(dto);
+            Console.WriteLine($"[DEBUG] Cliente creado exitosamente - ID: {resultado.Id}");
+            return resultado;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"[ERROR] CreateClienteBanco falló: {ex.Message}");
+            Console.WriteLine($"[ERROR] StackTrace: {ex.StackTrace}");
+            throw;
+        }
     }
 
     public async Task<ClienteBanco?> UpdateClienteBanco(int id, string cedula, string nombreCompleto, int estadoCivil, DateTime fechaNacimiento, bool tieneCreditoActivo)
@@ -119,5 +140,20 @@ public class ClienteBancoController : IClienteBancoController
     public async Task<List<AmortizacionCreditoDto>> ObtenerAmortizacionPorCreditoId(int creditoId)
     {
         return await _clienteBancoService.ObtenerAmortizacionPorCreditoId(creditoId);
+    }
+
+    public async Task<List<AmortizacionCreditoDto>> GetAmortizacionesByCredito(int creditoId)
+    {
+        return await _clienteBancoService.GetAmortizacionesByCredito(creditoId);
+    }
+
+    public async Task<List<CreditoBanco>> GetAllCreditosBanco()
+    {
+        return await _clienteBancoService.GetAllCreditosBanco();
+    }
+
+    public async Task<List<CreditoBanco>> GetCreditosByClienteId(int clienteId)
+    {
+        return await _clienteBancoService.GetCreditosByClienteId(clienteId);
     }
 }

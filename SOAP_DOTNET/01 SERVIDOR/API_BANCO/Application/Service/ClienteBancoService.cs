@@ -6,6 +6,11 @@ using API_BANCO.Models.Entities;
 using API_BANCO.Models.Enums;
 using API_BANCO.Repositories;
 using API_BANCO.Repositories.Interfaces;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Threading.Tasks;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace API_BANCO.Application.Service;
 
@@ -35,13 +40,23 @@ public class ClienteBancoService : IClienteBancoService
         return await _repository.GetByCedulaAsync(cedula);
     }
 
+
     public async Task<ClienteBanco> CreateClienteBanco(ClienteBancoCreateDto dto)
     {
+        if (string.IsNullOrWhiteSpace(dto.Cedula))
+            throw new ArgumentException("La cédula no puede estar vacía.");
+
+        if (string.IsNullOrWhiteSpace(dto.NombreCompleto))
+            throw new ArgumentException("El nombre no puede estar vacío.");
+
+        if (dto.FechaNacimiento == default)
+            throw new ArgumentException("Debe especificar la fecha de nacimiento.");
+
         var clienteBanco = new ClienteBanco
         {
-            Cedula = dto.Cedula,
-            NombreCompleto = dto.NombreCompleto,
-            EstadoCivil = dto.EstadoCivil,
+            Cedula = dto.Cedula.Trim(),
+            NombreCompleto = dto.NombreCompleto.Trim(),
+            EstadoCivil = dto.EstadoCivil, // se guarda tal como llega del cliente
             FechaNacimiento = dto.FechaNacimiento,
             TieneCreditoActivo = false
         };
@@ -108,5 +123,24 @@ public class ClienteBancoService : IClienteBancoService
         return await _repository.ObtenerAmortizacionPorCreditoIdAsync(creditoId);
     }
 
+    public async Task<List<AmortizacionCreditoDto>> GetAmortizacionesByCredito(int creditoId)
+    {
+        return await _repository.ObtenerAmortizacionPorCreditoIdAsync(creditoId);
+    }
+
+    public async Task<List<CreditoBanco>> GetCreditosByClienteId(int clienteId)
+    {
+        return await _context.CreditosBanco
+            .Where(c => c.ClienteBancoId == clienteId)
+            .OrderByDescending(c => c.FechaAprobacion)
+            .ToListAsync();
+    }
+
+    public async Task<List<CreditoBanco>> GetAllCreditosBanco()
+    {
+        return await _context.CreditosBanco
+            .OrderByDescending(c => c.FechaAprobacion)
+            .ToListAsync();
+    }
 
 }

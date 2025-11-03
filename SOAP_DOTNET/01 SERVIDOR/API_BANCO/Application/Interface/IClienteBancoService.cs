@@ -19,5 +19,8 @@ public interface IClienteBancoService
     Task<AprobacionCreditoResponseDto> AprobarCredito(AprobacionCreditoRequestDto dto);
     Task<CreditoResumenDto?> ObtenerCreditoPorCedula(string cedula);
     Task<List<AmortizacionCreditoDto>> ObtenerAmortizacionPorCreditoId(int creditoId);
+    Task<List<AmortizacionCreditoDto>> GetAmortizacionesByCredito(int creditoId);
+    Task<List<CreditoBanco>> GetAllCreditosBanco();
+    Task<List<CreditoBanco>> GetCreditosByClienteId(int clienteId);
 
 }

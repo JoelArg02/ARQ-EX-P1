@@ -1,4 +1,8 @@
 package ec.edu.espe.arguello.models
 
-class MontoMaximoCredito {
-}
+data class MontoMaximoCredito(
+    val montoMaximo: Double,
+    val promedioDepositos: Double,
+    val promedioRetiros: Double,
+    val mensaje: String
+)

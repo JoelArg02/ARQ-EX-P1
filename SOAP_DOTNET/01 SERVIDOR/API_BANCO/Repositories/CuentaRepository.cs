@@ -16,31 +16,79 @@ public class CuentaRepository : ICuentaRepository
 
     public async Task<List<Cuenta>> GetAllAsync()
     {
-        return await _context.Cuentas
+        var cuentas = await _context.Cuentas
             .Include(c => c.ClienteBanco)
             .ToListAsync();
+
+        // Calcular el saldo real de cada cuenta sumando los movimientos
+        foreach (var cuenta in cuentas)
+        {
+            cuenta.Saldo = await CalcularSaldoRealAsync(cuenta.Id);
+        }
+
+        return cuentas;
     }
 
     public async Task<Cuenta?> GetByIdAsync(int id)
     {
-        return await _context.Cuentas
+        var cuenta = await _context.Cuentas
             .Include(c => c.ClienteBanco)
             .FirstOrDefaultAsync(c => c.Id == id);
+
+        if (cuenta != null)
+        {
+            cuenta.Saldo = await CalcularSaldoRealAsync(cuenta.Id);
+        }
+
+        return cuenta;
     }
 
     public async Task<Cuenta?> GetByNumeroCuentaAsync(string numeroCuenta)
     {
-        return await _context.Cuentas
+        var cuenta = await _context.Cuentas
             .Include(c => c.ClienteBanco)
             .FirstOrDefaultAsync(c => c.NumeroCuenta == numeroCuenta);
+
+        if (cuenta != null)
+        {
+            cuenta.Saldo = await CalcularSaldoRealAsync(cuenta.Id);
+        }
+
+        return cuenta;
     }
 
     public async Task<List<Cuenta>> GetByClienteBancoIdAsync(int clienteBancoId)
     {
-        return await _context.Cuentas
+        var cuentas = await _context.Cuentas
             .Where(c => c.ClienteBancoId == clienteBancoId)
             .Include(c => c.ClienteBanco)
             .ToListAsync();
+
+        // Calcular el saldo real de cada cuenta sumando los movimientos
+        foreach (var cuenta in cuentas)
+        {
+            cuenta.Saldo = await CalcularSaldoRealAsync(cuenta.Id);
+        }
+
+        return cuentas;
+    }
+
+    private async Task<decimal> CalcularSaldoRealAsync(int cuentaId)
+    {
+        var movimientos = await _context.Movimientos
+            .Where(m => m.CuentaId == cuentaId)
+            .ToListAsync();
+
+        decimal saldo = 0;
+        foreach (var mov in movimientos)
+        {
+            if (mov.Tipo == Models.Enums.TipoMovimiento.Deposito)
+                saldo += mov.Monto;
+            else if (mov.Tipo == Models.Enums.TipoMovimiento.Retiro)
+                saldo -= mov.Monto;
+        }
+
+        return saldo;
     }
 
     public async Task<Cuenta> CreateAsync(Cuenta cuenta)
