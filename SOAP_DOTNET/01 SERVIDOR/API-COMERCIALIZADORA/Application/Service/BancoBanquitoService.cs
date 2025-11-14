@@ -13,7 +13,7 @@ public class BancoBanquitoService : IBancoBanquitoService
     {
         _logger = logger;
         
-        var soapServiceUrl = configuration["BancoBanquito:ServiceUrl"] ?? "http://localhost:5001/ClienteBancoService.svc";
+        var soapServiceUrl = configuration["BancoBanquito:ServiceUrl"] ?? "http://localhost:5000/ClienteBancoService.svc";
         
         var binding = new BasicHttpBinding
         {

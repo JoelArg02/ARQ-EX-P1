@@ -6,7 +6,14 @@ using CoreWCF.Configuration;
 using CoreWCF.Description;
 using Microsoft.EntityFrameworkCore;
 
+// Configurar encoding UTF-8
+Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+Console.OutputEncoding = Encoding.UTF8;
+
 var builder = WebApplication.CreateBuilder(args);
+
+// Configurar explícitamente puerto 62812 para la comercializadora
+builder.WebHost.UseUrls("http://localhost:62812");
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
@@ -28,10 +35,7 @@ foreach (var controller in controllers)
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ListenAnyIP(5004);
-});
+
 
 var app = builder.Build();
 
@@ -139,11 +143,11 @@ Console.WriteLine("API COMERCIALIZADORA - Servicios SOAP");
 Console.WriteLine("=============================================");
 foreach (var service in serviceList)
 {
-    Console.WriteLine($"Servicio: http://localhost:5000{service}");
-    Console.WriteLine($"WSDL: http://localhost:5000{service}?wsdl");
+    Console.WriteLine($"Servicio: http://localhost:62812{service}");
+    Console.WriteLine($"WSDL: http://localhost:62812{service}?wsdl");
 }
 Console.WriteLine("=============================================");
-Console.WriteLine("Página de inicio: http://localhost:5000/");
+Console.WriteLine("Página de inicio: http://localhost:62812/");
 Console.WriteLine("=============================================");
 
 app.Run();

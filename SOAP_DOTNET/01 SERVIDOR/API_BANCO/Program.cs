@@ -6,10 +6,15 @@ using CoreWCF.Configuration;
 using CoreWCF.Description;
 using Microsoft.EntityFrameworkCore;
 
+// Configurar encoding UTF-8
+Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+Console.OutputEncoding = Encoding.UTF8;
+
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+builder.WebHost.UseUrls("http://localhost:5001");
 
 builder.Services.AddServiceModelServices();
 builder.Services.AddServiceModelMetadata();
@@ -28,11 +33,6 @@ foreach (var controller in controllers)
 
 builder.Logging.ClearProviders();
 builder.Logging.AddConsole();
-
-builder.WebHost.ConfigureKestrel(options =>
-{
-    options.ListenAnyIP(5001);
-});
 
 var app = builder.Build();
 

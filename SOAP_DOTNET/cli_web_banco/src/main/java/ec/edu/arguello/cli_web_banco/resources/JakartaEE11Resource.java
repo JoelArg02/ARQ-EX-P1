@@ -1,4 +1,4 @@
-package ec.edu.arguello.resources;
+package ec.edu.arguello.cli_web_banco.resources;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;

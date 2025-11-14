@@ -1,4 +1,4 @@
-package ec.edu.arguello;
+package ec.edu.arguello.cli_web_banco;
 
 import jakarta.ws.rs.ApplicationPath;
 import jakarta.ws.rs.core.Application;

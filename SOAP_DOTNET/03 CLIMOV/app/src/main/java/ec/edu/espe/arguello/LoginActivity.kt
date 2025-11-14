@@ -17,7 +17,6 @@ class LoginActivity : AppCompatActivity() {
         val passwordInput = findViewById<TextInputEditText>(R.id.passwordInput)
         val loginButton = findViewById<MaterialButton>(R.id.loginButton)
         
-        // Pre-llenar con credenciales
         usernameInput.setText("MONSTER")
         passwordInput.setText("MONSTER9")
         
@@ -30,7 +29,6 @@ class LoginActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             
-            // Validación quemada en el frontend
             if (username.equals("MONSTER", ignoreCase = true) && password == "MONSTER9") {
                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                 finish()
