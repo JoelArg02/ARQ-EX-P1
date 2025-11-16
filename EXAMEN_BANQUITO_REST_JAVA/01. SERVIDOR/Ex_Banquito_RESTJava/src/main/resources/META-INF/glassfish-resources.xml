@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE resources PUBLIC "-//GlassFish.org//DTD GlassFish Application Server 3.1 Resource Definitions//EN"
+        "http://glassfish.org/dtds/glassfish-resources_1_5.dtd">
+<resources>
+
+    <!-- CONNECTION POOL -->
+    <jdbc-connection-pool
+            name="BanquitoPool"
+            res-type="javax.sql.DataSource"
+            datasource-classname="com.mysql.cj.jdbc.MysqlDataSource"
+            ping="true">
+
+        <property name="URL" value="jdbc:mysql://localhost:3306/banquito_bd?createDatabaseIfNotExist=true&amp;useSSL=false&amp;serverTimezone=UTC"/>
+        <property name="User" value="root"/>
+        <property name="Password" value="1234"/>
+    </jdbc-connection-pool>
+
+
+    <!-- JDBC RESOURCE (THIS MUST MATCH persistence.xml) -->
+    <jdbc-resource
+            jndi-name="jdbc/banquitoDS"
+            pool-name="BanquitoPool"/>
+</resources>

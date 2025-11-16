@@ -1,0 +1,248 @@
+# CONFIGURACIÓN DE DATASOURCE - COMERCIALIZADORA
+
+## Base de Datos
+
+- **Nombre:** `comercializadora_db`
+- **Usuario:** `root`
+- **Contraseña:** `[tu_password]`
+- **Puerto:** `3306`
+- **Servidor:** `localhost`
+
+---
+
+## OPCIÓN 1: Configuración via GlassFish Admin Console
+
+### URL: http://localhost:4848
+
+### Paso 1: Crear JDBC Connection Pool
+
+1. Navegar a: **Resources → JDBC → JDBC Connection Pools**
+2. Clic en **New**
+3. Configurar:
+   - **Pool Name:** `ComercializadoraPool`
+   - **Resource Type:** `javax.sql.DataSource`
+   - **Database Driver Vendor:** `MySQL`
+   - Clic en **Next**
+
+4. En la pestaña **Additional Properties**, configurar:
+   ```
+   serverName: localhost
+   portNumber: 3306
+   databaseName: comercializadora_db
+   user: root
+   password: [tu_password]
+   url: jdbc:mysql://localhost:3306/comercializadora_db?useSSL=false&serverTimezone=UTC
+   ```
+
+5. Clic en **Finish**
+6. **Ping** para verificar conexión
+
+### Paso 2: Crear JDBC Resource
+
+1. Navegar a: **Resources → JDBC → JDBC Resources**
+2. Clic en **New**
+3. Configurar:
+   - **JNDI Name:** `java:/comercializadoraDS`
+   - **Pool Name:** `ComercializadoraPool`
+4. Clic en **OK**
+
+---
+
+## OPCIÓN 2: Configuración via asadmin CLI
+
+### Crear Connection Pool
+```bash
+asadmin create-jdbc-connection-pool \
+  --datasourceclassname com.mysql.cj.jdbc.MysqlDataSource \
+  --restype javax.sql.DataSource \
+  --property user=root:password=tu_password:serverName=localhost:portNumber=3306:databaseName=comercializadora_db:url="jdbc\\:mysql\\://localhost\\:3306/comercializadora_db?useSSL=false&serverTimezone=UTC" \
+  ComercializadoraPool
+```
+
+### Crear JDBC Resource
+```bash
+asadmin create-jdbc-resource \
+  --connectionpoolid ComercializadoraPool \
+  java:/comercializadoraDS
+```
+
+### Ping para verificar
+```bash
+asadmin ping-connection-pool ComercializadoraPool
+```
+
+---
+
+## OPCIÓN 3: Configuración via domain.xml (Manual)
+
+**Archivo:** `glassfish/domains/domain1/config/domain.xml`
+
+### Agregar dentro de `<resources>`:
+
+```xml
+<jdbc-connection-pool 
+    name="ComercializadoraPool" 
+    datasource-classname="com.mysql.cj.jdbc.MysqlDataSource" 
+    res-type="javax.sql.DataSource">
+    <property name="serverName" value="localhost"/>
+    <property name="portNumber" value="3306"/>
+    <property name="databaseName" value="comercializadora_db"/>
+    <property name="user" value="root"/>
+    <property name="password" value="tu_password"/>
+    <property name="url" value="jdbc:mysql://localhost:3306/comercializadora_db?useSSL=false&amp;serverTimezone=UTC"/>
+    <property name="useSSL" value="false"/>
+    <property name="serverTimezone" value="UTC"/>
+</jdbc-connection-pool>
+
+<jdbc-resource 
+    pool-name="ComercializadoraPool" 
+    jndi-name="java:/comercializadoraDS"/>
+```
+
+**Reiniciar GlassFish:**
+```bash
+asadmin restart-domain
+```
+
+---
+
+## Verificación
+
+### Comando asadmin
+```bash
+asadmin list-jdbc-resources
+```
+
+**Salida esperada:**
+```
+java:/comercializadoraDS
+jdbc/__TimerPool
+jdbc/__default
+```
+
+### Verificar en Admin Console
+1. **Resources → JDBC → JDBC Resources**
+2. Debe aparecer: `java:/comercializadoraDS`
+3. Clic en el nombre
+4. Botón **Ping** → debe retornar "Ping Succeeded"
+
+---
+
+## Troubleshooting
+
+### Error: "Cannot load JDBC driver class 'com.mysql.cj.jdbc.Driver'"
+
+**Solución:** Copiar driver MySQL a GlassFish
+
+1. Descargar: `mysql-connector-j-8.0.33.jar`
+2. Copiar a: `glassfish/domains/domain1/lib/`
+3. Reiniciar GlassFish
+
+```bash
+# Desde Maven local repository
+cp ~/.m2/repository/com/mysql/mysql-connector-j/8.0.33/mysql-connector-j-8.0.33.jar \
+   glassfish/domains/domain1/lib/
+```
+
+### Error: "Communications link failure"
+
+**Causa:** MySQL no está ejecutándose  
+**Solución:**
+```bash
+# Windows
+net start mysql
+
+# Linux/Mac
+sudo systemctl start mysql
+```
+
+### Error: "Access denied for user 'root'@'localhost'"
+
+**Causa:** Credenciales incorrectas  
+**Solución:** Verificar usuario/contraseña en MySQL
+```bash
+mysql -u root -p
+# Ingresar contraseña
+```
+
+### Error: "Unknown database 'comercializadora_db'"
+
+**Causa:** Base de datos no existe  
+**Solución:** Ejecutar script SQL
+```bash
+mysql -u root -p < database_comercializadora_script.sql
+```
+
+---
+
+## persistence.xml
+
+**Archivo:** `src/main/resources/META-INF/persistence.xml`
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="3.0" 
+    xmlns="https://jakarta.ee/xml/ns/persistence" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xsi:schemaLocation="https://jakarta.ee/xml/ns/persistence 
+                        https://jakarta.ee/xml/ns/persistence/persistence_3_0.xsd">
+    
+    <persistence-unit name="comercializadoraPU" transaction-type="JTA">
+        <jta-data-source>java:/comercializadoraDS</jta-data-source>
+        
+        <properties>
+            <property name="hibernate.dialect" 
+                      value="org.hibernate.dialect.MySQL8Dialect"/>
+            <property name="hibernate.hbm2ddl.auto" value="validate"/>
+            <property name="hibernate.show_sql" value="true"/>
+            <property name="hibernate.format_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>
+```
+
+**Importante:** El `jta-data-source` debe coincidir con el JNDI Name configurado.
+
+---
+
+## Verificación Final
+
+### 1. Verificar DataSource
+```bash
+asadmin ping-connection-pool ComercializadoraPool
+```
+
+### 2. Desplegar aplicación
+```bash
+mvn clean package
+asadmin deploy --force target/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT.war
+```
+
+### 3. Verificar logs
+```bash
+tail -f glassfish/domains/domain1/logs/server.log
+```
+
+Buscar:
+```
+HHH000412: Hibernate ORM core version ...
+Successfully loaded entity classes from persistence unit 'comercializadoraPU'
+```
+
+### 4. Test endpoint
+```bash
+curl http://localhost:8080/Ex_Comercializadora_RESTJava/api/health
+```
+
+**Respuesta esperada:**
+```json
+{"status": "OK", "message": "Comercializadora REST Server is running"}
+```
+
+---
+
+## Referencias
+
+- [GlassFish Admin Guide - JDBC Resources](https://javaee.github.io/glassfish/doc/5.0/administration-guide.pdf)
+- [MySQL Connector/J 8.0 Documentation](https://dev.mysql.com/doc/connector-j/8.0/en/)
+- [Jakarta Persistence 3.1 Specification](https://jakarta.ee/specifications/persistence/3.1/)

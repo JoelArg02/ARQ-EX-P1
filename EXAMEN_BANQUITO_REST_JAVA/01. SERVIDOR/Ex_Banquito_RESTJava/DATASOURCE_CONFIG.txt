@@ -1,0 +1,195 @@
+# ============================================
+# CONFIGURACIÓN DEL DATASOURCE
+# ============================================
+# Este archivo contiene instrucciones para configurar el DataSource
+# en diferentes servidores de aplicaciones Jakarta EE
+
+# ============================================
+# OPCIÓN 1: GlassFish / Payara
+# ============================================
+
+## Paso 1: Copiar el driver MySQL
+# Copiar el archivo mysql-connector-j-8.0.33.jar a:
+# {GLASSFISH_HOME}/glassfish/domains/domain1/lib/
+
+## Paso 2: Crear Connection Pool
+# En la consola de administración (http://localhost:4848):
+# 1. Ir a: Resources → JDBC → JDBC Connection Pools
+# 2. Click en "New..."
+# 3. Configurar:
+#    - Pool Name: BanquitoPool
+#    - Resource Type: javax.sql.DataSource
+#    - Database Driver Vendor: MySQL
+# 4. Propiedades adicionales:
+#    - serverName: localhost
+#    - portNumber: 3306
+#    - databaseName: banquito_db
+#    - User: root
+#    - Password: root
+# 5. Guardar
+
+## Paso 3: Crear JNDI Resource
+# 1. Ir a: Resources → JDBC → JDBC Resources
+# 2. Click en "New..."
+# 3. Configurar:
+#    - JNDI Name: java:/banquitoDS
+#    - Pool Name: BanquitoPool
+# 4. Guardar
+
+## Paso 4 (alternativo): Usar comandos asadmin
+# asadmin create-jdbc-connection-pool \
+#   --datasourceclassname com.mysql.cj.jdbc.MysqlDataSource \
+#   --restype javax.sql.DataSource \
+#   --property user=root:password=root:serverName=localhost:portNumber=3306:databaseName=banquito_db \
+#   BanquitoPool
+#
+# asadmin create-jdbc-resource \
+#   --connectionpoolid BanquitoPool \
+#   java:/banquitoDS
+
+# ============================================
+# OPCIÓN 2: WildFly / JBoss EAP
+# ============================================
+
+## Paso 1: Desplegar el driver MySQL como módulo
+# Crear directorio: {WILDFLY_HOME}/modules/com/mysql/main/
+# Copiar: mysql-connector-j-8.0.33.jar
+# Crear archivo module.xml:
+
+<?xml version="1.0" ?>
+<module xmlns="urn:jboss:module:1.1" name="com.mysql">
+    <resources>
+        <resource-root path="mysql-connector-j-8.0.33.jar"/>
+    </resources>
+    <dependencies>
+        <module name="javax.api"/>
+        <module name="javax.transaction.api"/>
+    </dependencies>
+</module>
+
+## Paso 2: Configurar en standalone.xml o usando CLI
+# Agregar en <subsystem xmlns="urn:jboss:domain:datasources:X.X">:
+
+<datasource jndi-name="java:/banquitoDS" pool-name="BanquitoDS" enabled="true" use-java-context="true">
+    <connection-url>jdbc:mysql://localhost:3306/banquito_db</connection-url>
+    <driver>mysql</driver>
+    <security>
+        <user-name>root</user-name>
+        <password>root</password>
+    </security>
+</datasource>
+
+<drivers>
+    <driver name="mysql" module="com.mysql">
+        <driver-class>com.mysql.cj.jdbc.Driver</driver-class>
+    </driver>
+</drivers>
+
+## O usar JBoss CLI:
+# /subsystem=datasources/jdbc-driver=mysql:add(driver-name=mysql,driver-module-name=com.mysql,driver-class-name=com.mysql.cj.jdbc.Driver)
+# 
+# data-source add --name=BanquitoDS \
+#   --jndi-name=java:/banquitoDS \
+#   --driver-name=mysql \
+#   --connection-url=jdbc:mysql://localhost:3306/banquito_db \
+#   --user-name=root \
+#   --password=root \
+#   --enabled=true
+
+# ============================================
+# OPCIÓN 3: Apache TomEE
+# ============================================
+
+## Configurar en tomee.xml o conf/tomee.xml:
+
+<Resource id="banquitoDS" type="DataSource">
+    JdbcDriver com.mysql.cj.jdbc.Driver
+    JdbcUrl jdbc:mysql://localhost:3306/banquito_db
+    UserName root
+    Password root
+    JtaManaged true
+    MaxActive 20
+    MaxIdle 10
+    MinIdle 5
+    MaxWait 30000
+</Resource>
+
+## El driver MySQL debe estar en {TOMEE_HOME}/lib/
+
+# ============================================
+# VERIFICACIÓN
+# ============================================
+
+# Para verificar que el DataSource está correctamente configurado:
+
+# 1. Iniciar el servidor de aplicaciones
+# 2. Desplegar la aplicación
+# 3. Verificar en los logs que JPA encuentra el DataSource
+# 4. Probar conectividad llamando a algún endpoint REST
+
+# Si hay problemas de conexión:
+# - Verificar que MySQL esté corriendo
+# - Verificar usuario/contraseña
+# - Verificar que la base de datos banquito_db exista
+# - Verificar que el driver MySQL esté en el classpath del servidor
+# - Verificar logs del servidor de aplicaciones
+
+# ============================================
+# CONFIGURACIÓN DE PRODUCCIÓN (Recomendaciones)
+# ============================================
+
+# 1. Connection Pool:
+#    - Tamaño inicial: 5-10 conexiones
+#    - Tamaño máximo: 20-50 conexiones (según carga esperada)
+#    - Timeout: 30 segundos
+
+# 2. Seguridad:
+#    - NO usar credenciales hardcodeadas en producción
+#    - Usar variables de entorno o vault para passwords
+#    - Configurar SSL para conexiones a MySQL
+
+# 3. Performance:
+#    - Habilitar prepared statement cache
+#    - Configurar validate-on-match
+#    - Configurar test-on-borrow con query de validación
+
+# 4. Monitoring:
+#    - Habilitar estadísticas de connection pool
+#    - Configurar alertas para pool exhaustion
+#    - Monitorear tiempo de espera de conexiones
+
+# Ejemplo de configuración optimizada para GlassFish:
+# <jdbc-connection-pool 
+#     steady-pool-size="10"
+#     max-pool-size="30"
+#     max-wait-time-in-millis="30000"
+#     pool-resize-quantity="5"
+#     idle-timeout-in-seconds="300"
+#     validate-atmost-once-period-in-seconds="60"
+#     connection-validation-method="auto-commit"
+#     is-connection-validation-required="true">
+# </jdbc-connection-pool>
+
+# ============================================
+# TROUBLESHOOTING
+# ============================================
+
+# Problema: "DataSource not found"
+# Solución: Verificar que el JNDI name coincida exactamente con persistence.xml
+
+# Problema: "Unable to get a connection from pool"
+# Solución: 
+#   - Aumentar max-pool-size
+#   - Verificar que no haya leaks de conexiones
+#   - Revisar timeout configurations
+
+# Problema: "Communications link failure"
+# Solución:
+#   - Verificar que MySQL esté corriendo
+#   - Verificar firewall
+#   - Verificar URL de conexión
+
+# Problema: "Access denied for user 'root'@'localhost'"
+# Solución:
+#   - Verificar usuario y password en MySQL
+#   - Ejecutar: GRANT ALL PRIVILEGES ON banquito_db.* TO 'root'@'localhost';
