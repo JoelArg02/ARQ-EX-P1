@@ -36,6 +36,32 @@ public class MovimientoService : IMovimientoService
 
     public async Task<Movimiento> CreateMovimiento(int cuentaId, int tipo, decimal monto)
     {
+        // Obtener la cuenta
+        var cuenta = await _context.Cuentas.FindAsync(cuentaId);
+        if (cuenta == null)
+        {
+            throw new Exception($"Cuenta con ID {cuentaId} no encontrada");
+        }
+
+        // Actualizar el saldo según el tipo de movimiento
+        if (tipo == 1) // Depósito
+        {
+            cuenta.Saldo += monto;
+        }
+        else if (tipo == 2) // Retiro
+        {
+            if (cuenta.Saldo < monto)
+            {
+                throw new Exception($"Saldo insuficiente. Saldo actual: {cuenta.Saldo}, Monto a retirar: {monto}");
+            }
+            cuenta.Saldo -= monto;
+        }
+        else
+        {
+            throw new Exception($"Tipo de movimiento inválido: {tipo}. Use 1 para Depósito o 2 para Retiro");
+        }
+
+        // Crear el movimiento
         var movimiento = new Movimiento
         {
             CuentaId = cuentaId,
@@ -43,7 +69,12 @@ public class MovimientoService : IMovimientoService
             Monto = monto,
             Fecha = DateTime.UtcNow
         };
-        return await _repository.CreateAsync(movimiento);
+        
+        // Guardar los cambios
+        await _repository.CreateAsync(movimiento);
+        await _context.SaveChangesAsync();
+        
+        return movimiento;
     }
 
     public async Task<bool> DeleteMovimiento(int id)
