@@ -31,6 +31,7 @@
                     <span class="carrito-badge" id="carrito-badge" <%= (totalItems > 0) ? "" : "style='display:none;'" %>><%= totalItems %></span>
                 </a>
                 <a href="${pageContext.request.contextPath}/ventas">Mis Ventas</a>
+                <a href="${pageContext.request.contextPath}/consulta-credito">Consultar Crédito</a>
                 <a href="${pageContext.request.contextPath}/login?action=logout" class="btn-logout">Salir</a>
             </div>
         </div>

@@ -53,7 +53,7 @@ Asumiendo que estás en la raíz del proyecto y tienes estas rutas en tu máquin
 Ejecuta:
 
 ```sh
-docker cp "01. SERVIDOR/Ex_Banquito_RESTJava/database_script.sql" mysql-db:/tmp/database_script.sql
+docker cp "01. SERVIDOR/Ex_Banquito_RESTJava/database_script.sql" mysql-db:/tmp database_script.sql
 
 docker cp "01. SERVIDOR/Ex_Comercializadora_RESTJava/database_comercializadora_script.sql" mysql-db:/tmp/database_comercializadora_script.sql
 ```

@@ -11,6 +11,11 @@ public class CreditoDTO {
     private BigDecimal tasaInteres;
     private LocalDate fechaInicio;
     private String estado;
+    private Boolean valido;
+    private String mensaje;
+    private BigDecimal montoMaximo;
+    private Boolean esSujetoCredito;
+    private String motivo;
 
     // Constructores
     public CreditoDTO() {
@@ -78,5 +83,45 @@ public class CreditoDTO {
 
     public void setEstado(String estado) {
         this.estado = estado;
+    }
+
+    public Boolean isValido() {
+        return valido;
+    }
+
+    public void setValido(Boolean valido) {
+        this.valido = valido;
+    }
+
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+
+    public BigDecimal getMontoMaximo() {
+        return montoMaximo;
+    }
+
+    public void setMontoMaximo(BigDecimal montoMaximo) {
+        this.montoMaximo = montoMaximo;
+    }
+
+    public Boolean isEsSujetoCredito() {
+        return esSujetoCredito;
+    }
+
+    public void setEsSujetoCredito(Boolean esSujetoCredito) {
+        this.esSujetoCredito = esSujetoCredito;
+    }
+
+    public String getMotivo() {
+        return motivo;
+    }
+
+    public void setMotivo(String motivo) {
+        this.motivo = motivo;
     }
 }

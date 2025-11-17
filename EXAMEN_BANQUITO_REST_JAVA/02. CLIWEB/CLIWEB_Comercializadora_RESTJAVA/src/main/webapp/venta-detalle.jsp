@@ -22,6 +22,7 @@
                     <span class="carrito-badge" style="display:none;">0</span>
                 </a>
                 <a href="${pageContext.request.contextPath}/ventas" class="active">Mis Ventas</a>
+                <a href="${pageContext.request.contextPath}/consulta-credito">Consultar Crédito</a>
                 <a href="${pageContext.request.contextPath}/login?action=logout" class="btn-logout">Salir</a>
             </div>
         </div>

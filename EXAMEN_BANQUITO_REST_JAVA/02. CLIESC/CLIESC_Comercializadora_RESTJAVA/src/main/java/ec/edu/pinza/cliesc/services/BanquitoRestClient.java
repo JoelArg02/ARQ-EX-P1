@@ -95,4 +95,38 @@ public class BanquitoRestClient {
             throw new Exception("Error al obtener tabla de amortización: " + response.statusCode());
         }
     }
+    
+    public CreditoDTO validarSujetoCredito(String cedula) throws Exception {
+        String url = BASE_URL + "/creditos/sujeto-credito/" + cedula;
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+        
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        if (response.statusCode() == 200) {
+            return gson.fromJson(response.body(), CreditoDTO.class);
+        } else {
+            throw new Exception("Error al validar sujeto de crédito: " + response.statusCode());
+        }
+    }
+    
+    public CreditoDTO obtenerMontoMaximo(String cedula) throws Exception {
+        String url = BASE_URL + "/creditos/monto-maximo/" + cedula;
+        
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+        
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        
+        if (response.statusCode() == 200 || response.statusCode() == 400) {
+            return gson.fromJson(response.body(), CreditoDTO.class);
+        } else {
+            throw new Exception("Error al obtener monto máximo: " + response.statusCode());
+        }
+    }
 }

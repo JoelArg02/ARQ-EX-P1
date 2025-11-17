@@ -3,16 +3,19 @@ package ec.edu.pinza.clicon.app;
 import ec.edu.pinza.clicon.controllers.AuthController;
 import ec.edu.pinza.clicon.controllers.CarritoController;
 import ec.edu.pinza.clicon.controllers.CheckoutController;
+import ec.edu.pinza.clicon.controllers.CreditoController;
 import ec.edu.pinza.clicon.controllers.ProductosController;
 import ec.edu.pinza.clicon.controllers.VentasController;
 import ec.edu.pinza.clicon.models.FacturaResponseDTO;
 import ec.edu.pinza.clicon.models.ItemCarrito;
 import ec.edu.pinza.clicon.models.ProductoDTO;
 import ec.edu.pinza.clicon.models.UsuarioSesion;
+import ec.edu.pinza.clicon.services.BanquitoRestClient;
 import ec.edu.pinza.clicon.services.ComercializadoraRestClient;
 import ec.edu.pinza.clicon.views.ConsoleView;
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Scanner;
 
@@ -35,11 +38,13 @@ public class CliconApplication {
             return;
         }
 
-        try (ComercializadoraRestClient restClient = new ComercializadoraRestClient()) {
+        try (ComercializadoraRestClient restClient = new ComercializadoraRestClient();
+             BanquitoRestClient banquitoClient = new BanquitoRestClient()) {
             ProductosController productosController = new ProductosController(restClient);
             CarritoController carritoController = new CarritoController();
             CheckoutController checkoutController = new CheckoutController(restClient);
             VentasController ventasController = new VentasController(restClient);
+            CreditoController creditoController = new CreditoController(banquitoClient);
 
             boolean salir = false;
             while (!salir) {
@@ -52,6 +57,8 @@ public class CliconApplication {
                     case 4 -> flujoVentas(ventasController);
                     case 5 -> flujoDetalleVenta(ventasController);
                     case 6 -> flujoMisCompras(ventasController, sesion);
+                    case 7 -> flujoValidarSujetoCredito(creditoController);
+                    case 8 -> flujoConsultarMontoMaximo(creditoController);
                     case 0 -> salir = true;
                     default -> System.out.println("Opcion invalida.");
                 }
@@ -70,6 +77,8 @@ public class CliconApplication {
         System.out.println("4) Ver ventas");
         System.out.println("5) Ver detalle de venta");
         System.out.println("6) Mis compras");
+        System.out.println("7) Validar sujeto de credito");
+        System.out.println("8) Consultar monto maximo");
         System.out.println("0) Salir");
     }
 
@@ -250,6 +259,44 @@ public class CliconApplication {
             } catch (NumberFormatException e) {
                 System.out.println("Ingresa un numero valido.");
             }
+        }
+    }
+
+    private void flujoValidarSujetoCredito(CreditoController creditoController) {
+        System.out.print("Ingresa la cedula del cliente: ");
+        String cedula = scanner.nextLine().trim();
+        if (cedula.isEmpty()) {
+            System.out.println("La cedula es obligatoria.");
+            return;
+        }
+
+        try {
+            Map<String, Object> response = creditoController.validarSujetoCredito(cedula);
+            System.out.println("\n=== Validacion de Sujeto de Credito ===");
+            System.out.println("Cedula: " + response.get("cedula"));
+            System.out.println("Es sujeto de credito: " + response.get("esSujetoCredito"));
+            System.out.println("Mensaje: " + response.get("motivo"));
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Error al validar sujeto de credito: " + e.getMessage());
+        }
+    }
+
+    private void flujoConsultarMontoMaximo(CreditoController creditoController) {
+        System.out.print("Ingresa la cedula del cliente: ");
+        String cedula = scanner.nextLine().trim();
+        if (cedula.isEmpty()) {
+            System.out.println("La cedula es obligatoria.");
+            return;
+        }
+
+        try {
+            Map<String, Object> response = creditoController.obtenerMontoMaximo(cedula);
+            System.out.println("\n=== Monto Maximo de Credito ===");
+            System.out.println("Cedula: " + response.get("cedula"));
+            System.out.println("Monto maximo: $" + response.get("montoMaximo"));
+            System.out.println("Mensaje: " + response.get("motivo"));
+        } catch (IOException | InterruptedException e) {
+            System.out.println("Error al consultar monto maximo: " + e.getMessage());
         }
     }
 }
