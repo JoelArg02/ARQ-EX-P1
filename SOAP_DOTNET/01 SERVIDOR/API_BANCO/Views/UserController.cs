@@ -17,6 +17,9 @@ public interface IUserController
     Task<User?> GetUserById(int id);
 
     [OperationContract]
+    Task<User?> Login(string nombre, string contrasena);
+
+    [OperationContract]
     Task<User> CreateUser(string nombre);
 
     [OperationContract]
@@ -43,6 +46,11 @@ public class UserController : IUserController
     public async Task<User?> GetUserById(int id)
     {
         return await _userService.GetUserById(id);
+    }
+
+    public async Task<User?> Login(string nombre, string contrasena)
+    {
+        return await _userService.Login(nombre, contrasena);
     }
 
     public async Task<User> CreateUser(string nombre)

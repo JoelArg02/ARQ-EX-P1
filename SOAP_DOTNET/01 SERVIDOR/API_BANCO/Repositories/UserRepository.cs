@@ -24,6 +24,12 @@ public class UserRepository : IUserRepository
         return await _context.Users.FindAsync(id);
     }
 
+    public async Task<User?> LoginAsync(string nombre, string contrasena)
+    {
+        return await _context.Users
+            .FirstOrDefaultAsync(u => u.Nombre == nombre && u.Contrasena == contrasena);
+    }
+
     public async Task<User> CreateAsync(User user)
     {
         _context.Users.Add(user);
