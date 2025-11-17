@@ -1,5 +1,6 @@
 package ec.edu.pinza.clicon.app;
 
+import ec.edu.pinza.clicon.controllers.AdminProductosController;
 import ec.edu.pinza.clicon.controllers.AuthController;
 import ec.edu.pinza.clicon.controllers.CarritoController;
 import ec.edu.pinza.clicon.controllers.CheckoutController;
@@ -40,11 +41,13 @@ public class CliconApplication {
 
         try (ComercializadoraRestClient restClient = new ComercializadoraRestClient();
              BanquitoRestClient banquitoClient = new BanquitoRestClient()) {
+            ConsoleView view = new ConsoleView();
             ProductosController productosController = new ProductosController(restClient);
             CarritoController carritoController = new CarritoController();
             CheckoutController checkoutController = new CheckoutController(restClient);
             VentasController ventasController = new VentasController(restClient);
             CreditoController creditoController = new CreditoController(banquitoClient);
+            AdminProductosController adminProductosController = new AdminProductosController(restClient, view, scanner);
 
             boolean salir = false;
             while (!salir) {
@@ -59,6 +62,7 @@ public class CliconApplication {
                     case 6 -> flujoMisCompras(ventasController, sesion);
                     case 7 -> flujoValidarSujetoCredito(creditoController);
                     case 8 -> flujoConsultarMontoMaximo(creditoController);
+                    case 9 -> adminProductosController.mostrarMenuAdmin();
                     case 0 -> salir = true;
                     default -> System.out.println("Opcion invalida.");
                 }
@@ -79,6 +83,7 @@ public class CliconApplication {
         System.out.println("6) Mis compras");
         System.out.println("7) Validar sujeto de credito");
         System.out.println("8) Consultar monto maximo");
+        System.out.println("9) Administrar productos (CRUD)");
         System.out.println("0) Salir");
     }
 

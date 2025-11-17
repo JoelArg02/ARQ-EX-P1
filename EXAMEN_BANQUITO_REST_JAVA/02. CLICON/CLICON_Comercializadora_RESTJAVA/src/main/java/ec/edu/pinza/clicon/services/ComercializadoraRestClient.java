@@ -52,6 +52,67 @@ public class ComercializadoraRestClient implements AutoCloseable {
         throw new IOException("HTTP " + response.statusCode() + " al obtener productos");
     }
 
+    public ProductoDTO obtenerProductoPorId(Integer id) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/productos/" + id))
+                .header("Accept", "application/json")
+                .GET()
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() == 200) {
+            return mapper.readValue(response.body(), ProductoDTO.class);
+        }
+        throw new IOException("HTTP " + response.statusCode() + " al obtener producto");
+    }
+
+    public ProductoDTO crearProducto(ProductoDTO producto) throws IOException, InterruptedException {
+        String jsonBody = mapper.writeValueAsString(producto);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/productos"))
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() == 201 || response.statusCode() == 200) {
+            return mapper.readValue(response.body(), ProductoDTO.class);
+        }
+        throw new IOException("HTTP " + response.statusCode() + " al crear producto");
+    }
+
+    public ProductoDTO actualizarProducto(Integer id, ProductoDTO producto) throws IOException, InterruptedException {
+        String jsonBody = mapper.writeValueAsString(producto);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/productos/" + id))
+                .header("Accept", "application/json")
+                .header("Content-Type", "application/json")
+                .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() == 200) {
+            return mapper.readValue(response.body(), ProductoDTO.class);
+        }
+        throw new IOException("HTTP " + response.statusCode() + " al actualizar producto");
+    }
+
+    public void eliminarProducto(Integer id) throws IOException, InterruptedException {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(BASE_URL + "/productos/" + id))
+                .header("Accept", "application/json")
+                .DELETE()
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        if (response.statusCode() != 200) {
+            throw new IOException("HTTP " + response.statusCode() + " al eliminar producto");
+        }
+    }
+
     public FacturaResponseDTO crearFactura(String cedula, String formaPago, Integer numeroCuotas, List<Map<String, Integer>> items)
             throws IOException, InterruptedException {
         Map<String, Object> payload = new HashMap<>();

@@ -126,6 +126,16 @@ public class ProductosFrame extends JFrame {
         btnCredito.addActionListener(e -> abrirConsultaCredito());
         botonesPanel.add(btnCredito);
 
+        JButton btnAdmin = new JButton("Administrar Productos");
+        btnAdmin.setFont(UIConstants.FONT_NORMAL);
+        btnAdmin.setForeground(Color.WHITE);
+        btnAdmin.setBackground(new Color(255, 152, 0));
+        btnAdmin.setOpaque(true);
+        btnAdmin.setBorderPainted(false);
+        btnAdmin.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnAdmin.addActionListener(e -> abrirAdminProductos());
+        botonesPanel.add(btnAdmin);
+
         JButton btnSalir = new JButton("Salir");
         btnSalir.setFont(UIConstants.FONT_NORMAL);
         btnSalir.setForeground(Color.WHITE);
@@ -269,5 +279,10 @@ public class ProductosFrame extends JFrame {
     private void abrirConsultaCredito() {
         ConsultaCreditoFrame consultaFrame = new ConsultaCreditoFrame();
         consultaFrame.setVisible(true);
+    }
+
+    private void abrirAdminProductos() {
+        AdminProductosFrame adminFrame = new AdminProductosFrame();
+        adminFrame.setVisible(true);
     }
 }

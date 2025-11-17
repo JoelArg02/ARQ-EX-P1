@@ -59,6 +59,88 @@ public class ComercializadoraRestClient {
         }
     }
 
+    /**
+     * Obtiene un producto por ID.
+     */
+    public ProductoDTO obtenerProductoPorId(Long id) throws Exception {
+        String url = BASE_URL + "/productos/" + id;
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .GET()
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200) {
+            return gson.fromJson(response.body(), ProductoDTO.class);
+        } else {
+            throw new Exception("Error al obtener producto: " + response.statusCode());
+        }
+    }
+
+    /**
+     * Crea un nuevo producto.
+     */
+    public ProductoDTO crearProducto(ProductoDTO producto) throws Exception {
+        String url = BASE_URL + "/productos";
+        String jsonBody = gson.toJson(producto);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Content-Type", "application/json")
+                .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 201 || response.statusCode() == 200) {
+            return gson.fromJson(response.body(), ProductoDTO.class);
+        } else {
+            throw new Exception("Error al crear producto: " + response.statusCode());
+        }
+    }
+
+    /**
+     * Actualiza un producto existente.
+     */
+    public ProductoDTO actualizarProducto(Long id, ProductoDTO producto) throws Exception {
+        String url = BASE_URL + "/productos/" + id;
+        String jsonBody = gson.toJson(producto);
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .header("Content-Type", "application/json")
+                .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() == 200) {
+            return gson.fromJson(response.body(), ProductoDTO.class);
+        } else {
+            throw new Exception("Error al actualizar producto: " + response.statusCode());
+        }
+    }
+
+    /**
+     * Elimina un producto.
+     */
+    public void eliminarProducto(Long id) throws Exception {
+        String url = BASE_URL + "/productos/" + id;
+
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(url))
+                .DELETE()
+                .build();
+
+        HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+        if (response.statusCode() != 200) {
+            throw new Exception("Error al eliminar producto: " + response.statusCode());
+        }
+    }
+
     // ==================== FACTURAS ====================
 
     /**
