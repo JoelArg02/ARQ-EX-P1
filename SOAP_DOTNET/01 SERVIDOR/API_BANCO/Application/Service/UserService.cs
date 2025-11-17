@@ -27,6 +27,11 @@ public class UserService : IUserService
         return await _repository.GetByIdAsync(id);
     }
 
+    public async Task<User?> Login(string nombre, string contrasena)
+    {
+        return await _repository.LoginAsync(nombre, contrasena);
+    }
+
     public async Task<User> CreateUser(string nombre)
     {
         var user = new User { Nombre = nombre };
