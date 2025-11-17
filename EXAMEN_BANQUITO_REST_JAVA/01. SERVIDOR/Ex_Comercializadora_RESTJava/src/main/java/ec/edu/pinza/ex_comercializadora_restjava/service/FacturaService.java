@@ -111,17 +111,21 @@ public class FacturaService {
     }
     
     /**
-     * Procesa pago en efectivo
+     * Procesa pago en efectivo con descuento del 33%
      */
     private FacturaResponse procesarPagoEfectivo(ClienteCom cliente, List<ItemValidado> items, BigDecimal total) {
         FacturaResponse response = new FacturaResponse();
         
         try {
+            // Aplicar descuento del 33% para pagos en efectivo
+            BigDecimal descuento = total.multiply(new BigDecimal("0.33"));
+            BigDecimal totalConDescuento = total.subtract(descuento);
+            
             // Crear factura
             Factura factura = new Factura();
             factura.setCliente(cliente);
             factura.setFecha(LocalDate.now());
-            factura.setTotal(total);
+            factura.setTotal(totalConDescuento);
             factura.setFormaPago("EFECTIVO");
             factura.setIdCreditoBanco(null);
             
@@ -146,7 +150,7 @@ public class FacturaService {
             
             // Construir respuesta
             response.setExitoso(true);
-            response.setMensaje("Factura creada exitosamente (Pago en efectivo)");
+            response.setMensaje("Factura creada exitosamente (Pago en efectivo - Descuento del 33% aplicado)");
             response.setIdFactura(factura.getIdFactura());
             response.setCedulaCliente(cliente.getCedula());
             response.setNombreCliente(cliente.getNombre());
@@ -244,8 +248,13 @@ public class FacturaService {
             // Info del crédito
             FacturaResponse.InfoCredito infoCredito = new FacturaResponse.InfoCredito();
             infoCredito.setIdCredito(credito.getIdCredito());
+            infoCredito.setMontoCredito(credito.getMontoAprobado());
             infoCredito.setNumeroCuotas(numeroCuotas);
+            infoCredito.setValorCuota(credito.getTablaAmortizacion() != null && !credito.getTablaAmortizacion().isEmpty() 
+                    ? credito.getTablaAmortizacion().get(0).getValorCuota() 
+                    : null);
             infoCredito.setTasaInteres(credito.getTasaInteresAnual());
+            infoCredito.setEstado("ACTIVO");
             infoCredito.setTablaAmortizacion(credito.getTablaAmortizacion());
             response.setInfoCredito(infoCredito);
             
@@ -289,6 +298,174 @@ public class FacturaService {
             dtos.add(dto);
         }
         return dtos;
+    }
+    
+    /**
+     * Obtiene TODAS las facturas del sistema (para administrador)
+     */
+    public List<FacturaResponse> obtenerTodasLasFacturas() {
+        List<FacturaResponse> respuestas = new ArrayList<>();
+        
+        try {
+            List<Factura> facturas = facturaRepo.findAll();
+            
+            for (Factura factura : facturas) {
+                ClienteCom cliente = factura.getCliente();
+                FacturaResponse response = new FacturaResponse();
+                response.setIdFactura(factura.getIdFactura());
+                response.setCedulaCliente(cliente.getCedula());
+                response.setNombreCliente(cliente.getNombre());
+                response.setFecha(factura.getFecha());
+                response.setTotal(factura.getTotal());
+                response.setFormaPago(factura.getFormaPago());
+                response.setIdCreditoBanco(factura.getIdCreditoBanco());
+                response.setDetalles(construirDetallesDTO(factura.getDetalles()));
+                
+                // Si es crédito, agregar info
+                if ("CREDITO_DIRECTO".equals(factura.getFormaPago()) && factura.getIdCreditoBanco() != null) {
+                    try {
+                        OtorgarCreditoResponseDTO creditoInfo = banquitoClient.obtenerInformacionCredito(factura.getIdCreditoBanco());
+                        
+                        if (creditoInfo != null && creditoInfo.getTablaAmortizacion() != null && !creditoInfo.getTablaAmortizacion().isEmpty()) {
+                            FacturaResponse.InfoCredito infoCredito = new FacturaResponse.InfoCredito();
+                            infoCredito.setIdCredito(factura.getIdCreditoBanco());
+                            infoCredito.setMontoCredito(factura.getTotal());
+                            infoCredito.setNumeroCuotas(creditoInfo.getTablaAmortizacion().size());
+                            infoCredito.setValorCuota(creditoInfo.getTablaAmortizacion().get(0).getValorCuota());
+                            infoCredito.setTasaInteres(creditoInfo.getTasaInteresAnual());
+                            infoCredito.setEstado(creditoInfo.getEstado() != null ? creditoInfo.getEstado() : "APROBADO");
+                            infoCredito.setTablaAmortizacion(creditoInfo.getTablaAmortizacion());
+                            response.setInfoCredito(infoCredito);
+                        }
+                    } catch (Exception e) {
+                        System.err.println("Error al obtener info de crédito: " + e.getMessage());
+                    }
+                }
+                
+                respuestas.add(response);
+            }
+        } catch (Exception e) {
+            System.err.println("Error al obtener todas las facturas: " + e.getMessage());
+        }
+        
+        return respuestas;
+    }
+    
+    /**
+     * Obtiene todas las facturas de un cliente por su cédula
+     */
+    public List<FacturaResponse> obtenerFacturasPorCliente(String cedula) {
+        List<FacturaResponse> respuestas = new ArrayList<>();
+        
+        try {
+            ClienteCom cliente = clienteRepo.findByCedula(cedula).orElse(null);
+            if (cliente == null) {
+                return respuestas;
+            }
+            
+            List<Factura> facturas = facturaRepo.findByClienteId(cliente.getIdCliente());
+            
+            for (Factura factura : facturas) {
+                FacturaResponse response = new FacturaResponse();
+                response.setIdFactura(factura.getIdFactura());
+                response.setCedulaCliente(cliente.getCedula());
+                response.setNombreCliente(cliente.getNombre());
+                response.setFecha(factura.getFecha());
+                response.setTotal(factura.getTotal());
+                response.setFormaPago(factura.getFormaPago());
+                response.setIdCreditoBanco(factura.getIdCreditoBanco());
+                response.setDetalles(construirDetallesDTO(factura.getDetalles()));
+                
+                // Si es crédito, agregar info
+                if ("CREDITO_DIRECTO".equals(factura.getFormaPago()) && factura.getIdCreditoBanco() != null) {
+                    try {
+                        OtorgarCreditoResponseDTO creditoInfo = banquitoClient.obtenerInformacionCredito(factura.getIdCreditoBanco());
+                        
+                        if (creditoInfo != null && creditoInfo.getTablaAmortizacion() != null && !creditoInfo.getTablaAmortizacion().isEmpty()) {
+                            FacturaResponse.InfoCredito infoCredito = new FacturaResponse.InfoCredito();
+                            infoCredito.setIdCredito(factura.getIdCreditoBanco());
+                            infoCredito.setMontoCredito(factura.getTotal());
+                            infoCredito.setNumeroCuotas(creditoInfo.getTablaAmortizacion().size());
+                            infoCredito.setValorCuota(creditoInfo.getTablaAmortizacion().get(0).getValorCuota());
+                            infoCredito.setTasaInteres(creditoInfo.getTasaInteresAnual());
+                            infoCredito.setEstado(creditoInfo.getEstado() != null ? creditoInfo.getEstado() : "APROBADO");
+                            infoCredito.setTablaAmortizacion(creditoInfo.getTablaAmortizacion());
+                            response.setInfoCredito(infoCredito);
+                        }
+                    } catch (Exception e) {
+                        // Si falla obtener el crédito, continuar sin esa info
+                        System.err.println("Error al obtener info de crédito: " + e.getMessage());
+                    }
+                }
+                
+                respuestas.add(response);
+            }
+            
+        } catch (Exception e) {
+            System.err.println("Error al obtener facturas del cliente: " + e.getMessage());
+        }
+        
+        return respuestas;
+    }
+    
+    /**
+     * Obtiene una factura específica por su ID
+     */
+    public FacturaResponse obtenerFacturaPorId(Integer idFactura) {
+        try {
+            Factura factura = facturaRepo.findById(idFactura).orElse(null);
+            if (factura == null) {
+                return null;
+            }
+            
+            ClienteCom cliente = factura.getCliente();
+            
+            FacturaResponse response = new FacturaResponse();
+            response.setIdFactura(factura.getIdFactura());
+            response.setCedulaCliente(cliente.getCedula());
+            response.setNombreCliente(cliente.getNombre());
+            response.setFecha(factura.getFecha());
+            response.setTotal(factura.getTotal());
+            response.setFormaPago(factura.getFormaPago());
+            response.setIdCreditoBanco(factura.getIdCreditoBanco());
+            response.setDetalles(construirDetallesDTO(factura.getDetalles()));
+            
+            // Si es crédito, agregar info completa
+            if ("CREDITO_DIRECTO".equals(factura.getFormaPago()) && factura.getIdCreditoBanco() != null) {
+                System.out.println("DEBUG: Factura es crédito, ID crédito: " + factura.getIdCreditoBanco());
+                try {
+                    OtorgarCreditoResponseDTO creditoInfo = banquitoClient.obtenerInformacionCredito(factura.getIdCreditoBanco());
+                    
+                    System.out.println("DEBUG: Info crédito obtenida, estado: " + (creditoInfo != null ? creditoInfo.getEstado() : "null"));
+                    
+                    if (creditoInfo != null && creditoInfo.getTablaAmortizacion() != null && !creditoInfo.getTablaAmortizacion().isEmpty()) {
+                        FacturaResponse.InfoCredito infoCredito = new FacturaResponse.InfoCredito();
+                        infoCredito.setIdCredito(factura.getIdCreditoBanco());
+                        infoCredito.setMontoCredito(factura.getTotal());
+                        infoCredito.setNumeroCuotas(creditoInfo.getTablaAmortizacion().size());
+                        infoCredito.setValorCuota(creditoInfo.getTablaAmortizacion().get(0).getValorCuota());
+                        infoCredito.setTasaInteres(creditoInfo.getTasaInteresAnual());
+                        infoCredito.setEstado(creditoInfo.getEstado() != null ? creditoInfo.getEstado() : "APROBADO");
+                        infoCredito.setTablaAmortizacion(creditoInfo.getTablaAmortizacion());
+                        response.setInfoCredito(infoCredito);
+                        System.out.println("DEBUG: InfoCredito configurado correctamente con estado: " + infoCredito.getEstado());
+                    } else {
+                        System.err.println("DEBUG: Información de crédito vacía o nula");
+                    }
+                } catch (Exception e) {
+                    System.err.println("Error al obtener info de crédito: " + e.getMessage());
+                    e.printStackTrace();
+                }
+            } else {
+                System.out.println("DEBUG: Factura NO es crédito o no tiene ID crédito. FormaPago: " + factura.getFormaPago() + ", IDCreditoBanco: " + factura.getIdCreditoBanco());
+            }
+            
+            return response;
+            
+        } catch (Exception e) {
+            System.err.println("Error al obtener factura por ID: " + e.getMessage());
+            return null;
+        }
     }
     
     /**

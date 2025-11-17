@@ -116,6 +116,7 @@ public class CreditoController {
             response.setPlazoMeses(resultado.getCredito().getPlazoMeses());
             response.setTasaInteresAnual(resultado.getCredito().getTasaInteresAnual());
             response.setFechaOtorgamiento(resultado.getCredito().getFechaOtorgamiento());
+            response.setEstado(resultado.getCredito().getEstado());
             
             // Mapear tabla de amortización
             List<OtorgarCreditoResponse.CuotaDTO> cuotasDTO = resultado.getTablaAmortizacion()
@@ -161,6 +162,7 @@ public class CreditoController {
             response.setPlazoMeses(resultado.getCredito().getPlazoMeses());
             response.setTasaInteresAnual(resultado.getCredito().getTasaInteresAnual());
             response.setFechaOtorgamiento(resultado.getCredito().getFechaOtorgamiento());
+            response.setEstado(resultado.getCredito().getEstado());
             
             // Mapear tabla de amortización
             List<OtorgarCreditoResponse.CuotaDTO> cuotasDTO = resultado.getTablaAmortizacion()

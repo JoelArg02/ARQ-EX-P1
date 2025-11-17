@@ -131,25 +131,49 @@ public class BanquitoCreditoClient {
     }
     
     /**
-     * Obtiene la tabla de amortización de un crédito
+     * Obtiene la información completa del crédito incluyendo estado y tabla de amortización
      * @param idCredito ID del crédito
-     * @return Lista de cuotas
+     * @return Información completa del crédito
      */
-    @SuppressWarnings("unchecked")
-    public List<OtorgarCreditoResponseDTO.CuotaDTO> obtenerTablaAmortizacion(Integer idCredito) {
+    public OtorgarCreditoResponseDTO obtenerInformacionCredito(Integer idCredito) {
         try {
+            System.out.println("DEBUG BanquitoClient: Consultando información completa para crédito ID: " + idCredito);
             Response response = baseTarget
                 .path(String.valueOf(idCredito))
                 .path("amortizacion")
                 .request(MediaType.APPLICATION_JSON)
                 .get();
             
+            System.out.println("DEBUG BanquitoClient: Status HTTP: " + response.getStatus());
+            
             if (response.getStatus() == 200) {
-                return response.readEntity(List.class);
+                OtorgarCreditoResponseDTO creditoResponse = response.readEntity(OtorgarCreditoResponseDTO.class);
+                System.out.println("DEBUG BanquitoClient: Respuesta deserializada correctamente");
+                System.out.println("DEBUG BanquitoClient: Estado del crédito: " + creditoResponse.getEstado());
+                return creditoResponse;
             } else {
+                System.err.println("DEBUG BanquitoClient: Error HTTP " + response.getStatus());
                 return null;
             }
         } catch (Exception e) {
+            System.err.println("DEBUG BanquitoClient: Exception - " + e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
+     * Obtiene la tabla de amortización de un crédito
+     * @param idCredito ID del crédito
+     * @return Lista de cuotas
+     */
+    public List<OtorgarCreditoResponseDTO.CuotaDTO> obtenerTablaAmortizacion(Integer idCredito) {
+        try {
+            OtorgarCreditoResponseDTO creditoInfo = obtenerInformacionCredito(idCredito);
+            return (creditoInfo != null) ? creditoInfo.getTablaAmortizacion() : null;
+        } catch (Exception e) {
+            System.err.println("DEBUG BanquitoClient: Exception - " + e.getMessage());
+            e.printStackTrace();
             return null;
         }
     }

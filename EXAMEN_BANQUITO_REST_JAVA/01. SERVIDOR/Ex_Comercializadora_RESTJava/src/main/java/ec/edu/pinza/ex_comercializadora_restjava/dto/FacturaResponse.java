@@ -110,8 +110,11 @@ public class FacturaResponse {
     
     public static class InfoCredito {
         private Integer idCredito;
+        private BigDecimal montoCredito;
         private int numeroCuotas;
+        private BigDecimal valorCuota;
         private BigDecimal tasaInteres;
+        private String estado;
         private List<OtorgarCreditoResponseDTO.CuotaDTO> tablaAmortizacion;
         
         public InfoCredito() {
@@ -125,6 +128,14 @@ public class FacturaResponse {
             this.idCredito = idCredito;
         }
         
+        public BigDecimal getMontoCredito() {
+            return montoCredito;
+        }
+        
+        public void setMontoCredito(BigDecimal montoCredito) {
+            this.montoCredito = montoCredito;
+        }
+        
         public int getNumeroCuotas() {
             return numeroCuotas;
         }
@@ -133,12 +144,28 @@ public class FacturaResponse {
             this.numeroCuotas = numeroCuotas;
         }
         
+        public BigDecimal getValorCuota() {
+            return valorCuota;
+        }
+        
+        public void setValorCuota(BigDecimal valorCuota) {
+            this.valorCuota = valorCuota;
+        }
+        
         public BigDecimal getTasaInteres() {
             return tasaInteres;
         }
         
         public void setTasaInteres(BigDecimal tasaInteres) {
             this.tasaInteres = tasaInteres;
+        }
+        
+        public String getEstado() {
+            return estado;
+        }
+        
+        public void setEstado(String estado) {
+            this.estado = estado;
         }
         
         public List<OtorgarCreditoResponseDTO.CuotaDTO> getTablaAmortizacion() {

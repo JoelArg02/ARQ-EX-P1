@@ -17,6 +17,7 @@ public class OtorgarCreditoResponse {
     private int plazoMeses;
     private BigDecimal tasaInteresAnual;
     private LocalDate fechaOtorgamiento;
+    private String estado; // 'APROBADO', 'CANCELADO'
     private List<CuotaDTO> tablaAmortizacion;
     
     public OtorgarCreditoResponse() {
@@ -92,6 +93,14 @@ public class OtorgarCreditoResponse {
     
     public void setFechaOtorgamiento(LocalDate fechaOtorgamiento) {
         this.fechaOtorgamiento = fechaOtorgamiento;
+    }
+    
+    public String getEstado() {
+        return estado;
+    }
+    
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
     
     public List<CuotaDTO> getTablaAmortizacion() {

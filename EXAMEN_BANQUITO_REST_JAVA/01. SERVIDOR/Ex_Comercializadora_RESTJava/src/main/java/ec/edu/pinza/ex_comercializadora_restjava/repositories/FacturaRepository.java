@@ -48,7 +48,7 @@ public class FacturaRepository {
     public List<Factura> findAll() {
         EntityManager em = getEntityManager();
         try {
-            return em.createQuery("SELECT f FROM Factura f ORDER BY f.fecha DESC", Factura.class).getResultList();
+            return em.createQuery("SELECT f FROM Factura f ORDER BY f.idFactura DESC", Factura.class).getResultList();
         } finally {
             em.close();
         }

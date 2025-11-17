@@ -97,4 +97,61 @@ public class FacturaResource {
                     .build();
         }
     }
+    
+    /**
+     * Obtiene TODAS las facturas del sistema
+     * GET /api/facturas
+     */
+    @GET
+    public Response obtenerTodasLasFacturas() {
+        try {
+            List<FacturaResponse> facturas = facturaService.obtenerTodasLasFacturas();
+            return Response.ok(facturas).build();
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("mensaje", "Error al obtener facturas: " + e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(error).build();
+        }
+    }
+    
+    /**
+     * Obtiene todas las facturas de un cliente
+     * GET /api/facturas/cliente/{cedula}
+     */
+    @GET
+    @Path("/cliente/{cedula}")
+    public Response obtenerFacturasPorCliente(@PathParam("cedula") String cedula) {
+        try {
+            List<FacturaResponse> facturas = facturaService.obtenerFacturasPorCliente(cedula);
+            return Response.ok(facturas).build();
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("mensaje", "Error al obtener facturas: " + e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(error).build();
+        }
+    }
+    
+    /**
+     * Obtiene una factura por su ID
+     * GET /api/facturas/{idFactura}
+     */
+    @GET
+    @Path("/{idFactura}")
+    public Response obtenerFacturaPorId(@PathParam("idFactura") Integer idFactura) {
+        try {
+            FacturaResponse factura = facturaService.obtenerFacturaPorId(idFactura);
+            
+            if (factura == null) {
+                Map<String, String> error = new HashMap<>();
+                error.put("mensaje", "Factura no encontrada");
+                return Response.status(Response.Status.NOT_FOUND).entity(error).build();
+            }
+            
+            return Response.ok(factura).build();
+        } catch (Exception e) {
+            Map<String, String> error = new HashMap<>();
+            error.put("mensaje", "Error al obtener factura: " + e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(error).build();
+        }
+    }
 }
