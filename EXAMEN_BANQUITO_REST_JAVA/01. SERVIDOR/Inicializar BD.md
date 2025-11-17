@@ -53,7 +53,7 @@ Asumiendo que estás en la raíz del proyecto y tienes estas rutas en tu máquin
 Ejecuta:
 
 ```sh
-docker cp "01. SERVIDOR/Ex_Banquito_RESTJava/database_script.sql" mysql-db:/tmp/database_script.sql
+docker cp "01. SERVIDOR/Ex_Banquito_RESTJava/database_script.sql" mysql-db:/tmp database_script.sql
 
 docker cp "01. SERVIDOR/Ex_Comercializadora_RESTJava/database_comercializadora_script.sql" mysql-db:/tmp/database_comercializadora_script.sql
 ```
@@ -90,6 +90,16 @@ Esto va a:
 ### 🔹 Opción B: Ejecutar con un solo comando (no interactivo)
 
 Si prefieres no entrar al cliente MySQL y hacerlo directo:
+
+**Para PowerShell (Windows):**
+
+```powershell
+Get-Content "Ex_Banquito_RESTJava/database_script.sql" -Raw | docker exec -i mysql-db mysql -u root -p1234
+
+Get-Content "Ex_Comercializadora_RESTJava/database_comercializadora_script.sql" -Raw | docker exec -i mysql-db mysql -u root -p1234
+```
+
+**Para Bash/Linux/Mac:**
 
 ```sh
 docker exec -i mysql-db mysql -u root -p1234 < "01. SERVIDOR/Ex_Banquito_RESTJava/database_script.sql"

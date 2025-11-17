@@ -117,6 +117,25 @@ public class ProductosFrame extends JFrame {
         btnVentas.addActionListener(e -> controller.irAVentas());
         botonesPanel.add(btnVentas);
 
+        JButton btnCredito = new JButton("Consultar Crédito");
+        btnCredito.setFont(UIConstants.FONT_NORMAL);
+        btnCredito.setForeground(Color.WHITE);
+        btnCredito.setContentAreaFilled(false);
+        btnCredito.setBorderPainted(false);
+        btnCredito.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnCredito.addActionListener(e -> abrirConsultaCredito());
+        botonesPanel.add(btnCredito);
+
+        JButton btnAdmin = new JButton("Administrar Productos");
+        btnAdmin.setFont(UIConstants.FONT_NORMAL);
+        btnAdmin.setForeground(Color.WHITE);
+        btnAdmin.setBackground(new Color(255, 152, 0));
+        btnAdmin.setOpaque(true);
+        btnAdmin.setBorderPainted(false);
+        btnAdmin.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        btnAdmin.addActionListener(e -> abrirAdminProductos());
+        botonesPanel.add(btnAdmin);
+
         JButton btnSalir = new JButton("Salir");
         btnSalir.setFont(UIConstants.FONT_NORMAL);
         btnSalir.setForeground(Color.WHITE);
@@ -255,5 +274,15 @@ public class ProductosFrame extends JFrame {
 
     public void mostrarExito(String mensaje) {
         JOptionPane.showMessageDialog(this, mensaje, "Éxito", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    private void abrirConsultaCredito() {
+        ConsultaCreditoFrame consultaFrame = new ConsultaCreditoFrame();
+        consultaFrame.setVisible(true);
+    }
+
+    private void abrirAdminProductos() {
+        AdminProductosFrame adminFrame = new AdminProductosFrame();
+        adminFrame.setVisible(true);
     }
 }

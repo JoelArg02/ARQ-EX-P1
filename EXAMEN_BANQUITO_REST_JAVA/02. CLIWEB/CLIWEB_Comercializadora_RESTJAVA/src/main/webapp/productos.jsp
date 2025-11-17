@@ -31,6 +31,8 @@
                     <span class="carrito-badge" id="carrito-badge" <%= (totalItems > 0) ? "" : "style='display:none;'" %>><%= totalItems %></span>
                 </a>
                 <a href="${pageContext.request.contextPath}/ventas">Mis Ventas</a>
+                <a href="${pageContext.request.contextPath}/consulta-credito">Consultar Crédito</a>
+                <a href="${pageContext.request.contextPath}/admin/productos" style="background: linear-gradient(135deg, #FF9800 0%, #FF5722 100%); padding: 8px 16px; border-radius: 5px;">🛠️ Admin</a>
                 <a href="${pageContext.request.contextPath}/login?action=logout" class="btn-logout">Salir</a>
             </div>
         </div>

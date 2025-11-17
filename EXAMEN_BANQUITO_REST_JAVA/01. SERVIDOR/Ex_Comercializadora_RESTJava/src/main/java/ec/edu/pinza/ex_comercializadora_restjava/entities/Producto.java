@@ -27,14 +27,18 @@ public class Producto implements Serializable {
     @Column(name = "stock", nullable = false)
     private Integer stock;
     
+    @Column(name = "imagen", columnDefinition = "TEXT")
+    private String imagen;
+    
     public Producto() {
     }
     
-    public Producto(String codigo, String nombre, BigDecimal precio, Integer stock) {
+    public Producto(String codigo, String nombre, BigDecimal precio, Integer stock, String image) {
         this.codigo = codigo;
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
+        this.image = image;
     }
     
     // Getters y Setters
@@ -76,5 +80,13 @@ public class Producto implements Serializable {
     
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+    
+    public String getImagen() {
+        return imagen;
+    }
+    
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

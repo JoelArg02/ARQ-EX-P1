@@ -48,6 +48,83 @@ public class ComercializadoraRestClient {
     }
     
     /**
+     * Obtiene un producto por ID
+     */
+    public ProductoDTO obtenerProductoPorId(Integer id) {
+        try {
+            Response response = baseTarget
+                .path("productos/" + id)
+                .request(MediaType.APPLICATION_JSON)
+                .get();
+            
+            if (response.getStatus() == 200) {
+                return response.readEntity(ProductoDTO.class);
+            }
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
+     * Crea un nuevo producto
+     */
+    public ProductoDTO crearProducto(ProductoDTO producto) {
+        try {
+            Response response = baseTarget
+                .path("productos")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.json(producto));
+            
+            if (response.getStatus() == 201 || response.getStatus() == 200) {
+                return response.readEntity(ProductoDTO.class);
+            }
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
+     * Actualiza un producto existente
+     */
+    public ProductoDTO actualizarProducto(Integer id, ProductoDTO producto) {
+        try {
+            Response response = baseTarget
+                .path("productos/" + id)
+                .request(MediaType.APPLICATION_JSON)
+                .put(Entity.json(producto));
+            
+            if (response.getStatus() == 200) {
+                return response.readEntity(ProductoDTO.class);
+            }
+            return null;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    /**
+     * Elimina un producto
+     */
+    public boolean eliminarProducto(Integer id) {
+        try {
+            Response response = baseTarget
+                .path("productos/" + id)
+                .request(MediaType.APPLICATION_JSON)
+                .delete();
+            
+            return response.getStatus() == 200;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+    /**
      * Crea una factura (efectivo o crédito)
      */
     public FacturaResponseDTO crearFactura(String cedula, String formaPago, Integer numeroCuotas, List<Map<String, Integer>> items) {

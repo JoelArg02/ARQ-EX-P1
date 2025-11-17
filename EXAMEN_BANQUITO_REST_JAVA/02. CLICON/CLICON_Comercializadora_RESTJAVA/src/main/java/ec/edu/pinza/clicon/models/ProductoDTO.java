@@ -11,6 +11,7 @@ public class ProductoDTO {
     private String nombre;
     private BigDecimal precio;
     private Integer stock;
+    private String imagen; // Campo imagen en base64 (nullable)
 
     public Integer getIdProducto() {
         return idProducto;
@@ -50,5 +51,13 @@ public class ProductoDTO {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 }

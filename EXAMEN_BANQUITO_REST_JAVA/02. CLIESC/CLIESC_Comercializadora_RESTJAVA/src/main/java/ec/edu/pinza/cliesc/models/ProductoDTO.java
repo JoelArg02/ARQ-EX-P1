@@ -8,6 +8,7 @@ public class ProductoDTO {
     private String descripcion;
     private BigDecimal precio;
     private Integer stock;
+    private String imagen; // Imagen en base64 (nullable)
 
     // Constructores
     public ProductoDTO() {
@@ -61,6 +62,14 @@ public class ProductoDTO {
 
     public void setStock(Integer stock) {
         this.stock = stock;
+    }
+
+    public String getImagen() {
+        return imagen;
+    }
+
+    public void setImagen(String imagen) {
+        this.imagen = imagen;
     }
 
     public boolean hayStock() {
