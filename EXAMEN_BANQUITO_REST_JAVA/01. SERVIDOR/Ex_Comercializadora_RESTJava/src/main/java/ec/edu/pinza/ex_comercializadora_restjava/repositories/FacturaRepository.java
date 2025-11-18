@@ -52,7 +52,17 @@ public class FacturaRepository {
             
             try (ResultSet rs = stmt.executeQuery()) {
                 while (rs.next()) {
-                    facturas.add(mapResultSetToFactura(rs));
+                    try {
+                        Factura factura = mapResultSetToFactura(rs);
+                        // Solo agregar si el cliente fue cargado exitosamente
+                        if (factura.getCliente() != null) {
+                            facturas.add(factura);
+                        } else {
+                            System.out.println("⚠️ Factura " + rs.getInt("idFactura") + " omitida: cliente no encontrado");
+                        }
+                    } catch (Exception e) {
+                        System.err.println("⚠️ Error al mapear factura " + rs.getInt("idFactura") + ": " + e.getMessage());
+                    }
                 }
             }
         } catch (SQLException e) {
@@ -73,7 +83,17 @@ public class FacturaRepository {
              ResultSet rs = stmt.executeQuery()) {
             
             while (rs.next()) {
-                facturas.add(mapResultSetToFactura(rs));
+                try {
+                    Factura factura = mapResultSetToFactura(rs);
+                    // Solo agregar si el cliente fue cargado exitosamente
+                    if (factura.getCliente() != null) {
+                        facturas.add(factura);
+                    } else {
+                        System.out.println("⚠️ Factura " + rs.getInt("idFactura") + " omitida: cliente no encontrado");
+                    }
+                } catch (Exception e) {
+                    System.err.println("⚠️ Error al mapear factura " + rs.getInt("idFactura") + ": " + e.getMessage());
+                }
             }
         } catch (SQLException e) {
             System.err.println("Error al obtener todas las facturas: " + e.getMessage());
