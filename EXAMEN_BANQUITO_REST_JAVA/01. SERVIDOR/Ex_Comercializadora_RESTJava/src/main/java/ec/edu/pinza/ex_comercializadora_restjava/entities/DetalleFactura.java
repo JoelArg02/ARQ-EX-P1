@@ -1,35 +1,20 @@
 package ec.edu.pinza.ex_comercializadora_restjava.entities;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Entity
-@Table(name = "DetalleFactura")
+/**
+ * POJO DetalleFactura - Detalle de factura (SIN JPA - usa JDBC)
+ */
 public class DetalleFactura implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idDetalle")
     private Integer idDetalle;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idFactura", nullable = false)
     private Factura factura;
-    
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "idProducto", nullable = false)
     private Producto producto;
-    
-    @Column(name = "cantidad", nullable = false)
     private Integer cantidad;
-    
-    @Column(name = "precioUnitario", precision = 10, scale = 2, nullable = false)
     private BigDecimal precioUnitario;
-    
-    @Column(name = "subtotal", precision = 10, scale = 2, nullable = false)
     private BigDecimal subtotal;
     
     public DetalleFactura() {

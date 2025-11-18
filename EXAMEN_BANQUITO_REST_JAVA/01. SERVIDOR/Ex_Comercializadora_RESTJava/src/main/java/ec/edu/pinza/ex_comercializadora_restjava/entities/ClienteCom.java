@@ -1,33 +1,20 @@
 package ec.edu.pinza.ex_comercializadora_restjava.entities;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
-@Entity
-@Table(name = "ClienteCom")
+/**
+ * POJO ClienteCom - Cliente de comercializadora (SIN JPA - usa JDBC)
+ */
 public class ClienteCom implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idCliente")
     private Integer idCliente;
-    
-    @Column(name = "cedula", length = 10, nullable = false, unique = true)
     private String cedula;
-    
-    @Column(name = "nombre", length = 100, nullable = false)
     private String nombre;
-    
-    @Column(name = "direccion", length = 200)
     private String direccion;
-    
-    @Column(name = "telefono", length = 15)
     private String telefono;
-    
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Factura> facturas;
     
     public ClienteCom() {

@@ -1,40 +1,24 @@
 package ec.edu.pinza.ex_comercializadora_restjava.entities;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity
-@Table(name = "Factura")
+/**
+ * POJO Factura - Factura de venta (SIN JPA - usa JDBC)
+ */
 public class Factura implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "idFactura")
     private Integer idFactura;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "idCliente", nullable = false)
     private ClienteCom cliente;
-    
-    @Column(name = "fecha", nullable = false)
     private LocalDate fecha;
-    
-    @Column(name = "total", precision = 10, scale = 2, nullable = false)
     private BigDecimal total;
-    
-    @Column(name = "formaPago", length = 20, nullable = false)
     private String formaPago; // 'EFECTIVO' o 'CREDITO_DIRECTO'
-    
-    @Column(name = "idCreditoBanco")
     private Integer idCreditoBanco;
-    
-    @OneToMany(mappedBy = "factura", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<DetalleFactura> detalles = new ArrayList<>();
     
     public Factura() {
