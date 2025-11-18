@@ -1,31 +1,19 @@
 package ec.edu.pinza.ex_banquito_restjava.entities;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Entidad Cuenta - Representa una cuenta bancaria
+ * POJO Cuenta - Representa una cuenta bancaria (SIN JPA - usa JDBC)
  */
-@Entity
-@Table(name = "CUENTA")
 public class Cuenta implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    @Id
-    @Column(name = "NUM_CUENTA", length = 8, nullable = false)
     private String numCuenta;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "CEDULA", nullable = false)
     private Cliente cliente;
-    
-    @Column(name = "SALDO", precision = 10, scale = 2, nullable = false)
     private BigDecimal saldo;
-    
-    @OneToMany(mappedBy = "cuenta", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Movimiento> movimientos;
     
     // Constructores

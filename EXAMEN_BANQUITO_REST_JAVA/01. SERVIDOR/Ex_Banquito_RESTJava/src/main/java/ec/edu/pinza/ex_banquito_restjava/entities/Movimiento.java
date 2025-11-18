@@ -1,35 +1,20 @@
 package ec.edu.pinza.ex_banquito_restjava.entities;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
- * Entidad Movimiento - Representa una transacción en una cuenta
+ * POJO Movimiento - Representa una transacción en una cuenta (SIN JPA - usa JDBC)
  */
-@Entity
-@Table(name = "MOVIMIENTO")
 public class Movimiento implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "COD_MOVIMIENTO")
     private Integer codMovimiento;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "NUM_CUENTA", nullable = false)
     private Cuenta cuenta;
-    
-    @Column(name = "TIPO", length = 3, nullable = false)
     private String tipo; // 'DEP' = Depósito, 'RET' = Retiro
-    
-    @Column(name = "VALOR", precision = 10, scale = 2, nullable = false)
     private BigDecimal valor;
-    
-    @Column(name = "FECHA", nullable = false)
     private LocalDate fecha;
     
     // Constructores

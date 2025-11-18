@@ -299,10 +299,7 @@ public class FacturaService {
         }
         return dtos;
     }
-    
-    /**
-     * Obtiene TODAS las facturas del sistema (para administrador)
-     */
+
     public List<FacturaResponse> obtenerTodasLasFacturas() {
         List<FacturaResponse> respuestas = new ArrayList<>();
         
@@ -311,6 +308,13 @@ public class FacturaService {
             
             for (Factura factura : facturas) {
                 ClienteCom cliente = factura.getCliente();
+                
+                // Validar que el cliente exista antes de usarlo
+                if (cliente == null) {
+                    System.err.println("⚠️ Factura " + factura.getIdFactura() + " omitida: cliente no encontrado");
+                    continue;
+                }
+                
                 FacturaResponse response = new FacturaResponse();
                 response.setIdFactura(factura.getIdFactura());
                 response.setCedulaCliente(cliente.getCedula());
@@ -366,6 +370,13 @@ public class FacturaService {
             List<Factura> facturas = facturaRepo.findByClienteId(cliente.getIdCliente());
             
             for (Factura factura : facturas) {
+                // Validar que el cliente de la factura exista (doble validación)
+                ClienteCom clienteFactura = factura.getCliente();
+                if (clienteFactura == null) {
+                    System.err.println("⚠️ Factura " + factura.getIdFactura() + " omitida: cliente no encontrado en factura");
+                    continue;
+                }
+                
                 FacturaResponse response = new FacturaResponse();
                 response.setIdFactura(factura.getIdFactura());
                 response.setCedulaCliente(cliente.getCedula());
@@ -419,6 +430,12 @@ public class FacturaService {
             }
             
             ClienteCom cliente = factura.getCliente();
+            
+            // Validar que el cliente exista
+            if (cliente == null) {
+                System.err.println("⚠️ Factura " + idFactura + " tiene cliente nulo, no se puede construir respuesta completa");
+                return null;
+            }
             
             FacturaResponse response = new FacturaResponse();
             response.setIdFactura(factura.getIdFactura());

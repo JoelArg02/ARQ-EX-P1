@@ -1,36 +1,21 @@
 package ec.edu.pinza.ex_banquito_restjava.entities;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.List;
 
 /**
- * Entidad Cliente - Representa un cliente del banco
+ * POJO Cliente - Representa un cliente del banco (SIN JPA - usa JDBC)
  */
-@Entity
-@Table(name = "CLIENTE")
 public class Cliente implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    @Id
-    @Column(name = "CEDULA", length = 10, nullable = false)
     private String cedula;
-    
-    @Column(name = "NOMBRE", length = 100, nullable = false)
     private String nombre;
-    
-    @Column(name = "FECHA_NACIMIENTO", nullable = false)
     private LocalDate fechaNacimiento;
-    
-    @Column(name = "ESTADO_CIVIL", length = 1, nullable = false)
     private String estadoCivil; // 'S' = Soltero, 'C' = Casado
-    
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Cuenta> cuentas;
-    
-    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Credito> creditos;
     
     // Constructores

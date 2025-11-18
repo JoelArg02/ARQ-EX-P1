@@ -1,40 +1,21 @@
 package ec.edu.pinza.ex_banquito_restjava.entities;
 
-import jakarta.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
- * Entidad CuotaAmortizacion - Representa una cuota de la tabla de amortización
+ * POJO CuotaAmortizacion - Representa una cuota de la tabla de amortización (SIN JPA - usa JDBC)
  */
-@Entity
-@Table(name = "CUOTA_AMORTIZACION")
 public class CuotaAmortizacion implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_CUOTA")
     private Integer idCuota;
-    
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "ID_CREDITO", nullable = false)
     private Credito credito;
-    
-    @Column(name = "NUMERO_CUOTA", nullable = false)
     private Integer numeroCuota;
-    
-    @Column(name = "VALOR_CUOTA", precision = 10, scale = 2, nullable = false)
     private BigDecimal valorCuota;
-    
-    @Column(name = "INTERES_PAGADO", precision = 10, scale = 2, nullable = false)
     private BigDecimal interesPagado;
-    
-    @Column(name = "CAPITAL_PAGADO", precision = 10, scale = 2, nullable = false)
     private BigDecimal capitalPagado;
-    
-    @Column(name = "SALDO_RESTANTE", precision = 10, scale = 2, nullable = false)
     private BigDecimal saldoRestante;
     
     // Constructores
