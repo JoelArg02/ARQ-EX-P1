@@ -51,10 +51,7 @@ public class DatabaseConnection {
         }
         return connection;
     }
-    
-    /**
-     * Cerrar la conexión
-     */
+
     public void closeConnection() {
         if (connection != null) {
             try {
@@ -65,10 +62,7 @@ public class DatabaseConnection {
             }
         }
     }
-    
-    /**
-     * Verificar si la conexión está activa
-     */
+
     public boolean isConnected() {
         try {
             return connection != null && !connection.isClosed();

@@ -62,8 +62,8 @@ public class CreditoService {
         }
         
         // 4. Verificar que NO tenga créditos activos
-        boolean tieneCreditsActivos = creditoRepository.tieneCreditsActivos(cedula);
-        if (tieneCreditsActivos) {
+        boolean tieneCreditosActivos = creditoRepository.tieneCreditosActivos(cedula);
+        if (tieneCreditosActivos) {
             return new ValidationResult(false, "El cliente ya tiene un crédito activo");
         }
         
