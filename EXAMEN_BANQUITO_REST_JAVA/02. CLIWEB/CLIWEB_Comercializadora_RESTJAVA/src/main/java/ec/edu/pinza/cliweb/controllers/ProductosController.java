@@ -10,9 +10,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-/**
- * Controlador de Productos (MVC)
- */
 @WebServlet("/productos")
 public class ProductosController extends HttpServlet {
     

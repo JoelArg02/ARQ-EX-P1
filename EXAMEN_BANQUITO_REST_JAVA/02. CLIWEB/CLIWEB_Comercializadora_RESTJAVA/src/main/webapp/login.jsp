@@ -69,6 +69,12 @@
                     <span class="btn-arrow">→</span>
                 </button>
             </form>
+            
+            <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.9); border-radius: 8px; text-align: center;">
+                <small style="color: #666;">
+                    <strong>Credenciales:</strong> Usuario: MONSTER | Contraseña: MONSTER9
+                </small>
+            </div>
         </div>
     </div>
 </body>

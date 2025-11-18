@@ -59,6 +59,17 @@
                     for (ProductoDTO producto : productos) {
             %>
                 <div class="producto-card">
+                    <% if (producto.getImagen() != null && !producto.getImagen().isEmpty()) { %>
+                        <div class="producto-imagen">
+                            <img src="data:image/jpeg;base64,<%= producto.getImagen() %>" 
+                                 alt="<%= producto.getNombre() %>" 
+                                 style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                        </div>
+                    <% } else { %>
+                        <div class="producto-imagen-placeholder" style="width: 100%; height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; border-radius: 8px 8px 0 0;">
+                            <span style="font-size: 4rem; color: white; opacity: 0.5;">📦</span>
+                        </div>
+                    <% } %>
                     <div class="producto-header">
                         <h3><%= producto.getNombre() %></h3>
                         <span class="producto-codigo">Código: <%= producto.getCodigo() %></span>
