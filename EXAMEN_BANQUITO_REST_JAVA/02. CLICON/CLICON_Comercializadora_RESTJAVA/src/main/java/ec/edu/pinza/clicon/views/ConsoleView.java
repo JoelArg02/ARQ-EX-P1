@@ -12,6 +12,35 @@ import java.util.List;
  */
 public class ConsoleView {
 
+    // --- METHODS ADDED TO FIX THE ERROR ---
+    
+    /**
+     * Muestra un mensaje estándar en la consola.
+     * @param mensaje El texto a mostrar.
+     */
+    public void mostrarMensaje(String mensaje) {
+        System.out.println(mensaje);
+    }
+    
+    /**
+     * Muestra un mensaje de error, usualmente en un color diferente (rojo) en la consola.
+     * @param mensajeError El texto del error a mostrar.
+     */
+    public void mostrarError(String mensajeError) {
+        // System.err suele imprimir en rojo en muchos IDEs y terminales.
+        System.err.println("ERROR: " + mensajeError);
+    }
+
+    /**
+     * Muestra un mensaje de éxito.
+     * @param mensajeExito El texto de éxito a mostrar.
+     */
+    public void mostrarExito(String mensajeExito) {
+        System.out.println(mensajeExito);
+    }
+    
+    // --- EXISTING STATIC METHODS ---
+
     public static void mostrarProductos(List<ProductoDTO> productos) {
         System.out.println("\n=== Productos disponibles ===");
         System.out.printf("%-5s %-12s %-40s %-10s %-8s%n", "ID", "Codigo", "Nombre", "Precio", "Stock");

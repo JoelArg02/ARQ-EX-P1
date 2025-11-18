@@ -38,7 +38,7 @@ public class Producto implements Serializable {
         this.nombre = nombre;
         this.precio = precio;
         this.stock = stock;
-        this.image = image;
+        this.imagen = image;
     }
     
     // Getters y Setters
