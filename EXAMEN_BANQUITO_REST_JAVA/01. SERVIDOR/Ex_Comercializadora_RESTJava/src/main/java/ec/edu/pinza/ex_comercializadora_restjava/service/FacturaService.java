@@ -305,8 +305,10 @@ public class FacturaService {
         
         try {
             List<Factura> facturas = facturaRepo.findAll();
+            System.out.println("✅ TOTAL FACTURAS ENCONTRADAS EN BD: " + facturas.size());
             
             for (Factura factura : facturas) {
+                System.out.println("📋 Procesando factura ID: " + factura.getIdFactura());
                 ClienteCom cliente = factura.getCliente();
                 
                 // Validar que el cliente exista antes de usarlo
@@ -347,9 +349,13 @@ public class FacturaService {
                 }
                 
                 respuestas.add(response);
+                System.out.println("✅ Factura " + factura.getIdFactura() + " agregada a respuesta");
             }
+            
+            System.out.println("📊 TOTAL FACTURAS EN RESPUESTA: " + respuestas.size());
         } catch (Exception e) {
-            System.err.println("Error al obtener todas las facturas: " + e.getMessage());
+            System.err.println("❌ Error al obtener todas las facturas: " + e.getMessage());
+            e.printStackTrace();
         }
         
         return respuestas;
