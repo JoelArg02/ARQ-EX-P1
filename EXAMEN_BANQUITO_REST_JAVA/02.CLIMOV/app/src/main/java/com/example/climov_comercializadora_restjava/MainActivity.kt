@@ -66,6 +66,8 @@ import com.example.climov_comercializadora_restjava.controllers.AppController
 import com.example.climov_comercializadora_restjava.controllers.UiState
 import com.example.climov_comercializadora_restjava.models.FacturaResponseDTO
 import com.example.climov_comercializadora_restjava.models.ProductoDTO
+import com.example.climov_comercializadora_restjava.components.ProductImage
+import com.example.climov_comercializadora_restjava.screens.AdminProductosScreen
 import java.math.BigDecimal
 import java.math.RoundingMode
 
@@ -87,7 +89,8 @@ class MainActivity : ComponentActivity() {
 enum class HomeTab(val route: String, val label: String) {
     Productos("productos", "Productos"),
     Carrito("carrito", "Carrito"),
-    Compras("compras", "Mis compras")
+    Compras("compras", "Mis compras"),
+    Admin("admin", "Admin")
 }
 
 @Composable
@@ -201,6 +204,9 @@ fun HomeScreen(controller: AppController, state: UiState, snackbarHostState: Sna
             composable(HomeTab.Compras.route) {
                 MisComprasScreen(state, onBuscar = controller::cargarMisCompras, onDetalle = controller::cargarFacturaDetalle)
             }
+            composable(HomeTab.Admin.route) {
+                AdminProductosScreen(state = state, controller = controller)
+            }
         }
     }
 }
@@ -221,6 +227,17 @@ fun ProductoCard(producto: ProductoDTO, onAdd: (Int) -> Unit) {
     var cantidadText by remember { mutableStateOf("1") }
     Card(colors = CardDefaults.cardColors(containerColor = androidx.compose.material3.MaterialTheme.colorScheme.surfaceVariant), modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(12.dp)) {
+            // Imagen del producto
+            if (!producto.imagen.isNullOrBlank()) {
+                ProductImage(
+                    base64Image = producto.imagen,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(150.dp)
+                )
+                Spacer(Modifier.height(8.dp))
+            }
+            
             Text(producto.nombre, fontWeight = FontWeight.Bold, fontSize = 18.sp)
             Text("Codigo: ${producto.codigo}", color = Color.Gray, fontSize = 12.sp)
             Text("Precio: $${producto.precio} | Stock: ${producto.stock}")

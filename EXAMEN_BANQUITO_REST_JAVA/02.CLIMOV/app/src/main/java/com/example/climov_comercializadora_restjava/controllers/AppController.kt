@@ -151,6 +151,48 @@ class AppController(
         _state.value = _state.value.copy(mensaje = null)
     }
 
+    fun mostrarMensaje(mensaje: String) {
+        _state.value = _state.value.copy(mensaje = mensaje)
+    }
+
+    // ===== Métodos de administración de productos =====
+    
+    fun crearProducto(producto: ProductoDTO) {
+        viewModelScope.launch {
+            try {
+                productosController.crearProducto(producto)
+                _state.value = _state.value.copy(mensaje = "Producto creado exitosamente")
+                cargarProductos()
+            } catch (e: Exception) {
+                _state.value = _state.value.copy(mensaje = "Error al crear producto: ${e.message}")
+            }
+        }
+    }
+
+    fun actualizarProducto(id: Int, producto: ProductoDTO) {
+        viewModelScope.launch {
+            try {
+                productosController.actualizarProducto(id, producto)
+                _state.value = _state.value.copy(mensaje = "Producto actualizado exitosamente")
+                cargarProductos()
+            } catch (e: Exception) {
+                _state.value = _state.value.copy(mensaje = "Error al actualizar producto: ${e.message}")
+            }
+        }
+    }
+
+    fun eliminarProducto(id: Int) {
+        viewModelScope.launch {
+            try {
+                productosController.eliminarProducto(id)
+                _state.value = _state.value.copy(mensaje = "Producto eliminado exitosamente")
+                cargarProductos()
+            } catch (e: Exception) {
+                _state.value = _state.value.copy(mensaje = "Error al eliminar producto: ${e.message}")
+            }
+        }
+    }
+
     companion object {
         val factory: ViewModelProvider.Factory = object : ViewModelProvider.Factory {
             @Suppress("UNCHECKED_CAST")
