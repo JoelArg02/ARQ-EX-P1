@@ -8,5 +8,6 @@ data class ProductoDTO(
     @SerializedName("codigo") val codigo: String,
     @SerializedName("nombre") val nombre: String,
     @SerializedName("precio") val precio: BigDecimal,
-    @SerializedName("stock") val stock: Int
+    @SerializedName("stock") val stock: Int,
+    @SerializedName("imagen") val imagen: String?
 )

@@ -1,11 +1,13 @@
 package ec.edu.pinza.ex_comercializadora_restjava.entities;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
 @Entity
 @Table(name = "Producto")
+@JsonInclude(JsonInclude.Include.ALWAYS)
 public class Producto implements Serializable {
     
     private static final long serialVersionUID = 1L;

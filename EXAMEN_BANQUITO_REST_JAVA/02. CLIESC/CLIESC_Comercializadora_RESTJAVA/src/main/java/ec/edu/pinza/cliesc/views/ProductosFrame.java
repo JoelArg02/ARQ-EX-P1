@@ -4,6 +4,7 @@ import ec.edu.pinza.cliesc.controllers.ProductosController;
 import ec.edu.pinza.cliesc.managers.SessionManager;
 import ec.edu.pinza.cliesc.models.ProductoDTO;
 import ec.edu.pinza.cliesc.utils.FormatUtils;
+import ec.edu.pinza.cliesc.utils.ImageUtils;
 import ec.edu.pinza.cliesc.utils.UIConstants;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -178,6 +179,19 @@ public class ProductosFrame extends JFrame {
                 BorderFactory.createLineBorder(UIConstants.COLOR_CARD_HOVER, 1),
                 new EmptyBorder(15, 15, 15, 15)
         ));
+
+        // Imagen del producto
+        JLabel lblImagen = new JLabel();
+        lblImagen.setAlignmentX(Component.CENTER_ALIGNMENT);
+        lblImagen.setPreferredSize(new Dimension(200, 150));
+        lblImagen.setMaximumSize(new Dimension(200, 150));
+        
+        ImageIcon iconoProducto = ImageUtils.base64ToImageIcon(producto.getImagen(), 200, 150);
+        lblImagen.setIcon(iconoProducto);
+        lblImagen.setBorder(BorderFactory.createLineBorder(UIConstants.COLOR_CARD_HOVER, 1));
+        card.add(lblImagen);
+        
+        card.add(Box.createRigidArea(new Dimension(0, 10)));
 
         JLabel lblNombre = new JLabel(producto.getNombre());
         lblNombre.setFont(UIConstants.FONT_SUBTITLE);
