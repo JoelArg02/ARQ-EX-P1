@@ -25,7 +25,7 @@ ${PAYARA_DIR}/bin/asadmin start-domain --verbose=false &
 # Esperar que Payara esté listo
 sleep 15
 
-# Configurar JDBC Connection Pool
+# Configurar JDBC Connection Pool (SIN cambiar puertos, usa los default 8080/4848)
 ${PAYARA_DIR}/bin/asadmin --user admin --passwordfile=/opt/payara/passwordFile create-jdbc-connection-pool \
   --datasourceclassname com.mysql.cj.jdbc.MysqlDataSource \
   --restype javax.sql.DataSource \
@@ -41,10 +41,10 @@ ${PAYARA_DIR}/bin/asadmin --user admin --passwordfile=/opt/payara/passwordFile c
 ${PAYARA_DIR}/bin/asadmin --user admin --passwordfile=/opt/payara/passwordFile ping-connection-pool BanquitoPool
 
 # Desplegar aplicación WAR
-echo "Desplegando aplicación WAR..."
+echo "Desplegando aplicación Banquito..."
 ${PAYARA_DIR}/bin/asadmin --user admin --passwordfile=/opt/payara/passwordFile deploy --force=true ${DEPLOY_DIR}/*.war
 
-echo "=== Datasource configurado y aplicación desplegada ==="
+echo "=== Datasource Banquito configurado y aplicación desplegada ==="
 
 # Detener Payara y esperar a que realmente se detenga
 echo "Deteniendo Payara para reinicio limpio..."
@@ -52,7 +52,7 @@ ${PAYARA_DIR}/bin/asadmin stop-domain
 
 # Esperar a que el dominio se detenga completamente
 for i in {1..10}; do
-  if ! ${PAYARA_DIR}/bin/asadmin list-domains | grep -q "domain1 running"; then
+  if ! ${PAYARA_DIR}/bin/asadmin list-domains 2>/dev/null | grep -q "domain1 running"; then
     echo "Dominio detenido completamente"
     break
   fi

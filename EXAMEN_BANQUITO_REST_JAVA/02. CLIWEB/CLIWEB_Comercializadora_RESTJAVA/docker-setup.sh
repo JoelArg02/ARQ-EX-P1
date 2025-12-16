@@ -3,10 +3,10 @@
 # Iniciar Payara en background
 ${PAYARA_DIR}/bin/asadmin start-domain --verbose=false &
 
-# Esperar que esté listo
+# Esperar que Payara esté listo
 sleep 15
 
-# Desplegar aplicación
+# Desplegar aplicación WAR
 echo "Desplegando Cliente Web..."
 ${PAYARA_DIR}/bin/asadmin --user admin --passwordfile=/opt/payara/passwordFile deploy --force=true ${DEPLOY_DIR}/*.war
 
