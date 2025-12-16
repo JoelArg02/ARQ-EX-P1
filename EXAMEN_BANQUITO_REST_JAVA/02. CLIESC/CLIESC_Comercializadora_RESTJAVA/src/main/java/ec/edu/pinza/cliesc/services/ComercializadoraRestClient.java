@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class ComercializadoraRestClient {
 
-    private static final String BASE_URL = "http://159.203.120.118:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api";
+    private static final String BASE_URL = "http://159.203.120.118:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api/";
     private final HttpClient httpClient;
     private final Gson gson;
 
