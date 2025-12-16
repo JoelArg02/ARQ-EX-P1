@@ -15,7 +15,7 @@ import java.util.Map;
 
 public class BanquitoRestClient implements AutoCloseable {
 
-    private static final String BASE_URL = "http://104.248.78.221:8080/Ex_Banquito_RESTJava-1.0-SNAPSHOT/api";
+    private static final String BASE_URL = "http://159.203.120.118:8080/Ex_Banquito_RESTJava-1.0-SNAPSHOT/api";
 
     private final HttpClient httpClient;
     private final ObjectMapper mapper;

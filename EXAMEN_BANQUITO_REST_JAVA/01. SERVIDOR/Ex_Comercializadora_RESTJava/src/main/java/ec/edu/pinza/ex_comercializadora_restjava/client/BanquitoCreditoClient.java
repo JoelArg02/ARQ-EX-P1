@@ -19,7 +19,7 @@ import java.util.Map;
  */
 public class BanquitoCreditoClient {
     
-    private static final String BASE_URL = "http://104.248.78.221:8080/Ex_Banquito_RESTJava-1.0-SNAPSHOT/api/creditos";
+    private static final String BASE_URL = "http://159.203.120.118:8080/Ex_Banquito_RESTJava-1.0-SNAPSHOT/api/creditos";
     private final Client client;
     private final WebTarget baseTarget;
     

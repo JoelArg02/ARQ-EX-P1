@@ -135,7 +135,7 @@
             content.innerHTML = '<div class="loading">Cargando tabla de amortización...</div>';
             
             // Obtener la factura del servidor REST de Comercializadora
-            fetch('http://104.248.78.221:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api/facturas/' + idFactura)
+            fetch('http://159.203.120.118:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api/facturas/' + idFactura)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('HTTP ' + response.status);
