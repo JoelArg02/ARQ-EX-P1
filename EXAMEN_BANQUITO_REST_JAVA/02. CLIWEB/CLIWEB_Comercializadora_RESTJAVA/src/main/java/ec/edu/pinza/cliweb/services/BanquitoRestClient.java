@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class BanquitoRestClient {
     
-    private static final String BASE_URL = "http://localhost:8080/Ex_Banquito_RESTJava/api";
+    private static final String BASE_URL = "http://192.168.68.104:8080/Ex_Banquito_RESTJava-1.0-SNAPSHOT/api";
     private final Client client;
     private final WebTarget baseTarget;
     

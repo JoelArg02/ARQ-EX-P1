@@ -18,9 +18,7 @@ import java.util.Map;
  */
 public class ComercializadoraRestClient {
     
-    private static final String BASE_URL = System.getenv("API_COMERCIALIZADORA_URL") != null 
-        ? System.getenv("API_COMERCIALIZADORA_URL")
-        : "http://localhost:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api";
+    private static final String BASE_URL = "http://192.168.68.104:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api";
     private final Client client;
     private final WebTarget baseTarget;
     

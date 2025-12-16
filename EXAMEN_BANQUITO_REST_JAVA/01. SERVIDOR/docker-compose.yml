@@ -98,6 +98,40 @@ services:
       - API_COMERCIALIZADORA_URL=http://backend_comercializadora:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api
     restart: unless-stopped
 
+  phpmyadmin_banquito:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin_banquito
+    ports:
+      - "8090:80"
+    depends_on:
+      - mysql_banquito
+    networks:
+      - app_network
+    environment:
+      - PMA_HOST=mysql_banquito
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
+    restart: unless-stopped
+
+  phpmyadmin_comercializadora:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin_comercializadora
+    ports:
+      - "8091:80"
+    depends_on:
+      - mysql_comercializadora
+    networks:
+      - app_network
+    environment:
+      - PMA_HOST=mysql_comercializadora
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=root
+      - MYSQL_ROOT_PASSWORD=root
+    restart: unless-stopped
+
 
 networks:
   app_network:
