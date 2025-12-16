@@ -19,7 +19,11 @@ import java.util.Map;
  */
 public class BanquitoCreditoClient {
     
-    private static final String BASE_URL = "http://localhost:8080/Ex_Banquito_RESTJava/api/creditos";
+    // Usar variable de entorno o localhost por defecto
+    private static final String BANQUITO_HOST = System.getenv("BANQUITO_HOST") != null 
+        ? System.getenv("BANQUITO_HOST") 
+        : "localhost:8080";
+    private static final String BASE_URL = "http://" + BANQUITO_HOST + "/Ex_Banquito_RESTJava/api/creditos";
     private final Client client;
     private final WebTarget baseTarget;
     

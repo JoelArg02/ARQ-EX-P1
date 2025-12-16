@@ -19,7 +19,7 @@ CREATE TABLE Producto (
     nombre VARCHAR(100) NOT NULL,
     precio DECIMAL(10,2) NOT NULL,
     stock INT NOT NULL DEFAULT 0,
-    imagen TEXT NULL COMMENT 'Imagen del producto en formato base64',
+    imagen LONGTEXT NULL COMMENT 'Imagen del producto en formato base64',
     CONSTRAINT chk_precio_positivo CHECK (precio > 0),
     CONSTRAINT chk_stock_positivo CHECK (stock >= 0)
 ) ENGINE=InnoDB;

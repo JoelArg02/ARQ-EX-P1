@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class BanquitoRestClient {
     
-    private static final String BASE_URL = "http://localhost:8080/Ex_Banquito_RESTJava/api";
+    private static final String BASE_URL = "http://192.168.68.104:8080/Ex_Banquito_RESTJava-1.0-SNAPSHOT/api";
     private final HttpClient httpClient;
     private final Gson gson;
     

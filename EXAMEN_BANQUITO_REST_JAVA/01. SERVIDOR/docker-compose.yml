@@ -12,6 +12,11 @@ services:
       - mysql_banquito_data:/var/lib/mysql
     networks:
       - app_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   mysql_comercializadora:
     image: mysql:8.0
@@ -26,6 +31,72 @@ services:
       - mysql_comercializadora_data:/var/lib/mysql
     networks:
       - app_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-proot"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend_banquito:
+    build:
+      context: ./Ex_Banquito_RESTJava
+      dockerfile: Dockerfile
+    container_name: backend_banquito
+    ports:
+      - "8080:8080"
+      - "4848:4848"
+    depends_on:
+      mysql_banquito:
+        condition: service_healthy
+    networks:
+      - app_network
+    environment:
+      - DB_HOST=mysql_banquito
+      - DB_PORT=3306
+      - DB_NAME=banquito_db
+      - DB_USER=root
+      - DB_PASSWORD=root
+    restart: unless-stopped
+
+  backend_comercializadora:
+    build:
+      context: ./Ex_Comercializadora_RESTJava
+      dockerfile: Dockerfile
+    container_name: backend_comercializadora
+    ports:
+      - "8081:8080"
+      - "4849:4849"
+    depends_on:
+      mysql_comercializadora:
+        condition: service_healthy
+      backend_banquito:
+        condition: service_started
+    networks:
+      - app_network
+    environment:
+      - DB_HOST=mysql_comercializadora
+      - DB_PORT=3306
+      - DB_NAME=comercializadora_db
+      - DB_USER=root
+      - DB_PASSWORD=root
+      - BANQUITO_HOST=backend_banquito:8080
+    restart: unless-stopped
+
+  cliweb_comercializadora:
+    build:
+      context: ../02. CLIWEB/CLIWEB_Comercializadora_RESTJAVA
+      dockerfile: Dockerfile
+    container_name: cliweb_comercializadora
+    ports:
+      - "8082:8080"
+      - "4850:4848"
+    depends_on:
+      - backend_comercializadora
+    networks:
+      - app_network
+    environment:
+      - API_COMERCIALIZADORA_URL=http://backend_comercializadora:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api
+    restart: unless-stopped
 
 
 networks:
