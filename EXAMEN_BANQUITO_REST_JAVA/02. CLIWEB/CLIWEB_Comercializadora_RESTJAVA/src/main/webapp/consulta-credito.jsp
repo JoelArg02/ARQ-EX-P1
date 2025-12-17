@@ -115,6 +115,19 @@
     </style>
 </head>
 <body>
+    <%
+        // Obtener información del usuario logueado
+        String rol = (String) session.getAttribute("rol");
+        String nombreCliente = (String) session.getAttribute("nombreCliente");
+        String usuario = (String) session.getAttribute("usuario");
+        boolean isAdmin = "ADMIN".equals(rol);
+        
+        // Si no está logueado, redirigir al login
+        if (usuario == null) {
+            response.sendRedirect(request.getContextPath() + "/login");
+            return;
+        }
+    %>
     <nav class="navbar">
         <div class="nav-container">
             <h1>🛒 COMERCIALIZADORA MONSTER</h1>
@@ -123,6 +136,10 @@
                 <a href="${pageContext.request.contextPath}/carrito">Factura 📄</a>
                 <a href="${pageContext.request.contextPath}/ventas">Mis Ventas</a>
                 <a href="${pageContext.request.contextPath}/consulta-credito" class="active">Consultar Crédito</a>
+                <% if (isAdmin) { %>
+                    <a href="${pageContext.request.contextPath}/admin/productos" style="background: linear-gradient(135deg, #FF9800 0%, #FF5722 100%); padding: 8px 16px; border-radius: 5px;">🛠️ Admin</a>
+                <% } %>
+                <span style="color: #64748b; padding: 8px;">👤 <%= usuario %> <% if (!isAdmin && nombreCliente != null) { %>(<%= nombreCliente %>)<% } else if (isAdmin) { %>(Admin)<% } %></span>
                 <a href="${pageContext.request.contextPath}/login?action=logout" class="btn-logout">Salir</a>
             </div>
         </div>

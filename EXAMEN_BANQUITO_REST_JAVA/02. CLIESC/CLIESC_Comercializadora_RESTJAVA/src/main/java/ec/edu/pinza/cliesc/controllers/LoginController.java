@@ -1,23 +1,25 @@
 package ec.edu.pinza.cliesc.controllers;
 
 import ec.edu.pinza.cliesc.managers.SessionManager;
+import ec.edu.pinza.cliesc.models.LoginResponseDTO;
+import ec.edu.pinza.cliesc.services.ComercializadoraRestClient;
 import ec.edu.pinza.cliesc.views.LoginFrame;
 import ec.edu.pinza.cliesc.views.ProductosFrame;
 import javax.swing.SwingUtilities;
 
 /**
- * Controlador para la vista de Login (mismas credenciales que CLIWEB).
+ * Controlador para la vista de Login con autenticación dinámica via REST.
+ * ADMIN: MONSTER / MONSTER9 (puede vender a cualquier cédula)
+ * CLIENTES: cédula / abcd1234 (solo pueden comprar para su propia cédula)
  */
 public class LoginController {
 
-    private static final String USUARIO_VALIDO = "MONSTER";
-    private static final String PASSWORD_VALIDO = "MONSTER9";
-    private static final String CEDULA_DEMO = "1750123456";
-
     private final LoginFrame view;
+    private final ComercializadoraRestClient restClient;
 
     public LoginController(LoginFrame view) {
         this.view = view;
+        this.restClient = new ComercializadoraRestClient();
     }
 
     public void iniciarSesion() {
@@ -29,8 +31,16 @@ public class LoginController {
             return;
         }
 
-        if (USUARIO_VALIDO.equals(usuario) && PASSWORD_VALIDO.equals(contrasena)) {
-            SessionManager.getInstance().setCliente(usuario, CEDULA_DEMO);
+        // Llamar al API de autenticación
+        LoginResponseDTO response = restClient.login(usuario, contrasena);
+        
+        if (response != null && response.isExitoso()) {
+            // Guardar datos en sesión con el rol
+            SessionManager.getInstance().setCliente(
+                response.getUsername(),
+                response.getCedula(),
+                response.getRol()
+            );
 
             view.limpiarCampos();
             view.dispose();
@@ -40,7 +50,10 @@ public class LoginController {
                 productosFrame.setVisible(true);
             });
         } else {
-            view.mostrarError("Usuario o contraseña incorrectos");
+            String mensaje = response != null && response.getMensaje() != null
+                    ? response.getMensaje()
+                    : "Usuario o contraseña incorrectos";
+            view.mostrarError(mensaje);
         }
     }
 }

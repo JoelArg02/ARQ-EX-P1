@@ -43,10 +43,13 @@ public class CarritoFrame extends JFrame {
         centerPanel.setBackground(UIConstants.COLOR_BACKGROUND);
         centerPanel.setBorder(new EmptyBorder(30, 30, 30, 30));
 
+        JPanel tituloPanel = new JPanel();
+        tituloPanel.setBackground(UIConstants.COLOR_BACKGROUND);
         JLabel lblTitulo = new JLabel("Mi Factura");
         lblTitulo.setFont(UIConstants.FONT_TITLE);
         lblTitulo.setForeground(Color.WHITE);
-        centerPanel.add(lblTitulo, BorderLayout.NORTH);
+        tituloPanel.add(lblTitulo);
+        centerPanel.add(tituloPanel, BorderLayout.NORTH);
 
         String[] columnas = {"Producto", "Precio Unit.", "Cantidad", "Subtotal"};
         tableModel = new DefaultTableModel(columnas, 0) {
@@ -60,9 +63,10 @@ public class CarritoFrame extends JFrame {
         table.setFont(UIConstants.FONT_NORMAL);
         table.setRowHeight(40);
         table.setBackground(UIConstants.COLOR_CARD);
-        table.setForeground(Color.WHITE);
-        table.setGridColor(UIConstants.COLOR_CARD_HOVER);
-        table.setSelectionBackground(UIConstants.COLOR_PRIMARY_START);
+        table.setForeground(UIConstants.COLOR_TEXT_DARK);
+        table.setGridColor(new Color(226, 232, 240));
+        table.setSelectionBackground(UIConstants.COLOR_CARD_HOVER);
+        table.setSelectionForeground(UIConstants.COLOR_TEXT_DARK);
 
         JTableHeader header = table.getTableHeader();
         header.setFont(UIConstants.FONT_BUTTON);

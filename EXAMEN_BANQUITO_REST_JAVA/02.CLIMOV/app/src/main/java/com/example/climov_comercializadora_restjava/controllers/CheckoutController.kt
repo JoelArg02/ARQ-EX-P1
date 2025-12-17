@@ -4,6 +4,7 @@ import com.example.climov_comercializadora_restjava.models.FacturaRequest
 import com.example.climov_comercializadora_restjava.models.FacturaResponseDTO
 import com.example.climov_comercializadora_restjava.models.ItemCarrito
 import com.example.climov_comercializadora_restjava.services.ComercializadoraApi
+import com.google.gson.Gson
 
 class CheckoutController(private val api: ComercializadoraApi) {
 
@@ -30,7 +31,19 @@ class CheckoutController(private val api: ComercializadoraApi) {
                     Result.failure(IllegalStateException(factura?.mensaje ?: "No se pudo crear la factura"))
                 }
             } else {
-                Result.failure(IllegalStateException("Error HTTP ${resp.code()} al crear factura"))
+                // Parsear el error del body
+                val errorBody = resp.errorBody()?.string()
+                val mensaje = if (errorBody != null) {
+                    try {
+                        val errorResponse = Gson().fromJson(errorBody, FacturaResponseDTO::class.java)
+                        errorResponse.mensaje ?: "Error HTTP ${resp.code()}"
+                    } catch (e: Exception) {
+                        "Error HTTP ${resp.code()}: $errorBody"
+                    }
+                } else {
+                    "Error HTTP ${resp.code()} al crear factura"
+                }
+                Result.failure(IllegalStateException(mensaje))
             }
         } catch (e: Exception) {
             Result.failure(e)

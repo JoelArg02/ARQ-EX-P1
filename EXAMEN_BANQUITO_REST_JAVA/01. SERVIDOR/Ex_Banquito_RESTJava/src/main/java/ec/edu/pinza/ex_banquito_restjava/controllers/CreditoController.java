@@ -156,7 +156,12 @@ public class CreditoController {
             response.setAprobado(true);
             response.setMensaje("Tabla de amortización");
             response.setIdCredito(resultado.getCredito().getIdCredito());
-            response.setCedula(resultado.getCredito().getCliente().getCedula());
+            // Manejar caso donde cliente puede ser null
+            if (resultado.getCredito().getCliente() != null) {
+                response.setCedula(resultado.getCredito().getCliente().getCedula());
+            } else {
+                response.setCedula("N/A");
+            }
             response.setMontoAprobado(resultado.getCredito().getMontoAprobado());
             response.setMontoMaximoAutorizado(resultado.getCredito().getMontoMaximoAutorizado());
             response.setPlazoMeses(resultado.getCredito().getPlazoMeses());

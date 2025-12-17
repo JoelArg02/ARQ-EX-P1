@@ -1,6 +1,7 @@
 package ec.edu.pinza.cliweb.services;
 
 import ec.edu.pinza.cliweb.models.FacturaResponseDTO;
+import ec.edu.pinza.cliweb.models.LoginResponseDTO;
 import ec.edu.pinza.cliweb.models.ProductoDTO;
 import jakarta.ws.rs.client.Client;
 import jakarta.ws.rs.client.ClientBuilder;
@@ -18,7 +19,8 @@ import java.util.Map;
  */
 public class ComercializadoraRestClient {
     
-    private static final String BASE_URL = "http://192.168.68.104:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api";
+    // Para desarrollo local con Docker backend en puerto 8081
+    private static final String BASE_URL = "http://localhost:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api";
     private final Client client;
     private final WebTarget baseTarget;
     
@@ -27,6 +29,40 @@ public class ComercializadoraRestClient {
         this.baseTarget = client.target(BASE_URL);
     }
     
+    /**
+     * Autentica un usuario con username y password
+     */
+    public LoginResponseDTO login(String username, String password) {
+        try {
+            Map<String, String> request = new HashMap<>();
+            request.put("username", username);
+            request.put("password", password);
+            
+            Response response = baseTarget
+                .path("auth/login")
+                .request(MediaType.APPLICATION_JSON)
+                .post(Entity.json(request));
+            
+            if (response.getStatus() == 200) {
+                return response.readEntity(LoginResponseDTO.class);
+            } else if (response.getStatus() == 401 || response.getStatus() == 400) {
+                return response.readEntity(LoginResponseDTO.class);
+            }
+            
+            LoginResponseDTO error = new LoginResponseDTO();
+            error.setExitoso(false);
+            error.setMensaje("Error de conexión: HTTP " + response.getStatus());
+            return error;
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            LoginResponseDTO error = new LoginResponseDTO();
+            error.setExitoso(false);
+            error.setMensaje("Error de comunicación con el servidor: " + e.getMessage());
+            return error;
+        }
+    }
+
     /**
      * Obtiene todos los productos disponibles
      */

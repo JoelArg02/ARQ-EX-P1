@@ -13,6 +13,7 @@ public class SessionManager {
 
     private String usuario;
     private String cedula;
+    private String rol;
     private final List<ItemCarrito> carrito;
 
     private SessionManager() {
@@ -27,9 +28,18 @@ public class SessionManager {
     }
 
     // ===== Datos de usuario =====
-    public void setCliente(String usuario, String cedula) {
+    public void setCliente(String usuario, String cedula, String rol) {
         this.usuario = usuario;
         this.cedula = cedula;
+        this.rol = rol;
+    }
+    
+    public String getRol() {
+        return rol;
+    }
+    
+    public boolean isAdmin() {
+        return "ADMIN".equals(rol);
     }
 
     public String getUsuario() {
@@ -47,6 +57,7 @@ public class SessionManager {
     public void cerrarSesion() {
         this.usuario = null;
         this.cedula = null;
+        this.rol = null;
         this.carrito.clear();
     }
 

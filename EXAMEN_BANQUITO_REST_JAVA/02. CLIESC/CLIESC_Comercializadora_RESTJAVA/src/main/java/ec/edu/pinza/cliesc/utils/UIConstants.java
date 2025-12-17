@@ -13,20 +13,20 @@ public class UIConstants {
     public static final Color COLOR_PRIMARY_END = new Color(102, 126, 234);  // #667eea
     
     // Colores complementarios
-    public static final Color COLOR_SUCCESS = new Color(34, 197, 94);        // Verde
-    public static final Color COLOR_ERROR = new Color(239, 68, 68);          // Rojo
-    public static final Color COLOR_WARNING = new Color(251, 191, 36);       // Amarillo
-    public static final Color COLOR_INFO = new Color(59, 130, 246);          // Azul
+    public static final Color COLOR_SUCCESS = new Color(22, 163, 74);        // Verde (#16a34a)
+    public static final Color COLOR_ERROR = new Color(220, 38, 38);          // Rojo (#dc2626)
+    public static final Color COLOR_WARNING = new Color(245, 158, 11);       // Amarillo (#f59e0b)
+    public static final Color COLOR_INFO = new Color(37, 99, 235);           // Azul (#2563eb)
     
     // Colores de texto
     public static final Color COLOR_TEXT_PRIMARY = new Color(255, 255, 255); // Blanco
-    public static final Color COLOR_TEXT_SECONDARY = new Color(156, 163, 175); // Gris claro
-    public static final Color COLOR_TEXT_DARK = new Color(31, 41, 55);       // Gris oscuro
+    public static final Color COLOR_TEXT_SECONDARY = new Color(100, 116, 139); // Gris claro
+    public static final Color COLOR_TEXT_DARK = new Color(30, 41, 59);       // Gris oscuro (#1e293b)
     
     // Colores de fondo
-    public static final Color COLOR_BACKGROUND = new Color(17, 24, 39);      // Fondo oscuro
-    public static final Color COLOR_CARD = new Color(31, 41, 55);            // Card oscuro
-    public static final Color COLOR_CARD_HOVER = new Color(55, 65, 81);      // Card hover
+    public static final Color COLOR_BACKGROUND = new Color(102, 126, 234);   // Fondo con gradiente base (#667eea)
+    public static final Color COLOR_CARD = new Color(255, 255, 255);         // Card blanco
+    public static final Color COLOR_CARD_HOVER = new Color(248, 250, 252);   // Card hover (#f8fafc)
     
     // Fuentes
     public static final Font FONT_TITLE = new Font("Segoe UI", Font.BOLD, 24);

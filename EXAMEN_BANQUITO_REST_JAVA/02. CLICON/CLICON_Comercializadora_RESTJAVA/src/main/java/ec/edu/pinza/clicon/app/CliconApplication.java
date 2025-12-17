@@ -299,7 +299,7 @@ public class CliconApplication {
             System.out.println("\n=== Monto Maximo de Credito ===");
             System.out.println("Cedula: " + response.get("cedula"));
             System.out.println("Monto maximo: $" + response.get("montoMaximo"));
-            System.out.println("Mensaje: " + response.get("motivo"));
+            System.out.println("Mensaje: " + response.get("mensaje"));
         } catch (IOException | InterruptedException e) {
             System.out.println("Error al consultar monto maximo: " + e.getMessage());
         }

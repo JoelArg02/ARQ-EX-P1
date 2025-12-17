@@ -22,7 +22,7 @@ import java.util.Map;
  */
 public class ComercializadoraRestClient implements AutoCloseable {
 
-    private static final String BASE_URL = "http://localhost:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api";
+    private static final String BASE_URL = "http://localhost:8080/Ex_Comercializadora_RESTJava/api";
 
     private final HttpClient httpClient;
     private final ObjectMapper mapper;

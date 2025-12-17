@@ -6,74 +6,185 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login - Comercializadora MONSTER</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles.css">
+    <style>
+        .login-body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        
+        .login-container {
+            width: 100%;
+            max-width: 450px;
+        }
+        
+        .login-card {
+            background: white;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .login-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .login-header h1 {
+            font-size: 2.5rem;
+            color: #1e293b;
+            margin-bottom: 0.5rem;
+        }
+        
+        .login-header p {
+            color: #64748b;
+            font-size: 1rem;
+        }
+        
+        .login-form .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .login-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .login-form input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        .login-form input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        
+        .login-form button {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        
+        .login-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+        
+        .alert-error {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: #dc2626;
+            padding: 1rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+        
+        .login-footer {
+            text-align: center;
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .login-footer p {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .credentials-info {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .credentials-info h4 {
+            color: #16a34a;
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .credentials-info ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            font-size: 0.85rem;
+            color: #1e293b;
+        }
+        
+        .credentials-info li {
+            padding: 0.25rem 0;
+        }
+        
+        .credentials-info strong {
+            color: #16a34a;
+        }
+    </style>
 </head>
 <body class="login-body">
-    <!-- Decoraci√≥n de fondo -->
-    <div class="monster-decoration">
-        <div class="circle circle-1"></div>
-        <div class="circle circle-2"></div>
-        <div class="circle circle-3"></div>
-    </div>
-    
     <div class="login-container">
         <div class="login-card">
-            <!-- Sully Character -->
-            <div class="monster-character">
-                <div class="sully">
-                    <div class="sully-head">
-                        <div class="sully-horn horn-left"></div>
-                        <div class="sully-horn horn-right"></div>
-                        <div class="sully-eye eye-left">
-                            <div class="pupil"></div>
-                        </div>
-                        <div class="sully-eye eye-right">
-                            <div class="pupil"></div>
-                        </div>
-                        <div class="sully-nose"></div>
-                        <div class="sully-mouth"></div>
-                        <div class="sully-spot spot-1"></div>
-                        <div class="sully-spot spot-2"></div>
-                        <div class="sully-spot spot-3"></div>
-                    </div>
-                </div>
-            </div>
-            
             <div class="login-header">
-                <h1>üè¢ COMERCIALIZADORA MONSTER</h1>
-                <p class="subtitle">¬°Bienvenido al mundo de las ofertas monstruosas!</p>
+                <h1>?? MONSTER</h1>
+                <p>Comercializadora de ElectrodomÈsticos</p>
             </div>
             
-            <form action="${pageContext.request.contextPath}/login" method="post" class="login-form">
+            <% if (request.getAttribute("error") != null) { %>
+                <div class="alert-error">
+                    <%= request.getAttribute("error") %>
+                </div>
+            <% } %>
+            
+            <form class="login-form" action="${pageContext.request.contextPath}/login" method="post">
                 <div class="form-group">
-                    <label for="usuario">
-                        <span class="label-icon">üë§</span> Usuario
-                    </label>
-                    <input type="text" id="usuario" name="usuario" placeholder="Ingresa tu usuario" required autofocus>
+                    <label for="username">Usuario</label>
+                    <input type="text" id="username" name="username" 
+                           placeholder="Ingrese su usuario o cÈdula"
+                           value="<%= request.getAttribute("username") != null ? request.getAttribute("username") : "" %>"
+                           required autofocus>
                 </div>
                 
                 <div class="form-group">
-                    <label for="password">
-                        <span class="label-icon">üîí</span> Contrase√±a
-                    </label>
-                    <input type="password" id="password" name="password" placeholder="Ingresa tu contrase√±a" required>
+                    <label for="password">ContraseÒa</label>
+                    <input type="password" id="password" name="password" 
+                           placeholder="Ingrese su contraseÒa"
+                           required>
                 </div>
                 
-                <% if (request.getAttribute("error") != null) { %>
-                    <div class="error-message">
-                        ‚ö†Ô∏è <%= request.getAttribute("error") %>
-                    </div>
-                <% } %>
-                
-                <button type="submit" class="btn btn-login">
-                    <span>Iniciar Sesi√≥n</span>
-                    <span class="btn-arrow">‚Üí</span>
-                </button>
+                <button type="submit">Iniciar SesiÛn</button>
             </form>
             
-            <div style="margin-top: 20px; padding: 15px; background: rgba(255,255,255,0.9); border-radius: 8px; text-align: center;">
-                <small style="color: #666;">
-                    <strong>Credenciales:</strong> Usuario: MONSTER | Contrase√±a: MONSTER9
-                </small>
+            <div class="login-footer">
+                <p>Sistema de ComercializaciÛn de ElectrodomÈsticos</p>
+                
+                <div class="credentials-info">
+                    <h4>?? Credenciales de prueba:</h4>
+                    <ul>
+                        <li><strong>Admin:</strong> MONSTER / MONSTER9</li>
+                        <li><strong>Cliente:</strong> [cÈdula] / abcd1234</li>
+                        <li>Ej: 1750123456 / abcd1234</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </div>

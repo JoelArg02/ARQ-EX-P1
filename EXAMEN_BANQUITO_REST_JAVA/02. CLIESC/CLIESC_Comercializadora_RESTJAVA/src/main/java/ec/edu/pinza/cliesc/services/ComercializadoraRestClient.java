@@ -5,6 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonDeserializer;
 import ec.edu.pinza.cliesc.models.FacturaResponseDTO;
 import ec.edu.pinza.cliesc.models.ItemCarrito;
+import ec.edu.pinza.cliesc.models.LoginResponseDTO;
 import ec.edu.pinza.cliesc.models.ProductoDTO;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -22,7 +23,8 @@ import java.util.Map;
  */
 public class ComercializadoraRestClient {
 
-    private static final String BASE_URL = "http://159.203.120.118:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api/";
+    // Para desarrollo local con Docker backend en puerto 8081
+    private static final String BASE_URL = "http://localhost:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api";
     private final HttpClient httpClient;
     private final Gson gson;
 
@@ -34,6 +36,47 @@ public class ComercializadoraRestClient {
                 .registerTypeAdapter(LocalDate.class, (JsonDeserializer<LocalDate>) (json, typeOfT, context) ->
                         LocalDate.parse(json.getAsString(), DateTimeFormatter.ISO_LOCAL_DATE))
                 .create();
+    }
+
+    // ==================== AUTENTICACIÓN ====================
+    
+    /**
+     * Autentica un usuario con username y password
+     */
+    public LoginResponseDTO login(String username, String password) {
+        try {
+            String url = BASE_URL + "/auth/login";
+            
+            Map<String, String> requestBody = new HashMap<>();
+            requestBody.put("username", username);
+            requestBody.put("password", password);
+            
+            String jsonBody = gson.toJson(requestBody);
+            
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(url))
+                    .header("Content-Type", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                    .build();
+            
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            
+            if (response.statusCode() == 200 || response.statusCode() == 401 || response.statusCode() == 400) {
+                return gson.fromJson(response.body(), LoginResponseDTO.class);
+            }
+            
+            LoginResponseDTO error = new LoginResponseDTO();
+            error.setExitoso(false);
+            error.setMensaje("Error de conexión: HTTP " + response.statusCode());
+            return error;
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            LoginResponseDTO error = new LoginResponseDTO();
+            error.setExitoso(false);
+            error.setMensaje("Error de comunicación con el servidor: " + e.getMessage());
+            return error;
+        }
     }
 
     // ==================== PRODUCTOS ====================

@@ -47,6 +47,8 @@ public class ConsultaCreditoFrame extends JFrame {
         cedulaPanel.add(lblCedula);
         txtCedula = new JTextField(15);
         txtCedula.setFont(UIConstants.FONT_NORMAL);
+        txtCedula.setBackground(Color.WHITE);
+        txtCedula.setForeground(UIConstants.COLOR_TEXT_DARK);
         cedulaPanel.add(txtCedula);
         contentPanel.add(cedulaPanel);
         contentPanel.add(Box.createRigidArea(new Dimension(0, 15)));
@@ -78,7 +80,7 @@ public class ConsultaCreditoFrame extends JFrame {
         JLabel lblResultado = new JLabel("Resultado:");
         lblResultado.setFont(UIConstants.FONT_SUBTITLE);
         lblResultado.setForeground(Color.WHITE);
-        lblResultado.setAlignmentX(Component.LEFT_ALIGNMENT);
+        lblResultado.setAlignmentX(Component.CENTER_ALIGNMENT);
         contentPanel.add(lblResultado);
         contentPanel.add(Box.createRigidArea(new Dimension(0, 8)));
 
@@ -86,13 +88,14 @@ public class ConsultaCreditoFrame extends JFrame {
         txtResultado.setFont(UIConstants.FONT_NORMAL);
         txtResultado.setEditable(false);
         txtResultado.setBackground(UIConstants.COLOR_CARD);
-        txtResultado.setForeground(Color.WHITE);
+        txtResultado.setForeground(UIConstants.COLOR_TEXT_DARK);
         txtResultado.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(UIConstants.COLOR_CARD_HOVER, 1),
+                BorderFactory.createLineBorder(new Color(226, 232, 240), 1),
                 new EmptyBorder(10, 10, 10, 10)
         ));
         JScrollPane scrollPane = new JScrollPane(txtResultado);
-        scrollPane.setBorder(BorderFactory.createLineBorder(UIConstants.COLOR_CARD_HOVER, 1));
+        scrollPane.setBorder(BorderFactory.createLineBorder(new Color(226, 232, 240), 1));
+        scrollPane.setAlignmentX(Component.CENTER_ALIGNMENT);
         contentPanel.add(scrollPane);
         contentPanel.add(Box.createRigidArea(new Dimension(0, 15)));
 

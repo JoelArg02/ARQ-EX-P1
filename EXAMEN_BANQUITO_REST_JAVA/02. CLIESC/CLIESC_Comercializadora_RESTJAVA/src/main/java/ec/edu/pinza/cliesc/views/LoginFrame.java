@@ -52,7 +52,7 @@ public class LoginFrame extends JFrame {
 
         JLabel lblTitulo = new JLabel("COMERCIALIZADORA MONSTER");
         lblTitulo.setFont(UIConstants.FONT_TITLE);
-        lblTitulo.setForeground(Color.WHITE);
+        lblTitulo.setForeground(UIConstants.COLOR_PRIMARY_START);
         lblTitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         loginPanel.add(lblTitulo);
 
@@ -72,7 +72,7 @@ public class LoginFrame extends JFrame {
 
         JLabel lblSubtitulo = new JLabel("Iniciar Sesión");
         lblSubtitulo.setFont(UIConstants.FONT_SUBTITLE);
-        lblSubtitulo.setForeground(Color.WHITE);
+        lblSubtitulo.setForeground(UIConstants.COLOR_TEXT_DARK);
         lblSubtitulo.setAlignmentX(Component.CENTER_ALIGNMENT);
         loginPanel.add(lblSubtitulo);
 
@@ -80,7 +80,7 @@ public class LoginFrame extends JFrame {
 
         JLabel lblUsuario = new JLabel("Usuario:");
         lblUsuario.setFont(UIConstants.FONT_NORMAL);
-        lblUsuario.setForeground(Color.WHITE);
+        lblUsuario.setForeground(UIConstants.COLOR_TEXT_DARK);
         lblUsuario.setAlignmentX(Component.CENTER_ALIGNMENT);
         loginPanel.add(lblUsuario);
 
@@ -90,17 +90,17 @@ public class LoginFrame extends JFrame {
         txtUsuario.setFont(UIConstants.FONT_NORMAL);
         txtUsuario.setMaximumSize(new Dimension(300, 35));
         txtUsuario.setAlignmentX(Component.CENTER_ALIGNMENT);
-        txtUsuario.setBackground(UIConstants.COLOR_BACKGROUND);
-        txtUsuario.setForeground(Color.WHITE);
-        txtUsuario.setCaretColor(Color.WHITE);
-        txtUsuario.setBorder(BorderFactory.createLineBorder(UIConstants.COLOR_CARD_HOVER));
+        txtUsuario.setBackground(Color.WHITE);
+        txtUsuario.setForeground(UIConstants.COLOR_TEXT_DARK);
+        txtUsuario.setCaretColor(UIConstants.COLOR_TEXT_DARK);
+        txtUsuario.setBorder(BorderFactory.createLineBorder(new Color(226, 232, 240)));
         loginPanel.add(txtUsuario);
 
         loginPanel.add(Box.createRigidArea(new Dimension(0, 12)));
 
         JLabel lblContrasena = new JLabel("Contraseña:");
         lblContrasena.setFont(UIConstants.FONT_NORMAL);
-        lblContrasena.setForeground(Color.WHITE);
+        lblContrasena.setForeground(UIConstants.COLOR_TEXT_DARK);
         lblContrasena.setAlignmentX(Component.CENTER_ALIGNMENT);
         loginPanel.add(lblContrasena);
 
@@ -110,10 +110,10 @@ public class LoginFrame extends JFrame {
         txtContrasena.setFont(UIConstants.FONT_NORMAL);
         txtContrasena.setMaximumSize(new Dimension(300, 35));
         txtContrasena.setAlignmentX(Component.CENTER_ALIGNMENT);
-        txtContrasena.setBackground(UIConstants.COLOR_BACKGROUND);
-        txtContrasena.setForeground(Color.WHITE);
-        txtContrasena.setCaretColor(Color.WHITE);
-        txtContrasena.setBorder(BorderFactory.createLineBorder(UIConstants.COLOR_CARD_HOVER));
+        txtContrasena.setBackground(Color.WHITE);
+        txtContrasena.setForeground(UIConstants.COLOR_TEXT_DARK);
+        txtContrasena.setCaretColor(UIConstants.COLOR_TEXT_DARK);
+        txtContrasena.setBorder(BorderFactory.createLineBorder(new Color(226, 232, 240)));
         loginPanel.add(txtContrasena);
 
         loginPanel.add(Box.createRigidArea(new Dimension(0, 16)));
@@ -136,6 +136,15 @@ public class LoginFrame extends JFrame {
         btnIngresar.setCursor(new Cursor(Cursor.HAND_CURSOR));
         btnIngresar.addActionListener(e -> controller.iniciarSesion());
         loginPanel.add(btnIngresar);
+        
+        loginPanel.add(Box.createRigidArea(new Dimension(0, 15)));
+        
+        // Instrucciones de login
+        JLabel lblInfo = new JLabel("<html><center><b>Admin:</b> MONSTER / MONSTER9<br><b>Cliente:</b> cédula / abcd1234</center></html>");
+        lblInfo.setFont(UIConstants.FONT_SMALL);
+        lblInfo.setForeground(new Color(100, 116, 139));
+        lblInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
+        loginPanel.add(lblInfo);
 
         txtContrasena.addActionListener(e -> controller.iniciarSesion());
 

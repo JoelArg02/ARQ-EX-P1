@@ -6,6 +6,12 @@ RUN mvn clean package -DskipTests
 
 FROM payara/server-full:6.2023.12-jdk17
 COPY --from=build /app/target/*.war $DEPLOY_DIR/
-COPY --chmod=755 docker-setup.sh /opt/payara/docker-setup.sh
+COPY docker-setup.sh /opt/payara/docker-setup.sh
+
+# Convertir finales de línea de Windows a Unix y dar permisos
+USER root
+RUN sed -i 's/\r$//' /opt/payara/docker-setup.sh && chmod +x /opt/payara/docker-setup.sh
+USER payara
+
 EXPOSE 8082 4850
 ENTRYPOINT ["/opt/payara/docker-setup.sh"]

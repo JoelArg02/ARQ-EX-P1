@@ -58,6 +58,9 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.gson)
     implementation(libs.okhttp.logging)
+    
+    // PDF generation
+    implementation("com.itextpdf:itext7-core:7.2.5")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

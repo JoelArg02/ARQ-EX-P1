@@ -1,6 +1,7 @@
 package ec.edu.pinza.ex_banquito_restjava.repositories;
 
 import ec.edu.pinza.ex_banquito_restjava.config.DatabaseConnection;
+import ec.edu.pinza.ex_banquito_restjava.entities.Cliente;
 import ec.edu.pinza.ex_banquito_restjava.entities.Credito;
 import java.sql.*;
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.Optional;
 public class CreditoRepository {
     
     private final DatabaseConnection dbConnection = DatabaseConnection.getInstance();
+    private final ClienteRepository clienteRepository = new ClienteRepository();
     
     public Optional<Credito> findById(Integer id) {
         String sql = "SELECT ID_CREDITO, CEDULA, MONTO_APROBADO, MONTO_SOLICITADO, " +
@@ -216,7 +218,14 @@ public class CreditoRepository {
         credito.setMontoMaximoAutorizado(rs.getBigDecimal("MONTO_MAXIMO_AUTORIZADO"));
         credito.setFechaOtorgamiento(rs.getDate("FECHA_OTORGAMIENTO").toLocalDate());
         credito.setEstado(rs.getString("ESTADO"));
-        // La CEDULA se carga como parte de la relación Cliente si es necesario
+        
+        // Cargar el cliente asociado usando la cédula
+        String cedula = rs.getString("CEDULA");
+        if (cedula != null && !cedula.isEmpty()) {
+            Optional<Cliente> clienteOpt = clienteRepository.findByCedula(cedula);
+            clienteOpt.ifPresent(credito::setCliente);
+        }
+        
         return credito;
     }
 }

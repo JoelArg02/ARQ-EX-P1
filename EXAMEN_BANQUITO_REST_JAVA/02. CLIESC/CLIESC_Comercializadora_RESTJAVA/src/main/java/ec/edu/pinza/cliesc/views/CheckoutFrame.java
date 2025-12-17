@@ -69,9 +69,22 @@ public class CheckoutFrame extends JFrame {
         cedulaPanel.add(lblCedula);
         txtCedula = new JTextField(12);
         txtCedula.setFont(UIConstants.FONT_NORMAL);
-        if (SessionManager.getInstance().getCedula() != null) {
-            txtCedula.setText(SessionManager.getInstance().getCedula());
+        
+        // Configurar cédula según el rol
+        SessionManager session = SessionManager.getInstance();
+        if (session.getCedula() != null) {
+            txtCedula.setText(session.getCedula());
         }
+        
+        // Si NO es admin, la cédula es de solo lectura (solo puede comprar para sí mismo)
+        if (!session.isAdmin()) {
+            txtCedula.setEditable(false);
+            txtCedula.setBackground(new Color(240, 240, 240));
+            txtCedula.setToolTipText("Solo puedes comprar para tu propia cédula");
+        } else {
+            txtCedula.setToolTipText("Como administrador, puedes vender a cualquier cédula");
+        }
+        
         cedulaPanel.add(txtCedula);
         centerPanel.add(cedulaPanel);
         centerPanel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -91,7 +104,7 @@ public class CheckoutFrame extends JFrame {
         table.setFont(UIConstants.FONT_NORMAL);
         table.setRowHeight(30);
         table.setBackground(UIConstants.COLOR_CARD);
-        table.setForeground(Color.WHITE);
+        table.setForeground(UIConstants.COLOR_TEXT_DARK);
         table.setGridColor(UIConstants.COLOR_CARD_HOVER);
         JTableHeader header = table.getTableHeader();
         header.setFont(UIConstants.FONT_BUTTON);
@@ -115,7 +128,7 @@ public class CheckoutFrame extends JFrame {
 
         JLabel lblMetodoPago = new JLabel("Método de Pago");
         lblMetodoPago.setFont(UIConstants.FONT_SUBTITLE);
-        lblMetodoPago.setForeground(Color.WHITE);
+        lblMetodoPago.setForeground(UIConstants.COLOR_TEXT_DARK);
         lblMetodoPago.setAlignmentX(Component.CENTER_ALIGNMENT);
         pagoPanel.add(lblMetodoPago);
         pagoPanel.add(Box.createRigidArea(new Dimension(0, 8)));
@@ -128,7 +141,7 @@ public class CheckoutFrame extends JFrame {
 
         rbEfectivo = new JRadioButton("Efectivo (33% de descuento)");
         rbEfectivo.setFont(UIConstants.FONT_NORMAL);
-        rbEfectivo.setForeground(Color.WHITE);
+        rbEfectivo.setForeground(UIConstants.COLOR_TEXT_DARK);
         rbEfectivo.setBackground(UIConstants.COLOR_CARD);
         rbEfectivo.setSelected(true);
         rbEfectivo.addActionListener(e -> controller.cambiarMetodoPago());
@@ -137,7 +150,7 @@ public class CheckoutFrame extends JFrame {
 
         rbCredito = new JRadioButton("Crédito Directo (BanQuito)");
         rbCredito.setFont(UIConstants.FONT_NORMAL);
-        rbCredito.setForeground(Color.WHITE);
+        rbCredito.setForeground(UIConstants.COLOR_TEXT_DARK);
         rbCredito.setBackground(UIConstants.COLOR_CARD);
         rbCredito.addActionListener(e -> controller.cambiarMetodoPago());
         bgMetodoPago.add(rbCredito);
@@ -187,7 +200,7 @@ public class CheckoutFrame extends JFrame {
 
         lblSubtotal = new JLabel("Subtotal: $0.00");
         lblSubtotal.setFont(UIConstants.FONT_NORMAL);
-        lblSubtotal.setForeground(Color.WHITE);
+        lblSubtotal.setForeground(UIConstants.COLOR_TEXT_DARK);
         lblSubtotal.setAlignmentX(Component.CENTER_ALIGNMENT);
         resumenPanel.add(lblSubtotal);
 

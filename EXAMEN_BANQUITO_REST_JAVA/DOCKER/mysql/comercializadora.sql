@@ -74,13 +74,30 @@ CREATE TABLE DetalleFactura (
 ) ENGINE=InnoDB;
 
 -- ====================================================================
--- √çNDICES PARA OPTIMIZACI√ìN DE CONSULTAS
+-- TABLA: Usuario
+-- DescripciÛn: Usuarios del sistema de la comercializadora
+-- ====================================================================
+CREATE TABLE Usuario (
+    idUsuario INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    idCliente INT NULL COMMENT 'NULL para admin, referencia a ClienteCom para usuarios normales',
+    rol VARCHAR(20) NOT NULL DEFAULT 'CLIENTE',
+    activo BOOLEAN DEFAULT TRUE,
+    CONSTRAINT fk_usuario_cliente FOREIGN KEY (idCliente) 
+        REFERENCES ClienteCom(idCliente),
+    CONSTRAINT chk_rol CHECK (rol IN ('ADMIN', 'CLIENTE'))
+) ENGINE=InnoDB;
+
+-- ====================================================================
+-- ÕNDICES PARA OPTIMIZACI”N DE CONSULTAS
 -- ====================================================================
 CREATE INDEX idx_factura_cliente ON Factura(idCliente);
 CREATE INDEX idx_factura_fecha ON Factura(fecha);
 CREATE INDEX idx_factura_credito ON Factura(idCreditoBanco);
 CREATE INDEX idx_detalle_factura ON DetalleFactura(idFactura);
 CREATE INDEX idx_detalle_producto ON DetalleFactura(idProducto);
+CREATE INDEX idx_usuario_username ON Usuario(username);
 
 -- ====================================================================
 -- DATOS DE PRUEBA: PRODUCTOS
@@ -104,11 +121,24 @@ INSERT INTO Producto (codigo, nombre, precio, stock, imagen) VALUES
 --       para que puedan solicitar cr√©ditos
 -- ====================================================================
 INSERT INTO ClienteCom (cedula, nombre, direccion, telefono) VALUES
-('1750123456', 'Juan Carlos P√©rez L√≥pez', 'Av. Amazonas N123 y Patria', '0991234567'),
-('1750234567', 'Mar√≠a Elena Garc√≠a Torres', 'Calle Sucre 456', '0987654321'),
+('1750123456', 'Juan Carlos PÈrez LÛpez', 'Av. Amazonas N123 y Patria', '0991234567'),
+('1750234567', 'MarÌa Elena GarcÌa Torres', 'Calle Sucre 456', '0987654321'),
 ('1750345678', 'Pedro Antonio Morales Cruz', 'Av. 6 de Diciembre N789', '0998877665'),
-('1750456789', 'Ana Sof√≠a Ram√≠rez Flores', 'Calle Bol√≠var 321', '0976543210'),
+('1750456789', 'Ana SofÌa RamÌrez Flores', 'Calle BolÌvar 321', '0976543210'),
 ('1750567890', 'Luis Fernando Castro Vega', 'Av. Shyris N555', '0965432109');
+
+-- ====================================================================
+-- DATOS DE PRUEBA: USUARIOS DEL SISTEMA
+-- Usuario ADMIN: MONSTER / MONSTER9
+-- Usuarios CLIENTE: su cÈdula / abcd1234
+-- ====================================================================
+INSERT INTO Usuario (username, password, idCliente, rol) VALUES
+('MONSTER', 'MONSTER9', NULL, 'ADMIN'),
+('1750123456', 'abcd1234', 1, 'CLIENTE'),
+('1750234567', 'abcd1234', 2, 'CLIENTE'),
+('1750345678', 'abcd1234', 3, 'CLIENTE'),
+('1750456789', 'abcd1234', 4, 'CLIENTE'),
+('1750567890', 'abcd1234', 5, 'CLIENTE');
 
 -- ====================================================================
 -- DATOS DE PRUEBA: FACTURAS EN EFECTIVO

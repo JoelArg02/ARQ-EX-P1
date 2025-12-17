@@ -8,7 +8,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 object ApiProvider {
     // Ajusta la IP al host donde corre el servidor si usas dispositivo físico.
     // Para emulador de Android Studio, 10.0.2.2 apunta al host.
-    private const val BASE_URL = "http://10.0.2.2:8080/Ex_Comercializadora_RESTJava/api/"
+//    private const val BASE_URL = "http://10.0.2.2:8080/Ex_Comercializadora_RESTJava/api/"
+    private const val BASE_URL = "http://192.168.137.1:8080/Ex_Comercializadora_RESTJava/api/"
+
 
     private val client: OkHttpClient by lazy {
         val logging = HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }

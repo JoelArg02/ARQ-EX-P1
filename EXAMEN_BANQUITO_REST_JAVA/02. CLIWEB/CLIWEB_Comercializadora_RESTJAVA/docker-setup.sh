@@ -1,10 +1,26 @@
 #!/bin/bash
 
-# Iniciar Payara en background
-${PAYARA_DIR}/bin/asadmin start-domain --verbose=false &
+# Función para esperar a que Payara esté listo
+wait_for_payara() {
+  echo "Esperando a que Payara esté listo..."
+  for i in {1..60}; do
+    if ${PAYARA_DIR}/bin/asadmin --user admin --passwordfile=/opt/payara/passwordFile list-domains 2>/dev/null | grep -q "domain1 running"; then
+      echo "Payara está listo!"
+      sleep 3  # Espera adicional para asegurar que esté completamente inicializado
+      return 0
+    fi
+    echo "Intento $i/60: Payara no está listo aún..."
+    sleep 3
+  done
+  echo "ERROR: Payara no estuvo disponible después de 180 segundos"
+  return 1
+}
 
-# Esperar que Payara esté listo
-sleep 15
+# Iniciar Payara en background
+${PAYARA_DIR}/bin/asadmin start-domain &
+
+# Esperar que Payara esté realmente listo
+wait_for_payara
 
 # Desplegar aplicación WAR
 echo "Desplegando Cliente Web..."

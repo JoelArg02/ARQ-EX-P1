@@ -19,7 +19,8 @@ import java.util.Map;
  */
 public class BanquitoCreditoClient {
     
-    private static final String BASE_URL = "http://159.203.120.118:8080/Ex_Banquito_RESTJava-1.0-SNAPSHOT/api/creditos";
+    // En Docker, los contenedores se comunican por nombre. backend_banquito escucha en puerto 8080
+    private static final String BASE_URL = "http://backend_banquito:8080/Ex_Banquito_RESTJava-1.0-SNAPSHOT/api/creditos";
     private final Client client;
     private final WebTarget baseTarget;
     

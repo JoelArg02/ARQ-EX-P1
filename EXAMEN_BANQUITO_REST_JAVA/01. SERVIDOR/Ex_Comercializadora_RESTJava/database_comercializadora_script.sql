@@ -222,3 +222,43 @@ ORDER BY stock DESC;
 -- 5. El servidor valida stock antes de crear facturas
 -- 6. El servidor actualiza stock automáticamente al crear facturas
 -- ====================================================================
+
+-- ====================================================================
+-- TABLA: Usuario
+-- Descripción: Usuarios del sistema para autenticación
+-- ====================================================================
+CREATE TABLE Usuario (
+    idUsuario INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(50) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL,
+    idCliente INT NULL,
+    rol VARCHAR(20) NOT NULL DEFAULT 'CLIENTE',
+    activo BOOLEAN NOT NULL DEFAULT TRUE,
+    CONSTRAINT fk_usuario_cliente FOREIGN KEY (idCliente) 
+        REFERENCES ClienteCom(idCliente) ON DELETE SET NULL,
+    CONSTRAINT chk_rol CHECK (rol IN ('ADMIN', 'CLIENTE'))
+) ENGINE=InnoDB;
+
+-- ====================================================================
+-- DATOS DE PRUEBA: USUARIOS
+-- Admin: MONSTER/MONSTER9 (puede vender a cualquier cédula)
+-- Clientes: usan su cédula y password abcd1234
+-- ====================================================================
+
+-- Usuario ADMIN (sin cliente asociado, puede vender a cualquier cédula)
+INSERT INTO Usuario (username, password, idCliente, rol, activo) VALUES
+('MONSTER', 'MONSTER9', NULL, 'ADMIN', TRUE);
+
+-- Usuarios CLIENTE (cada uno asociado a su cliente, solo pueden comprar para su propia cédula)
+INSERT INTO Usuario (username, password, idCliente, rol, activo) VALUES
+('1750123456', 'abcd1234', 1, 'CLIENTE', TRUE),
+('1750234567', 'abcd1234', 2, 'CLIENTE', TRUE),
+('1750345678', 'abcd1234', 3, 'CLIENTE', TRUE),
+('1750456789', 'abcd1234', 4, 'CLIENTE', TRUE),
+('1750567890', 'abcd1234', 5, 'CLIENTE', TRUE);
+
+-- Verificar usuarios creados
+SELECT u.idUsuario, u.username, u.rol, u.activo, c.cedula, c.nombre
+FROM Usuario u
+LEFT JOIN ClienteCom c ON u.idCliente = c.idCliente
+ORDER BY u.rol, u.username;

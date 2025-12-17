@@ -1,5 +1,6 @@
 package ec.edu.pinza.cliesc.controllers;
 
+import ec.edu.pinza.cliesc.managers.SessionManager;
 import ec.edu.pinza.cliesc.models.FacturaResponseDTO;
 import ec.edu.pinza.cliesc.services.ComercializadoraRestClient;
 import ec.edu.pinza.cliesc.views.VentasFrame;
@@ -7,6 +8,7 @@ import java.util.List;
 
 /**
  * Controlador para la vista de Ventas (facturas).
+ * ADMIN ve todas las facturas, CLIENTE solo ve las suyas.
  */
 public class VentasController {
 
@@ -21,8 +23,18 @@ public class VentasController {
 
     public void cargarFacturas() {
         try {
-            // Igual que CLIWEB: vista administrador obtiene todas las facturas.
-            facturas = comercializadoraClient.obtenerTodasLasFacturas();
+            SessionManager session = SessionManager.getInstance();
+            boolean isAdmin = session.isAdmin();
+            String cedula = session.getCedula();
+            
+            if (isAdmin) {
+                // Admin ve TODAS las facturas del sistema
+                facturas = comercializadoraClient.obtenerTodasLasFacturas();
+            } else {
+                // Cliente solo ve sus propias compras
+                facturas = comercializadoraClient.obtenerFacturasPorCliente(cedula);
+            }
+            
             view.mostrarFacturas(facturas);
         } catch (Exception ex) {
             view.mostrarError("Error al cargar facturas: " + ex.getMessage());
@@ -32,7 +44,19 @@ public class VentasController {
     public void verDetalle(int index) {
         try {
             if (index >= 0 && facturas != null && index < facturas.size()) {
-                Integer idFactura = facturas.get(index).getIdFactura();
+                FacturaResponseDTO facturaSeleccionada = facturas.get(index);
+                Integer idFactura = facturaSeleccionada.getIdFactura();
+                
+                // Validar que cliente no pueda ver facturas de otros
+                SessionManager session = SessionManager.getInstance();
+                if (!session.isAdmin()) {
+                    String cedulaUsuario = session.getCedula();
+                    if (!cedulaUsuario.equals(facturaSeleccionada.getCedulaCliente())) {
+                        view.mostrarError("No tienes permiso para ver esta factura");
+                        return;
+                    }
+                }
+                
                 FacturaResponseDTO factura = comercializadoraClient.obtenerFacturaPorId(idFactura);
                 view.mostrarDetalleFactura(factura);
             }

@@ -20,8 +20,13 @@ USER payara
 # Copiar el WAR generado
 COPY --from=build /app/target/*.war $DEPLOY_DIR/
 
-# Copiar script de configuración con permisos de ejecución
-COPY --chmod=755 docker-setup.sh /opt/payara/docker-setup.sh
+# Copiar script de configuración
+COPY docker-setup.sh /opt/payara/docker-setup.sh
+
+# Convertir finales de línea de Windows a Unix y dar permisos
+USER root
+RUN sed -i 's/\r$//' /opt/payara/docker-setup.sh && chmod +x /opt/payara/docker-setup.sh
+USER payara
 
 # Exponer puerto
 EXPOSE 8081 4849

@@ -176,7 +176,7 @@ public class ProductosFrame extends JFrame {
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
         card.setBackground(UIConstants.COLOR_CARD);
         card.setBorder(BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(UIConstants.COLOR_CARD_HOVER, 1),
+                BorderFactory.createLineBorder(new Color(226, 232, 240), 1),
                 new EmptyBorder(15, 15, 15, 15)
         ));
 
@@ -185,17 +185,19 @@ public class ProductosFrame extends JFrame {
         lblImagen.setAlignmentX(Component.CENTER_ALIGNMENT);
         lblImagen.setPreferredSize(new Dimension(200, 150));
         lblImagen.setMaximumSize(new Dimension(200, 150));
+        lblImagen.setBackground(new Color(248, 249, 250));
+        lblImagen.setOpaque(true);
         
         ImageIcon iconoProducto = ImageUtils.base64ToImageIcon(producto.getImagen(), 200, 150);
         lblImagen.setIcon(iconoProducto);
-        lblImagen.setBorder(BorderFactory.createLineBorder(UIConstants.COLOR_CARD_HOVER, 1));
+        lblImagen.setBorder(BorderFactory.createLineBorder(new Color(226, 232, 240), 1));
         card.add(lblImagen);
         
         card.add(Box.createRigidArea(new Dimension(0, 10)));
 
         JLabel lblNombre = new JLabel(producto.getNombre());
         lblNombre.setFont(UIConstants.FONT_SUBTITLE);
-        lblNombre.setForeground(Color.WHITE);
+        lblNombre.setForeground(UIConstants.COLOR_TEXT_DARK);
         lblNombre.setAlignmentX(Component.CENTER_ALIGNMENT);
         card.add(lblNombre);
 
@@ -215,7 +217,7 @@ public class ProductosFrame extends JFrame {
 
         JLabel lblPrecio = new JLabel(FormatUtils.formatCurrency(producto.getPrecio()));
         lblPrecio.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        lblPrecio.setForeground(UIConstants.COLOR_PRIMARY_START);
+        lblPrecio.setForeground(UIConstants.COLOR_INFO);
         lblPrecio.setAlignmentX(Component.CENTER_ALIGNMENT);
         card.add(lblPrecio);
 
