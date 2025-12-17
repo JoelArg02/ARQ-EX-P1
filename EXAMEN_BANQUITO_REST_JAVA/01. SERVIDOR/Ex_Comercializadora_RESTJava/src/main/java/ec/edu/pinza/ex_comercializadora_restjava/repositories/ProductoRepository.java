@@ -92,7 +92,8 @@ public class ProductoRepository {
      * Guardar o actualizar producto
      */
     public Producto save(Producto producto) {
-        if (producto.getIdProducto() == null) {
+        // null o 0 significa nuevo producto
+        if (producto.getIdProducto() == null || producto.getIdProducto() == 0) {
             return insert(producto);
         } else {
             return update(producto);

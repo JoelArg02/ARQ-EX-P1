@@ -48,11 +48,17 @@ ${PAYARA_DIR}/bin/asadmin --user admin --passwordfile=/opt/payara/passwordFile s
 ${PAYARA_DIR}/bin/asadmin --user admin --passwordfile=/opt/payara/passwordFile set configs.config.server-config.iiop-service.iiop-listener.SSL.port=3921
 ${PAYARA_DIR}/bin/asadmin --user admin --passwordfile=/opt/payara/passwordFile set configs.config.server-config.iiop-service.iiop-listener.SSL_MUTUALAUTH.port=3961
 
-# Configurar JDBC Connection Pool
+# Configurar JDBC Connection Pool (usando variables de entorno)
+DB_USER=${DB_USER:-root}
+DB_PASSWORD=${DB_PASSWORD:-C0m3rc14l_S3cur3_2024!}
+DB_HOST=${DB_HOST:-mysql_comercializadora}
+DB_PORT=${DB_PORT:-3306}
+DB_NAME=${DB_NAME:-comercializadora_db}
+
 ${PAYARA_DIR}/bin/asadmin --user admin --passwordfile=/opt/payara/passwordFile create-jdbc-connection-pool \
   --datasourceclassname com.mysql.cj.jdbc.MysqlDataSource \
   --restype javax.sql.DataSource \
-  --property user=root:password=root:serverName=mysql_comercializadora:portNumber=3306:databaseName=comercializadora_db:useSSL=false:allowPublicKeyRetrieval=true \
+  --property user=${DB_USER}:password=${DB_PASSWORD}:serverName=${DB_HOST}:portNumber=${DB_PORT}:databaseName=${DB_NAME}:useSSL=false:allowPublicKeyRetrieval=true \
   ComercializadoraPool 2>/dev/null || echo "Pool already exists"
 
 # Crear JDBC Resource

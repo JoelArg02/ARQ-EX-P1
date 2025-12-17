@@ -41,11 +41,17 @@ ${PAYARA_DIR}/bin/asadmin start-domain &
 # Esperar que Payara esté realmente listo
 wait_for_payara
 
-# Configurar JDBC Connection Pool (SIN cambiar puertos, usa los default 8080/4848)
+# Configurar JDBC Connection Pool (usando variables de entorno)
+DB_USER=${DB_USER:-root}
+DB_PASSWORD=${DB_PASSWORD:-B4nqu1t0_S3cur3_2024!}
+DB_HOST=${DB_HOST:-mysql_banquito}
+DB_PORT=${DB_PORT:-3306}
+DB_NAME=${DB_NAME:-banquito_db}
+
 ${PAYARA_DIR}/bin/asadmin --user admin --passwordfile=/opt/payara/passwordFile create-jdbc-connection-pool \
   --datasourceclassname com.mysql.cj.jdbc.MysqlDataSource \
   --restype javax.sql.DataSource \
-  --property user=root:password=root:serverName=mysql_banquito:portNumber=3306:databaseName=banquito_db:useSSL=false:allowPublicKeyRetrieval=true \
+  --property user=${DB_USER}:password=${DB_PASSWORD}:serverName=${DB_HOST}:portNumber=${DB_PORT}:databaseName=${DB_NAME}:useSSL=false:allowPublicKeyRetrieval=true \
   BanquitoPool 2>/dev/null || echo "Pool already exists"
 
 # Crear JDBC Resource
