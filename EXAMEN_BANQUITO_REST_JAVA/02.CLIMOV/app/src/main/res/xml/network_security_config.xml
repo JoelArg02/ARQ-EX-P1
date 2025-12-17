@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <network-security-config>
     <domain-config cleartextTrafficPermitted="true">
-        <domain includeSubdomains="false">192.168.137.1</domain>
+        <!-- Local: emulador -->
         <domain includeSubdomains="false">10.0.2.2</domain>
+        <!-- Local: dispositivo físico en red local -->
+        <domain includeSubdomains="false">192.168.137.1</domain>
+        <!-- Producción: DigitalOcean -->
+        <domain includeSubdomains="false">159.203.120.118</domain>
     </domain-config>
 </network-security-config>
