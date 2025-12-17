@@ -1,0 +1,142 @@
+services:
+  mysql_banquito:
+    image: mysql:8.0
+    container_name: mysql_banquito
+    environment:
+      MYSQL_ROOT_PASSWORD: B4nqu1t0_S3cur3_2024!
+      MYSQL_DATABASE: banquito_db
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./Ex_Banquito_RESTJava/database_script.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - mysql_banquito_data:/var/lib/mysql
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pB4nqu1t0_S3cur3_2024!"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  mysql_comercializadora:
+    image: mysql:8.0
+    container_name: mysql_comercializadora
+    environment:
+      MYSQL_ROOT_PASSWORD: C0m3rc14l_S3cur3_2024!
+      MYSQL_DATABASE: comercializadora_db
+    ports:
+      - "3307:3306"
+    volumes:
+      - ./Ex_Comercializadora_RESTJava/database_comercializadora_script.sql:/docker-entrypoint-initdb.d/01-init.sql
+      - mysql_comercializadora_data:/var/lib/mysql
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-pC0m3rc14l_S3cur3_2024!"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  backend_banquito:
+    build:
+      context: ./Ex_Banquito_RESTJava
+      dockerfile: Dockerfile
+    container_name: backend_banquito
+    ports:
+      - "8086:8080"
+      - "4843:4848"
+    depends_on:
+      mysql_banquito:
+        condition: service_healthy
+    networks:
+      - app_network
+    environment:
+      - DB_HOST=mysql_banquito
+      - DB_PORT=3306
+      - DB_NAME=banquito_db
+      - DB_USER=root
+      - DB_PASSWORD=B4nqu1t0_S3cur3_2024!
+    restart: unless-stopped
+
+  backend_comercializadora:
+    build:
+      context: ./Ex_Comercializadora_RESTJava
+      dockerfile: Dockerfile
+    container_name: backend_comercializadora
+    ports:
+      - "8081:8080"
+      - "4849:4849"
+    depends_on:
+      mysql_comercializadora:
+        condition: service_healthy
+      backend_banquito:
+        condition: service_started
+    networks:
+      - app_network
+    environment:
+      - DB_HOST=mysql_comercializadora
+      - DB_PORT=3306
+      - DB_NAME=comercializadora_db
+      - DB_USER=root
+      - DB_PASSWORD=C0m3rc14l_S3cur3_2024!
+      - BANQUITO_HOST=backend_banquito:8080
+    restart: unless-stopped
+
+  cliweb_comercializadora:
+    build:
+      context: ../02. CLIWEB/CLIWEB_Comercializadora_RESTJAVA
+      dockerfile: Dockerfile
+    container_name: cliweb_comercializadora
+    ports:
+      - "8085:8080"
+      - "4850:4848"
+    depends_on:
+      - backend_comercializadora
+    networks:
+      - app_network
+    environment:
+      - API_COMERCIALIZADORA_URL=http://backend_comercializadora:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api
+    restart: unless-stopped
+
+  phpmyadmin_banquito:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin_banquito
+    ports:
+      - "8090:80"
+    depends_on:
+      - mysql_banquito
+    networks:
+      - app_network
+    environment:
+      - PMA_HOST=mysql_banquito
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=B4nqu1t0_S3cur3_2024!
+      - MYSQL_ROOT_PASSWORD=B4nqu1t0_S3cur3_2024!
+    restart: unless-stopped
+
+  phpmyadmin_comercializadora:
+    image: phpmyadmin:latest
+    container_name: phpmyadmin_comercializadora
+    ports:
+      - "8091:80"
+    depends_on:
+      - mysql_comercializadora
+    networks:
+      - app_network
+    environment:
+      - PMA_HOST=mysql_comercializadora
+      - PMA_PORT=3306
+      - PMA_USER=root
+      - PMA_PASSWORD=C0m3rc14l_S3cur3_2024!
+      - MYSQL_ROOT_PASSWORD=C0m3rc14l_S3cur3_2024!
+    restart: unless-stopped
+
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  mysql_banquito_data:
+  mysql_comercializadora_data:

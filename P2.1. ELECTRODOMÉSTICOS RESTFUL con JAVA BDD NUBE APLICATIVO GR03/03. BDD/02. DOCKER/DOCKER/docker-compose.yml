@@ -1,0 +1,22 @@
+services:
+  mysql_all:
+    image: mysql:8.0
+    container_name: mysql_all
+    environment:
+      MYSQL_ROOT_PASSWORD: DB_All_S3cur3_2024!
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/00-init.sql
+      - ./mysql/banquito.sql:/docker-entrypoint-initdb.d/01-banquito.sql
+      - ./mysql/comercializadora.sql:/docker-entrypoint-initdb.d/02-comercializadora.sql
+      - mysql_all_data:/var/lib/mysql
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  mysql_all_data:
