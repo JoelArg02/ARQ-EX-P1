@@ -15,12 +15,16 @@ import java.math.BigDecimal
 data class UiState(
     val isLoggedIn: Boolean = false,
     val usuario: String = "",
+    val rol: String = "",
+    val cedula: String = "",
+    val isAdmin: Boolean = false,
     val productos: List<ProductoDTO> = emptyList(),
     val carrito: List<ItemCarrito> = emptyList(),
     val ventas: List<FacturaResponseDTO> = emptyList(),
     val misCompras: List<FacturaResponseDTO> = emptyList(),
     val facturaActual: FacturaResponseDTO? = null,
-    val mensaje: String? = null
+    val mensaje: String? = null,
+    val isLoading: Boolean = false
 )
 
 class AppController(
@@ -35,11 +39,28 @@ class AppController(
     val state: StateFlow<UiState> = _state
 
     fun login(usuario: String, password: String) {
-        if (authController.login(usuario, password)) {
-            _state.value = _state.value.copy(isLoggedIn = true, usuario = usuario, mensaje = null)
-            cargarProductos()
-        } else {
-            _state.value = _state.value.copy(mensaje = "Usuario o contrasena incorrectos")
+        viewModelScope.launch {
+            _state.value = _state.value.copy(isLoading = true, mensaje = null)
+            
+            val response = authController.login(usuario, password)
+            
+            if (response.exitoso) {
+                _state.value = _state.value.copy(
+                    isLoggedIn = true,
+                    usuario = response.username ?: usuario,
+                    rol = response.rol ?: "",
+                    cedula = response.cedula ?: "",
+                    isAdmin = response.isAdmin(),
+                    mensaje = null,
+                    isLoading = false
+                )
+                cargarProductos()
+            } else {
+                _state.value = _state.value.copy(
+                    mensaje = response.mensaje ?: "Usuario o contraseña incorrectos",
+                    isLoading = false
+                )
+            }
         }
     }
 
@@ -75,7 +96,13 @@ class AppController(
     fun cargarVentas() {
         viewModelScope.launch {
             try {
-                val ventas = ventasController.obtenerVentas()
+                val ventas = if (_state.value.isAdmin) {
+                    // Admin ve TODAS las facturas
+                    ventasController.obtenerVentas()
+                } else {
+                    // Cliente solo ve sus propias compras
+                    ventasController.obtenerCompras(_state.value.cedula)
+                }
                 _state.value = _state.value.copy(ventas = ventas, mensaje = null)
             } catch (e: Exception) {
                 _state.value = _state.value.copy(mensaje = "Error al cargar ventas: ${e.message}")
@@ -199,7 +226,7 @@ class AppController(
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 val api = ApiProvider.api
                 return AppController(
-                    AuthController,
+                    AuthController(api),
                     ProductosController(api),
                     CarritoController(),
                     VentasController(api),

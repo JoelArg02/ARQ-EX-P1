@@ -1,4 +1,4 @@
-package ec.edu.pinza.cliweb.models;
+package ec.edu.pinza.clicon.models;
 
 /**
  * DTO para respuesta de login desde el servidor

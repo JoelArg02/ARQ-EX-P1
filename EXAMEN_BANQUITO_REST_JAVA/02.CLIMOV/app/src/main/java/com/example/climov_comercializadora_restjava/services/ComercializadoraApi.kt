@@ -2,12 +2,20 @@ package com.example.climov_comercializadora_restjava.services
 
 import com.example.climov_comercializadora_restjava.models.FacturaRequest
 import com.example.climov_comercializadora_restjava.models.FacturaResponseDTO
+import com.example.climov_comercializadora_restjava.models.LoginResponseDTO
 import com.example.climov_comercializadora_restjava.models.ProductoDTO
 import okhttp3.ResponseBody
 import retrofit2.Response
 import retrofit2.http.*
 
 interface ComercializadoraApi {
+
+    // ==================== AUTENTICACIÓN ====================
+    
+    @POST("auth/login")
+    suspend fun login(@Body request: Map<String, String>): Response<LoginResponseDTO>
+
+    // ==================== PRODUCTOS ====================
 
     @GET("productos")
     suspend fun obtenerProductos(): List<ProductoDTO>

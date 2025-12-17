@@ -91,7 +91,7 @@ public class ConsultaCreditoController extends HttpServlet {
         html.append("</div>");
         html.append("<div class='result-item'>");
         html.append("<span class='result-label'>Mensaje:</span>");
-        html.append("<span class='result-value'>").append(data.get("motivo")).append("</span>");
+        html.append("<span class='result-value'>").append(data.get("mensaje")).append("</span>");
         html.append("</div>");
         return html.toString();
     }

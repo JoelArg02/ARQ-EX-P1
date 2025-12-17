@@ -20,10 +20,10 @@ public class LoginController extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         
-        // Validar campos vacÌos
+        // Validar campos vac√≠os
         if (username == null || username.trim().isEmpty() || 
             password == null || password.trim().isEmpty()) {
-            request.setAttribute("error", "Usuario y contraseÒa son requeridos");
+            request.setAttribute("error", "Usuario y contrase√±a son requeridos");
             request.getRequestDispatcher("/login.jsp").forward(request, response);
             return;
         }
@@ -34,7 +34,7 @@ public class LoginController extends HttpServlet {
             LoginResponseDTO loginResult = client.login(username.trim(), password);
             
             if (loginResult != null && loginResult.isExitoso()) {
-                // Login exitoso - crear sesiÛn
+                // Login exitoso - crear sesi√≥n
                 HttpSession session = request.getSession(true);
                 session.setAttribute("usuario", loginResult.getUsername());
                 session.setAttribute("rol", loginResult.getRol());
@@ -47,7 +47,7 @@ public class LoginController extends HttpServlet {
                 response.sendRedirect(request.getContextPath() + "/productos");
             } else {
                 // Login fallido
-                String mensaje = loginResult != null ? loginResult.getMensaje() : "Error de conexiÛn";
+                String mensaje = loginResult != null ? loginResult.getMensaje() : "Error de conexi√≥n";
                 request.setAttribute("error", mensaje);
                 request.setAttribute("username", username);
                 request.getRequestDispatcher("/login.jsp").forward(request, response);
@@ -73,14 +73,14 @@ public class LoginController extends HttpServlet {
             return;
         }
         
-        // Si ya est· logueado, redirigir a productos
+        // Si ya est√° logueado, redirigir a productos
         HttpSession session = request.getSession(false);
         if (session != null && session.getAttribute("usuario") != null) {
             response.sendRedirect(request.getContextPath() + "/productos");
             return;
         }
         
-        // Mostrar p·gina de login
+        // Mostrar p√°gina de login
         request.getRequestDispatcher("/login.jsp").forward(request, response);
     }
 }

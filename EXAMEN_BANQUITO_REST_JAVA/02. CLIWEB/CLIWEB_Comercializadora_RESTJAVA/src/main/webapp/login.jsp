@@ -145,8 +145,8 @@
     <div class="login-container">
         <div class="login-card">
             <div class="login-header">
-                <h1>?? MONSTER</h1>
-                <p>Comercializadora de Electrodomésticos</p>
+                <h1>ðŸ›’ MONSTER</h1>
+                <p>Comercializadora de ElectrodomÃ©sticos</p>
             </div>
             
             <% if (request.getAttribute("error") != null) { %>
@@ -159,29 +159,29 @@
                 <div class="form-group">
                     <label for="username">Usuario</label>
                     <input type="text" id="username" name="username" 
-                           placeholder="Ingrese su usuario o cédula"
+                           placeholder="Ingrese su usuario o cÃ©dula"
                            value="<%= request.getAttribute("username") != null ? request.getAttribute("username") : "" %>"
                            required autofocus>
                 </div>
                 
                 <div class="form-group">
-                    <label for="password">Contraseña</label>
+                    <label for="password">ContraseÃ±a</label>
                     <input type="password" id="password" name="password" 
-                           placeholder="Ingrese su contraseña"
+                           placeholder="Ingrese su contraseÃ±a"
                            required>
                 </div>
                 
-                <button type="submit">Iniciar Sesión</button>
+                <button type="submit">Iniciar SesiÃ³n</button>
             </form>
             
             <div class="login-footer">
-                <p>Sistema de Comercialización de Electrodomésticos</p>
+                <p>Sistema de ComercializaciÃ³n de ElectrodomÃ©sticos</p>
                 
                 <div class="credentials-info">
-                    <h4>?? Credenciales de prueba:</h4>
+                    <h4>ðŸ“‹ Credenciales de prueba:</h4>
                     <ul>
                         <li><strong>Admin:</strong> MONSTER / MONSTER9</li>
-                        <li><strong>Cliente:</strong> [cédula] / abcd1234</li>
+                        <li><strong>Cliente:</strong> [cÃ©dula] / abcd1234</li>
                         <li>Ej: 1750123456 / abcd1234</li>
                     </ul>
                 </div>

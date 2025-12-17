@@ -9,6 +9,7 @@ import ec.edu.pinza.clicon.controllers.ProductosController;
 import ec.edu.pinza.clicon.controllers.VentasController;
 import ec.edu.pinza.clicon.models.FacturaResponseDTO;
 import ec.edu.pinza.clicon.models.ItemCarrito;
+import ec.edu.pinza.clicon.models.LoginResponseDTO;
 import ec.edu.pinza.clicon.models.ProductoDTO;
 import ec.edu.pinza.clicon.models.UsuarioSesion;
 import ec.edu.pinza.clicon.services.BanquitoRestClient;
@@ -21,7 +22,9 @@ import java.util.Optional;
 import java.util.Scanner;
 
 /**
- * Cliente de consola que replica las funcionalidades de CLIWEB (MVC).
+ * Cliente de consola con login dinámico y diferenciación de roles.
+ * ADMIN: MONSTER / MONSTER9 (puede vender a cualquier cédula, ver todas las ventas)
+ * CLIENTES: cédula / abcd1234 (solo puede comprar para su propia cédula, ver sus compras)
  */
 public class CliconApplication {
 
@@ -33,14 +36,20 @@ public class CliconApplication {
 
     private void run() {
         System.out.println("=== CLICON Comercializadora REST Java ===");
-        AuthController authController = new AuthController();
-        UsuarioSesion sesion = loginLoop(authController);
-        if (sesion == null) {
-            return;
-        }
-
+        System.out.println("Credenciales:");
+        System.out.println("  Admin: MONSTER / MONSTER9");
+        System.out.println("  Cliente: cedula / abcd1234");
+        System.out.println();
+        
         try (ComercializadoraRestClient restClient = new ComercializadoraRestClient();
              BanquitoRestClient banquitoClient = new BanquitoRestClient()) {
+            
+            AuthController authController = new AuthController(restClient);
+            UsuarioSesion sesion = loginLoop(authController);
+            if (sesion == null) {
+                return;
+            }
+
             ConsoleView view = new ConsoleView();
             ProductosController productosController = new ProductosController(restClient);
             CarritoController carritoController = new CarritoController();
@@ -53,18 +62,28 @@ public class CliconApplication {
             while (!salir) {
                 mostrarMenuPrincipal(sesion);
                 int opcion = leerEntero("Selecciona una opcion: ");
+                
+                // Opciones comunes
                 switch (opcion) {
                     case 1 -> flujoProductos(productosController, carritoController);
                     case 2 -> flujoCarrito(carritoController);
                     case 3 -> flujoCheckout(checkoutController, carritoController, sesion);
-                    case 4 -> flujoVentas(ventasController);
-                    case 5 -> flujoDetalleVenta(ventasController);
-                    case 6 -> flujoMisCompras(ventasController, sesion);
-                    case 7 -> flujoValidarSujetoCredito(creditoController);
-                    case 8 -> flujoConsultarMontoMaximo(creditoController);
-                    case 9 -> adminProductosController.mostrarMenuAdmin();
+                    case 4 -> flujoVentas(ventasController, sesion);
+                    case 5 -> flujoDetalleVenta(ventasController, sesion);
                     case 0 -> salir = true;
-                    default -> System.out.println("Opcion invalida.");
+                    default -> {
+                        // Opciones solo para admin
+                        if (sesion.isAdmin()) {
+                            switch (opcion) {
+                                case 6 -> flujoValidarSujetoCredito(creditoController);
+                                case 7 -> flujoConsultarMontoMaximo(creditoController);
+                                case 8 -> adminProductosController.mostrarMenuAdmin();
+                                default -> System.out.println("Opcion invalida.");
+                            }
+                        } else {
+                            System.out.println("Opcion invalida.");
+                        }
+                    }
                 }
             }
             System.out.println("Hasta pronto!");
@@ -74,16 +93,22 @@ public class CliconApplication {
     }
 
     private void mostrarMenuPrincipal(UsuarioSesion sesion) {
-        System.out.println("\nUsuario: " + sesion.getUsuario());
+        System.out.println("\n" + (sesion.isAdmin() ? "[ADMIN]" : "[CLIENTE]") + " Usuario: " + sesion.getUsuario());
+        if (!sesion.isAdmin() && sesion.getCedula() != null) {
+            System.out.println("CI: " + sesion.getCedula());
+        }
         System.out.println("1) Ver productos / agregar al carrito");
         System.out.println("2) Ver carrito");
         System.out.println("3) Checkout / pagar");
-        System.out.println("4) Ver ventas");
+        System.out.println("4) " + (sesion.isAdmin() ? "Ver todas las ventas" : "Mis compras"));
         System.out.println("5) Ver detalle de venta");
-        System.out.println("6) Mis compras");
-        System.out.println("7) Validar sujeto de credito");
-        System.out.println("8) Consultar monto maximo");
-        System.out.println("9) Administrar productos (CRUD)");
+        
+        if (sesion.isAdmin()) {
+            System.out.println("6) Validar sujeto de credito");
+            System.out.println("7) Consultar monto maximo");
+            System.out.println("8) Administrar productos (CRUD)");
+        }
+        
         System.out.println("0) Salir");
     }
 
@@ -95,12 +120,17 @@ public class CliconApplication {
             System.out.print("Password: ");
             String password = scanner.nextLine();
 
-            UsuarioSesion sesion = authController.login(usuario, password);
-            if (sesion != null) {
-                System.out.println("Login exitoso!");
+            LoginResponseDTO response = authController.login(usuario, password);
+            if (response != null && response.isExitoso()) {
+                UsuarioSesion sesion = authController.crearSesion(response);
+                System.out.println("Login exitoso! Rol: " + response.getRol());
                 return sesion;
             }
-            System.out.println("Usuario o password incorrectos.");
+            
+            String mensaje = response != null && response.getMensaje() != null 
+                    ? response.getMensaje() 
+                    : "Usuario o password incorrectos.";
+            System.out.println(mensaje);
             intentos++;
         }
         System.out.println("Demasiados intentos fallidos. Cerrando.");
@@ -174,11 +204,19 @@ public class CliconApplication {
             return;
         }
 
-        System.out.print("Ingresa la cedula del cliente: ");
-        String cedula = scanner.nextLine().trim();
-        if (cedula.isEmpty()) {
-            System.out.println("La cedula es obligatoria para facturar.");
-            return;
+        String cedula;
+        if (sesion.isAdmin()) {
+            // Admin puede vender a cualquier cédula
+            System.out.print("Ingresa la cedula del cliente: ");
+            cedula = scanner.nextLine().trim();
+            if (cedula.isEmpty()) {
+                System.out.println("La cedula es obligatoria para facturar.");
+                return;
+            }
+        } else {
+            // Cliente solo puede comprar para su propia cédula
+            cedula = sesion.getCedula();
+            System.out.println("Comprando para tu cedula: " + cedula);
         }
 
         System.out.println("Formas de pago: 1) EFECTIVO  2) CREDITO_DIRECTO");
@@ -221,37 +259,43 @@ public class CliconApplication {
         }
     }
 
-    private void flujoVentas(VentasController ventasController) {
+    private void flujoVentas(VentasController ventasController, UsuarioSesion sesion) {
         try {
-            List<FacturaResponseDTO> facturas = ventasController.listarTodas();
-            ConsoleView.mostrarFacturasResumen(facturas, "Ventas registradas");
+            List<FacturaResponseDTO> facturas;
+            String titulo;
+            
+            if (sesion.isAdmin()) {
+                // Admin ve TODAS las facturas
+                facturas = ventasController.listarTodas();
+                titulo = "Historial de Ventas (Todas)";
+            } else {
+                // Cliente solo ve sus propias compras
+                facturas = ventasController.listarPorCliente(sesion.getCedula());
+                titulo = "Mis Compras";
+            }
+            
+            ConsoleView.mostrarFacturasResumen(facturas, titulo);
         } catch (IOException | InterruptedException e) {
             System.out.println("Error al cargar ventas: " + e.getMessage());
         }
     }
 
-    private void flujoDetalleVenta(VentasController ventasController) {
+    private void flujoDetalleVenta(VentasController ventasController, UsuarioSesion sesion) {
         int id = leerEntero("Ingresa el ID de la factura: ");
         try {
             FacturaResponseDTO factura = ventasController.obtenerPorId(id);
+            
+            // Validar que cliente no pueda ver facturas de otros
+            if (!sesion.isAdmin() && factura != null) {
+                if (!sesion.getCedula().equals(factura.getCedulaCliente())) {
+                    System.out.println("No tienes permiso para ver esta factura.");
+                    return;
+                }
+            }
+            
             ConsoleView.mostrarFacturaDetalle(factura);
         } catch (IOException | InterruptedException e) {
             System.out.println("Error al cargar detalle: " + e.getMessage());
-        }
-    }
-
-    private void flujoMisCompras(VentasController ventasController, UsuarioSesion sesion) {
-        try {
-            System.out.print("Ingresa la cedula del cliente a consultar: ");
-            String cedula = scanner.nextLine().trim();
-            if (cedula.isEmpty()) {
-                System.out.println("Debes ingresar una cedula.");
-                return;
-            }
-            List<FacturaResponseDTO> facturas = ventasController.listarPorCliente(cedula);
-            ConsoleView.mostrarFacturasResumen(facturas, "Mis compras");
-        } catch (IOException | InterruptedException e) {
-            System.out.println("Error al cargar tus compras: " + e.getMessage());
         }
     }
 

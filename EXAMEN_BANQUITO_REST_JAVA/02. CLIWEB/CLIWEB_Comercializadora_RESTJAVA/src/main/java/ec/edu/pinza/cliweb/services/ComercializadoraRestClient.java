@@ -20,7 +20,8 @@ import java.util.Map;
 public class ComercializadoraRestClient {
     
     // Para desarrollo local con Docker backend en puerto 8081
-    private static final String BASE_URL = "http://localhost:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api";
+    // LOCAL: private static final String BASE_URL = "http://localhost:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api";
+    private static final String BASE_URL = "http://159.203.120.118:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api";
     private final Client client;
     private final WebTarget baseTarget;
     
@@ -51,14 +52,14 @@ public class ComercializadoraRestClient {
             
             LoginResponseDTO error = new LoginResponseDTO();
             error.setExitoso(false);
-            error.setMensaje("Error de conexión: HTTP " + response.getStatus());
+            error.setMensaje("Error de conexiÃ³n: HTTP " + response.getStatus());
             return error;
             
         } catch (Exception e) {
             e.printStackTrace();
             LoginResponseDTO error = new LoginResponseDTO();
             error.setExitoso(false);
-            error.setMensaje("Error de comunicación con el servidor: " + e.getMessage());
+            error.setMensaje("Error de comunicaciÃ³n con el servidor: " + e.getMessage());
             return error;
         }
     }

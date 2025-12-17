@@ -7,53 +7,21 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 
 /**
  * Controlador para administración de productos
- * SOLO accesible para usuarios con rol ADMIN
  */
 @WebServlet(name = "AdminProductosController", urlPatterns = {"/admin/productos"})
 public class AdminProductosController extends HttpServlet {
     
     private final ComercializadoraRestClient restClient = new ComercializadoraRestClient();
     
-    /**
-     * Verifica si el usuario tiene rol de administrador
-     */
-    private boolean verificarAdmin(HttpServletRequest request, HttpServletResponse response) 
-            throws IOException {
-        HttpSession session = request.getSession(false);
-        
-        // Verificar si hay sesión y usuario logueado
-        if (session == null || session.getAttribute("usuario") == null) {
-            response.sendRedirect(request.getContextPath() + "/login");
-            return false;
-        }
-        
-        // Verificar rol de administrador
-        String rol = (String) session.getAttribute("rol");
-        if (!"ADMIN".equals(rol)) {
-            // No es admin - redirigir a productos con mensaje
-            session.setAttribute("error", "⛔ Acceso denegado: Solo administradores pueden acceder a esta sección");
-            response.sendRedirect(request.getContextPath() + "/productos");
-            return false;
-        }
-        
-        return true;
-    }
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        // Verificar permisos de administrador
-        if (!verificarAdmin(request, response)) {
-            return;
-        }
         
         String action = request.getParameter("action");
         
@@ -90,17 +58,13 @@ public class AdminProductosController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
-        // Verificar permisos de administrador
-        if (!verificarAdmin(request, response)) {
-            return;
-        }
-        
+        String action = request.getParameter("action");
         String idStr = request.getParameter("id");
         String nombre = request.getParameter("nombre");
         String codigo = request.getParameter("codigo");
         String precioStr = request.getParameter("precio");
         String stockStr = request.getParameter("stock");
-        String imagen = request.getParameter("imagen"); // Base64
+        String imagenBase64 = request.getParameter("imagenBase64"); // Base64
         
         try {
             ProductoDTO producto = new ProductoDTO();
@@ -108,9 +72,13 @@ public class AdminProductosController extends HttpServlet {
             producto.setCodigo(codigo);
             producto.setPrecio(new BigDecimal(precioStr));
             producto.setStock(Integer.parseInt(stockStr));
-            producto.setImagen(imagen);
             
-            if (idStr != null && !idStr.isEmpty()) {
+            // Solo actualizar la imagen si se proporcionó una nueva
+            if (imagenBase64 != null && !imagenBase64.trim().isEmpty()) {
+                producto.setImagen(imagenBase64);
+            }
+            
+            if ("update".equals(action) && idStr != null && !idStr.isEmpty()) {
                 // Actualizar
                 Integer id = Integer.parseInt(idStr);
                 producto.setIdProducto(id);

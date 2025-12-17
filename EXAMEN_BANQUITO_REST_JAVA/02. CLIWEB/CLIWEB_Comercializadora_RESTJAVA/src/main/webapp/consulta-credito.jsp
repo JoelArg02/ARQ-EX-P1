@@ -6,6 +6,42 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Consulta de Crédito - Comercializadora MONSTER</title>
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/styles.css">
+</head>
+<body>
+    <%
+        // Obtener información del usuario logueado
+        String rol = (String) session.getAttribute("rol");
+        String cedulaUsuario = (String) session.getAttribute("cedula");
+        String nombreCliente = (String) session.getAttribute("nombreCliente");
+        String usuario = (String) session.getAttribute("usuario");
+        boolean isAdmin = "ADMIN".equals(rol);
+    %>
+    <nav class="navbar">
+        <div class="nav-container">
+            <h1>🏢 COMERCIALIZADORA MONSTER</h1>
+            <div class="nav-links">
+                <a href="${pageContext.request.contextPath}/productos">Productos</a>
+                <a href="${pageContext.request.contextPath}/carrito" class="carrito-link">
+                    Factura 📄
+                    <span class="carrito-badge" style="display:none;">0</span>
+                </a>
+                <a href="${pageContext.request.contextPath}/ventas">Mis Ventas</a>
+                <a href="${pageContext.request.contextPath}/consulta-credito" class="active">Consultar Crédito</a>
+                <% if (isAdmin) { %>
+                    <a href="${pageContext.request.contextPath}/admin/productos" style="background: linear-gradient(135deg, #FF9800 0%, #FF5722 100%); padding: 8px 16px; border-radius: 5px;">🛠️ Admin</a>
+                <% } %>
+                <span style="color: #64748b; padding: 8px;">👤 <%= usuario %> (<%= isAdmin ? "Admin" : nombreCliente %>)</span>
+                <a href="${pageContext.request.contextPath}/login?action=logout" class="btn-logout">Salir</a>
+            </div>
+        </div>
+    </nav>
+    
+    <div class="container">
+        <div style="text-align: center; margin-bottom: 2rem;">
+            <h2 style="font-size: 2.5rem; color: white; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); margin-bottom: 0.5rem;">💳 Consulta de Crédito BanQuito</h2>
+            <p style="color: rgba(255,255,255,0.9); font-size: 1.1rem;">Verifica tu elegibilidad y monto máximo autorizado</p>
+        </div>
+        
     <style>
         .credit-container {
             max-width: 800px;
@@ -13,7 +49,7 @@
             padding: 2rem;
         }
         .credit-card {
-            background: rgba(31, 41, 55, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
             padding: 2rem;
             margin-bottom: 1.5rem;
@@ -29,21 +65,22 @@
             flex-direction: column;
         }
         .form-group label {
-            color: white;
+            color: #1e293b;
             margin-bottom: 0.5rem;
             font-weight: 600;
         }
         .form-group input {
             padding: 0.75rem;
-            border: 2px solid rgba(124, 58, 237, 0.5);
+            border: 2px solid rgba(124, 58, 237, 0.3);
             border-radius: 8px;
-            background: rgba(17, 24, 39, 0.8);
-            color: white;
+            background: white;
+            color: #1e293b;
             font-size: 1rem;
         }
         .form-group input:focus {
             outline: none;
             border-color: #7c3aed;
+            background: white;
         }
         .button-group {
             display: flex;
@@ -77,34 +114,44 @@
             box-shadow: 0 4px 12px rgba(34, 197, 94, 0.4);
         }
         .result-card {
-            background: rgba(31, 41, 55, 0.9);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 15px;
             padding: 2rem;
-            margin-top: 2rem;
-            border-left: 5px solid #7c3aed;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
         }
-        .result-title {
-            color: #7c3aed;
-            font-size: 1.5rem;
+        .result-card h3 {
+            color: #1e293b;
             margin-bottom: 1rem;
+        }
+        .result-info {
+            color: #475569;
+        }
+        .amount-display {
+            font-size: 3rem;
             font-weight: bold;
+            background: linear-gradient(135deg, #7c3aed 0%, #667eea 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+            margin: 1rem 0;
         }
         .result-item {
             display: flex;
             justify-content: space-between;
             padding: 0.75rem 0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-bottom: 1px solid #e2e8f0;
         }
         .result-item:last-child {
             border-bottom: none;
         }
         .result-label {
-            color: rgba(255, 255, 255, 0.7);
+            color: #64748b;
             font-weight: 600;
         }
         .result-value {
-            color: white;
-            font-weight: bold;
+            color: #1e293b;
+            font-weight: 700;
         }
         .result-value.success {
             color: #22c55e;
@@ -115,39 +162,7 @@
     </style>
 </head>
 <body>
-    <%
-        // Obtener información del usuario logueado
-        String rol = (String) session.getAttribute("rol");
-        String nombreCliente = (String) session.getAttribute("nombreCliente");
-        String usuario = (String) session.getAttribute("usuario");
-        boolean isAdmin = "ADMIN".equals(rol);
-        
-        // Si no está logueado, redirigir al login
-        if (usuario == null) {
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
-    %>
-    <nav class="navbar">
-        <div class="nav-container">
-            <h1>🛒 COMERCIALIZADORA MONSTER</h1>
-            <div class="nav-links">
-                <a href="${pageContext.request.contextPath}/productos">Productos</a>
-                <a href="${pageContext.request.contextPath}/carrito">Factura 📄</a>
-                <a href="${pageContext.request.contextPath}/ventas">Mis Ventas</a>
-                <a href="${pageContext.request.contextPath}/consulta-credito" class="active">Consultar Crédito</a>
-                <% if (isAdmin) { %>
-                    <a href="${pageContext.request.contextPath}/admin/productos" style="background: linear-gradient(135deg, #FF9800 0%, #FF5722 100%); padding: 8px 16px; border-radius: 5px;">🛠️ Admin</a>
-                <% } %>
-                <span style="color: #64748b; padding: 8px;">👤 <%= usuario %> <% if (!isAdmin && nombreCliente != null) { %>(<%= nombreCliente %>)<% } else if (isAdmin) { %>(Admin)<% } %></span>
-                <a href="${pageContext.request.contextPath}/login?action=logout" class="btn-logout">Salir</a>
-            </div>
-        </div>
-    </nav>
-
     <div class="container credit-container">
-        <h2 style="color: white; text-align: center; font-size: 2rem; margin-bottom: 2rem;">💳 Consulta de Crédito BanQuito</h2>
-
         <div class="credit-card">
             <form action="${pageContext.request.contextPath}/consulta-credito" method="post" class="credit-form">
                 <div class="form-group">

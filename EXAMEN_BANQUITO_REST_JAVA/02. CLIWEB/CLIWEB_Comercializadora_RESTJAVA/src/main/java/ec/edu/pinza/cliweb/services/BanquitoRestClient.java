@@ -12,7 +12,8 @@ import java.util.Map;
 public class BanquitoRestClient {
     
     // Para desarrollo local con Docker backend en puerto 8086
-    private static final String BASE_URL = "http://localhost:8086/Ex_Banquito_RESTJava-1.0-SNAPSHOT/api";
+    // LOCAL: private static final String BASE_URL = "http://localhost:8086/Ex_Banquito_RESTJava-1.0-SNAPSHOT/api";
+    private static final String BASE_URL = "http://159.203.120.118:8086/Ex_Banquito_RESTJava-1.0-SNAPSHOT/api";
     private final Client client;
     private final WebTarget baseTarget;
     

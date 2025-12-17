@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import ec.edu.pinza.clicon.models.FacturaResponseDTO;
+import ec.edu.pinza.clicon.models.LoginResponseDTO;
 import ec.edu.pinza.clicon.models.ProductoDTO;
 import java.io.IOException;
 import java.net.URI;
@@ -22,7 +23,9 @@ import java.util.Map;
  */
 public class ComercializadoraRestClient implements AutoCloseable {
 
-    private static final String BASE_URL = "http://localhost:8080/Ex_Comercializadora_RESTJava/api";
+    // Para desarrollo local con Docker backend en puerto 8081
+    // LOCAL: private static final String BASE_URL = "http://localhost:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api";
+    private static final String BASE_URL = "http://159.203.120.118:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api";
 
     private final HttpClient httpClient;
     private final ObjectMapper mapper;
@@ -37,6 +40,47 @@ public class ComercializadoraRestClient implements AutoCloseable {
         mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
         mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
+
+    // ==================== AUTENTICACIÓN ====================
+    
+    /**
+     * Autentica un usuario con username y password
+     */
+    public LoginResponseDTO login(String username, String password) {
+        try {
+            Map<String, String> requestBody = new HashMap<>();
+            requestBody.put("username", username);
+            requestBody.put("password", password);
+            
+            String jsonBody = mapper.writeValueAsString(requestBody);
+            
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(BASE_URL + "/auth/login"))
+                    .header("Content-Type", "application/json")
+                    .header("Accept", "application/json")
+                    .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+                    .build();
+            
+            HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            
+            if (response.statusCode() == 200 || response.statusCode() == 401 || response.statusCode() == 400) {
+                return mapper.readValue(response.body(), LoginResponseDTO.class);
+            }
+            
+            LoginResponseDTO error = new LoginResponseDTO();
+            error.setExitoso(false);
+            error.setMensaje("Error de conexión: HTTP " + response.statusCode());
+            return error;
+            
+        } catch (Exception e) {
+            LoginResponseDTO error = new LoginResponseDTO();
+            error.setExitoso(false);
+            error.setMensaje("Error de comunicación con el servidor: " + e.getMessage());
+            return error;
+        }
+    }
+
+    // ==================== PRODUCTOS ====================
 
     public List<ProductoDTO> obtenerProductos() throws IOException, InterruptedException {
         HttpRequest request = HttpRequest.newBuilder()

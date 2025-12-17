@@ -177,6 +177,24 @@ fun LoginScreen(onLogin: (String, String) -> Unit, snackbarHostState: SnackbarHo
             Button(onClick = { onLogin(usuario.trim(), password.trim()) }, modifier = Modifier.fillMaxWidth()) {
                 Text("Ingresar")
             }
+            
+            // Instrucciones de login
+            Spacer(Modifier.height(24.dp))
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(containerColor = Color(0xFFF1F5F9))
+            ) {
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        "Credenciales de acceso:",
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 14.sp
+                    )
+                    Spacer(Modifier.height(8.dp))
+                    Text("Admin: MONSTER / MONSTER9", fontSize = 13.sp, color = Color.Gray)
+                    Text("Cliente: cédula / abcd1234", fontSize = 13.sp, color = Color.Gray)
+                }
+            }
         }
     }
 }
@@ -195,11 +213,26 @@ fun HomeScreen(controller: AppController, state: UiState, snackbarHostState: Sna
         drawerContent = {
             ModalDrawerSheet {
                 Spacer(Modifier.height(16.dp))
-                Text(
-                    "Menu",
-                    modifier = Modifier.padding(16.dp),
-                    style = androidx.compose.material3.MaterialTheme.typography.titleLarge
-                )
+                
+                // Info del usuario
+                Column(modifier = Modifier.padding(16.dp)) {
+                    Text(
+                        if (state.isAdmin) "Admin" else "Cliente",
+                        style = androidx.compose.material3.MaterialTheme.typography.titleLarge
+                    )
+                    Text(
+                        state.usuario,
+                        style = androidx.compose.material3.MaterialTheme.typography.bodyMedium,
+                        color = Color.Gray
+                    )
+                    if (!state.isAdmin && state.cedula.isNotEmpty()) {
+                        Text(
+                            "CI: ${state.cedula}",
+                            style = androidx.compose.material3.MaterialTheme.typography.bodySmall,
+                            color = Color.Gray
+                        )
+                    }
+                }
                 HorizontalDivider()
                 
                 NavigationDrawerItem(
@@ -232,9 +265,10 @@ fun HomeScreen(controller: AppController, state: UiState, snackbarHostState: Sna
                     modifier = Modifier.padding(horizontal = 12.dp)
                 )
                 
+                // Ventas/Compras - Admin ve "Todas las Ventas", Cliente ve "Mis Compras"
                 NavigationDrawerItem(
                     icon = { Icon(Icons.Default.List, contentDescription = null) },
-                    label = { Text(Screen.TodasVentas.label) },
+                    label = { Text(if (state.isAdmin) "Historial de Ventas" else "Mis Compras") },
                     selected = currentRoute == Screen.TodasVentas.route,
                     onClick = {
                         scope.launch { drawerState.close() }
@@ -247,35 +281,23 @@ fun HomeScreen(controller: AppController, state: UiState, snackbarHostState: Sna
                     modifier = Modifier.padding(horizontal = 12.dp)
                 )
                 
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Person, contentDescription = null) },
-                    label = { Text(Screen.MisCompras.label) },
-                    selected = currentRoute == Screen.MisCompras.route,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                        navController.navigate(Screen.MisCompras.route) {
-                            popUpTo(navController.graph.startDestinationId) { saveState = true }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    },
-                    modifier = Modifier.padding(horizontal = 12.dp)
-                )
-                
-                NavigationDrawerItem(
-                    icon = { Icon(Icons.Default.Settings, contentDescription = null) },
-                    label = { Text(Screen.Admin.label) },
-                    selected = currentRoute == Screen.Admin.route,
-                    onClick = {
-                        scope.launch { drawerState.close() }
-                        navController.navigate(Screen.Admin.route) {
-                            popUpTo(navController.graph.startDestinationId) { saveState = true }
-                            launchSingleTop = true
-                            restoreState = true
-                        }
-                    },
-                    modifier = Modifier.padding(horizontal = 12.dp)
-                )
+                // Solo admin ve la opción de Admin Productos
+                if (state.isAdmin) {
+                    NavigationDrawerItem(
+                        icon = { Icon(Icons.Default.Settings, contentDescription = null) },
+                        label = { Text(Screen.Admin.label) },
+                        selected = currentRoute == Screen.Admin.route,
+                        onClick = {
+                            scope.launch { drawerState.close() }
+                            navController.navigate(Screen.Admin.route) {
+                                popUpTo(navController.graph.startDestinationId) { saveState = true }
+                                launchSingleTop = true
+                                restoreState = true
+                            }
+                        },
+                        modifier = Modifier.padding(horizontal = 12.dp)
+                    )
+                }
             }
         }
     ) {
@@ -406,16 +428,27 @@ fun CarritoScreen(
     }
 
     if (mostrarCheckout) {
-        CheckoutDialog(onDismiss = { mostrarCheckout = false }, onConfirm = { cedula, metodo, cuotas ->
-            onCheckout(cedula, metodo, cuotas)
-            mostrarCheckout = false
-        })
+        CheckoutDialog(
+            isAdmin = state.isAdmin,
+            cedulaUsuario = state.cedula,
+            onDismiss = { mostrarCheckout = false },
+            onConfirm = { cedula, metodo, cuotas ->
+                onCheckout(cedula, metodo, cuotas)
+                mostrarCheckout = false
+            }
+        )
     }
 }
 
 @Composable
-fun CheckoutDialog(onDismiss: () -> Unit, onConfirm: (String, String, Int?) -> Unit) {
-    var cedula by remember { mutableStateOf("") }
+fun CheckoutDialog(
+    isAdmin: Boolean,
+    cedulaUsuario: String,
+    onDismiss: () -> Unit,
+    onConfirm: (String, String, Int?) -> Unit
+) {
+    // Si no es admin, la cédula viene fija del usuario logueado
+    var cedula by remember { mutableStateOf(cedulaUsuario) }
     var metodo by remember { mutableStateOf("EFECTIVO") }
     var cuotasText by remember { mutableStateOf("3") }
 
@@ -426,7 +459,22 @@ fun CheckoutDialog(onDismiss: () -> Unit, onConfirm: (String, String, Int?) -> U
         title = { Text("Checkout") },
         text = {
             Column {
-                OutlinedTextField(value = cedula, onValueChange = { cedula = it }, label = { Text("Cedula del cliente") }, singleLine = true)
+                OutlinedTextField(
+                    value = cedula,
+                    onValueChange = { if (isAdmin) cedula = it },
+                    label = { Text(if (isAdmin) "Cédula del cliente" else "Tu cédula") },
+                    singleLine = true,
+                    enabled = isAdmin, // Solo admin puede editar la cédula
+                    readOnly = !isAdmin
+                )
+                if (!isAdmin) {
+                    Text(
+                        "Solo puedes comprar para tu propia cédula",
+                        fontSize = 12.sp,
+                        color = Color.Gray,
+                        modifier = Modifier.padding(top = 4.dp)
+                    )
+                }
                 Spacer(Modifier.height(8.dp))
                 Text("Forma de pago")
                 Row(verticalAlignment = Alignment.CenterVertically) {
@@ -434,13 +482,13 @@ fun CheckoutDialog(onDismiss: () -> Unit, onConfirm: (String, String, Int?) -> U
                     Text("Efectivo")
                     Spacer(Modifier.width(12.dp))
                     RadioButton(selected = metodo == "CREDITO_DIRECTO", onClick = { metodo = "CREDITO_DIRECTO" })
-                    Text("Credito directo")
+                    Text("Crédito directo")
                 }
                 if (metodo == "CREDITO_DIRECTO") {
                     OutlinedTextField(
                         value = cuotasText,
                         onValueChange = { cuotasText = it.filter { ch -> ch.isDigit() } },
-                        label = { Text("Numero de cuotas (3-24)") },
+                        label = { Text("Número de cuotas (3-24)") },
                         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                         singleLine = true
                     )
@@ -496,11 +544,18 @@ fun TodasVentasScreen(state: UiState, onCargar: () -> Unit, onDetalle: (Int) -> 
     LaunchedEffect(Unit) { onCargar() }
     
     Column(modifier = Modifier.fillMaxSize().padding(12.dp)) {
-        Text("Todas las Ventas", style = androidx.compose.material3.MaterialTheme.typography.titleLarge)
+        // Título según el rol
+        Text(
+            if (state.isAdmin) "Historial de Ventas (Todas)" else "Mis Compras",
+            style = androidx.compose.material3.MaterialTheme.typography.titleLarge
+        )
         Spacer(Modifier.height(8.dp))
         
         if (state.ventas.isEmpty()) {
-            Text("No hay ventas registradas.", modifier = Modifier.padding(16.dp))
+            Text(
+                if (state.isAdmin) "No hay ventas registradas." else "No tienes compras registradas.",
+                modifier = Modifier.padding(16.dp)
+            )
         } else {
             LazyColumn {
                 items(state.ventas) { factura ->

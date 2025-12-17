@@ -6,10 +6,13 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiProvider {
-    // Ajusta la IP al host donde corre el servidor si usas dispositivo físico.
-    // Para emulador de Android Studio, 10.0.2.2 apunta al host.
-//    private const val BASE_URL = "http://10.0.2.2:8080/Ex_Comercializadora_RESTJava/api/"
-    private const val BASE_URL = "http://192.168.137.1:8080/Ex_Comercializadora_RESTJava/api/"
+    // Para desarrollo local con Docker backend en puerto 8081
+    // - Emulador Android Studio: 10.0.2.2 apunta al localhost del host
+    // - Dispositivo físico en la misma red: usar IP del host (ej: 192.168.x.x)
+    // LOCAL EMULADOR: private const val BASE_URL = "http://10.0.2.2:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api/"
+    // LOCAL FISICO: private const val BASE_URL = "http://192.168.137.1:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api/"
+    // PRODUCCION (DigitalOcean):
+    private const val BASE_URL = "http://159.203.120.118:8081/Ex_Comercializadora_RESTJava-1.0-SNAPSHOT/api/"
 
 
     private val client: OkHttpClient by lazy {

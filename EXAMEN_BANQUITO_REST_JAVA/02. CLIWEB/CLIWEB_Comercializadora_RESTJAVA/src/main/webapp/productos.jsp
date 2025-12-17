@@ -17,12 +17,6 @@
         String nombreCliente = (String) session.getAttribute("nombreCliente");
         String usuario = (String) session.getAttribute("usuario");
         boolean isAdmin = "ADMIN".equals(rol);
-        
-        // Si no está logueado, redirigir al login
-        if (usuario == null) {
-            response.sendRedirect(request.getContextPath() + "/login");
-            return;
-        }
     %>
     <nav class="navbar">
         <div class="nav-container">
@@ -49,7 +43,7 @@
                 <% if (isAdmin) { %>
                     <a href="${pageContext.request.contextPath}/admin/productos" style="background: linear-gradient(135deg, #FF9800 0%, #FF5722 100%); padding: 8px 16px; border-radius: 5px;">🛠️ Admin</a>
                 <% } %>
-                <span style="color: #64748b; padding: 8px;">👤 <%= usuario %> <% if (!isAdmin && nombreCliente != null) { %>(<%= nombreCliente %>)<% } else if (isAdmin) { %>(Admin)<% } %></span>
+                <span style="color: #64748b; padding: 8px;">👤 <%= usuario %> (<%= isAdmin ? "Admin" : nombreCliente %>)</span>
                 <a href="${pageContext.request.contextPath}/login?action=logout" class="btn-logout">Salir</a>
             </div>
         </div>
@@ -80,7 +74,7 @@
                         <div class="producto-imagen">
                             <img src="data:image/jpeg;base64,<%= producto.getImagen() %>" 
                                  alt="<%= producto.getNombre() %>" 
-                                 style="width: 100%; height: 200px; object-fit: cover; border-radius: 8px 8px 0 0;">
+                                 style="width: 100%; height: 200px; object-fit: contain; background: #f8f9fa; border-radius: 8px 8px 0 0;">
                         </div>
                     <% } else { %>
                         <div class="producto-imagen-placeholder" style="width: 100%; height: 200px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center; border-radius: 8px 8px 0 0;">
